@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/Home.vue";
-import CreatePlayer from "../views/CreatePlayer.vue";
+import Home from "../Views/Home.vue";
+import CreatePlayer from "../Views/CreatePlayer.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: "/create-player",
+    path: "/createPlayer",
     name: "CreatePlayer",
     component: CreatePlayer,
   },
