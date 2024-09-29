@@ -12,9 +12,14 @@
             @click="selectProfilePicture(picture)"
             :class="['profile-img', { selected: selectedProfilePicture === picture }]"
           />
-          <!-- Zeilenumbruch nach dem 5. Bild -->
-          <br v-if="(index  + 1) % 5 === 0" />
         </template>
+        <Allert
+          v-if="showAllert"
+          :title="allertTitle"
+          :message="allertMessage"
+          :isVisible="showAllert"
+          @close="showAllert = false"
+        />
       </div>
     </div>
 
@@ -26,12 +31,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Player } from '../Types/Player';
 import router from '../router';
+import Allert from '../components/Allert.vue'; 
+import $ from 'jquery';
 
 const playerName = ref<string>('');
 const selectedProfilePicture = ref<string | null>(null);
+const showAllert = ref(false); // Steuere die Sichtbarkeit des Allerts
+const allertTitle = ref('');
+const allertMessage = ref('');
 
 // Profilbilder importieren
 import profile1 from '../assets/Profilbilder/ProfilBild1.png';
@@ -82,32 +92,78 @@ const goHome = () => {
 
 const SaveAndHome = async () => {
   if (playerName.value && selectedProfilePicture.value) {
-    // Umwandlung in Base64
     const base64Image = await toBase64(selectedProfilePicture.value);
 
-    // Erstelle ein Player-Objekt
     const newPlayer: Player = {
       name: playerName.value,
       profilePicture: base64Image,
     };
-
-    // Wandelt das Player-Objekt in ein JSON-Objekt um
     const playerJson = JSON.stringify(newPlayer);
 
-    // Hier kannst du den API-Call hinzufügen, um das JSON-Objekt zu speichern
-    console.log(playerJson); // Zum Debuggen, um das JSON-Objekt in der Konsole zu sehen
+    $.ajax({
+      url: '/api/createSpieler',
+      method: 'POST',
+      contentType: 'application/json', 
+      data: playerJson, 
+      dataType: 'json',
+    }).done((response: any) => {
+      console.log('Erfolg:', response);
+      console.log(response.body.statuscode);
 
+    }).fail((jqXHR: JQuery.jqXHR, textStatus: string, errorThrown: string) => {
+      console.error('Fehler:', textStatus, errorThrown); 
+    });
 
+    console.log("json-Object Spieler", playerJson); 
 
+    // Setze den Alert-Text und zeige ihn an
+    allertTitle.value = `Spieler ${playerName.value} erstellt!`;
+    allertMessage.value = `Spieler ${playerName.value} mit Profilbild erstellt!`;
+    showAllert.value = true;
 
-    alert(`Spieler ${playerName.value} mit Profilbild erstellt!`);
-    playerName.value = ''; // Zurücksetzen des Spielernamens
-    selectedProfilePicture.value = null; // Zurücksetzen des Profilbilds
-    router.push('/'); // Navigiere zur Startseite
+    // Warten auf das Schließen des Alerts
+    await new Promise<void>((resolve) => {
+      // Event Listener für das Schließen des Alerts
+      const closeAlert = () => {
+        showAllert.value = false; // Setze showAllert zurück
+        resolve(); // Auflösen des Promises
+      };
+
+      // Warte darauf, dass der Alert geschlossen wird
+      watch(showAllert, (newValue) => {
+        if (!newValue) {
+          closeAlert();
+        }
+      });
+    });
+
+    // Nach dem Schließen des Alerts zur Startseite navigieren
+    playerName.value = ''; 
+    selectedProfilePicture.value = null; 
+    router.push('/');
   } else {
-    alert('Bitte einen Spielernamen und ein Profilbild auswählen!');
+    // Fehler-Alert
+    allertTitle.value = 'Fehler';
+    allertMessage.value = 'Bitte einen Spielernamen und ein Profilbild auswählen!';
+    showAllert.value = true;
+
+    // Warten auf das Schließen des Alerts
+    await new Promise<void>((resolve) => {
+      const closeAlert = () => {
+        showAllert.value = false; // Setze showAllert zurück
+        resolve(); // Auflösen des Promises
+      };
+
+      // Warte darauf, dass der Alert geschlossen wird
+      watch(showAllert, (newValue) => {
+        if (!newValue) {
+          closeAlert();
+        }
+      });
+    });
   }
 };
+
 </script>
 
 <style scoped>
@@ -121,20 +177,21 @@ input {
   font-size: 16px;
   margin-bottom: 20px;
   display: block;
-  width: 300px;
+  width: 301px;
   margin: 0 auto;
 }
 
 .profile-pictures {
   margin: 20px 0;
-  display: flex; /* Verwende Flexbox für den Container */
+  display: flex; /* Flexbox für den Container */
   justify-content: center; /* Zentriert die Bilder */
 }
 
 .pictures {
   display: grid;
-  grid-template-columns: repeat(5, 50px); /* Setze die Breite der Spalten auf 50px */
-  gap: 5px; /* Abstand zwischen den Bildern */
+  grid-template-columns: repeat(5, 54px); /* Hier 5 Spalten für die Bilder */
+  gap: 10px; /* Abstand zwischen den Bildern */
+  justify-items: center; /* Zentriert die Bilder */
 }
 
 .profile-img {
@@ -176,7 +233,3 @@ input {
   background-color: #0056b3; /* Dunklere Farbe beim Hover */
 }
 </style>
-
-
-
-
