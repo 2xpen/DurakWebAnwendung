@@ -23,22 +23,30 @@ const spieler = ref<Player[]>([]);
 const fetchSpieler = async () => {
   try {
     const response = await axios.get('/api/getAlleSpieler');
-    console.log("das ist die response", response)
-    // Mit forEach durch das Array der Spieler iterieren
-    response.data.forEach((spielerData: Player) => {
-      // Ein neues Spielerobjekt erstellen und zur spieler-Referenz hinzufügen
-      spieler.value.push({
-        spielerId: spielerData.spielerId, // ID vom Backend
-        name: spielerData.name,
-        profilePicture: spielerData.profilePicture,
+    console.log('API Response:', response); // API Antwort überprüfen
+
+    // Überprüfen, ob response.data.data ein Array ist
+    const spielerArray = response.data.data; // Zugriff auf das Array mit den Spielern
+
+    if (Array.isArray(spielerArray)) {
+      spielerArray.forEach((spielerData: any) => {
+        // Spieler zur spieler-Referenz hinzufügen
+        spieler.value.push({
+          spielerId: spielerData.spielerId.id, // Zugriff auf die ID
+          name: spielerData.name, // Zugriff auf den Namen
+          profilePicture: spielerData.profilePicture, // Zugriff auf das Profilbild
+        });
       });
-    });
+    } else {
+      console.error('Erwartetes Array, aber erhalten:', spielerArray);
+    }
     
     console.log('Spieler-Daten:', spieler.value);
   } catch (error) {
     console.error('Fehler beim Abrufen der Spieler:', error);
   }
 };
+
 
 onMounted(() => {
   fetchSpieler();
