@@ -14,9 +14,9 @@ public class Spieler {
     private final SpielerId spielerId;
 
 
-    Spieler(String name,String profilBild){
+    Spieler(String name,String profilePicture){
         this.name = name;
-        this.profilePicture = profilBild;
+        this.profilePicture = profilePicture;
         this.spielerId = new SpielerId();
     }
 
@@ -37,7 +37,7 @@ public class Spieler {
         return spielerId;
     }
 
-    public String getProfilBild() {
+    public String getprofilePicture() {
         return profilePicture;
     }
 

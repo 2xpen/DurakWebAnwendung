@@ -19,6 +19,8 @@ private final UUID id;
         this.id = UUID.fromString(id);
     }
 
-
+    public UUID getId() {
+        return id;
+    }
 
 }

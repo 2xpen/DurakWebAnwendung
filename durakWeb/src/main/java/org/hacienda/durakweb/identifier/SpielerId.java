@@ -11,6 +11,9 @@ public class SpielerId extends AbstractIdentifier{
         super(id);
     }
 
-
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
 }
