@@ -41,7 +41,11 @@ const toBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(new Blob([file]));
-        reader.onload = () => resolve(reader.result);
+        reader.onload = () => {
+            // Den Base64-String ohne Präfix extrahieren
+            const base64String = reader.result.split(',')[1];
+            resolve(base64String);
+        };
         reader.onerror = error => reject(error);
     });
 };
@@ -53,6 +57,7 @@ const goHome = () => {
 const SaveAndHome = async () => {
     if (playerName.value && selectedProfilePicture.value) {
         const base64Image = await toBase64(selectedProfilePicture.value);
+        console.log(base64Image);
         const newPlayer = {
             name: playerName.value,
             profilePicture: base64Image,
