@@ -4,7 +4,7 @@
 
     <!-- Eingabefeld für Sessionnamen -->
     <div class="session-name">
-      <input v-model="sessionData.sessionName" placeholder="Sessionname eingeben" />
+      <input v-model="sessionData.spielRundenName" placeholder="Sessionname eingeben" />
     </div>
 
     <!-- Spieler-Liste -->
@@ -42,8 +42,8 @@ import { Player } from '@/Types/Player';  // Player Interface importieren
 
 // Session State
 const sessionData = ref<Session>({
-  sessionName: '',          // Sessionname leer initialisieren
-  spielerIdListe: [],       // Leere Liste von Spieler-IDs
+  spielRundenName: '',          // Sessionname leer initialisieren
+  spielerIds: [],       // Leere Liste von Spieler-IDs
 });
 
 // Alle Spieler abrufen
@@ -70,30 +70,30 @@ const fetchSpieler = async () => {
 
 // Spieler zur Session hinzufügen
 const addPlayerToSession = (spielerId: string) => {
-  if (!sessionData.value.spielerIdListe.includes(spielerId)) {
-    sessionData.value.spielerIdListe.push(spielerId);
+  if (!sessionData.value.spielerIds.includes(spielerId)) {
+    sessionData.value.spielerIds.push(spielerId);
   }
-  console.log('Spieler hinzugefügt:', sessionData.value.spielerIdListe);
+  console.log('Spieler hinzugefügt:', sessionData.value.spielerIds);
 };
 
 // Spieler aus der Session entfernen
 const removePlayerFromSession = (spielerId: string) => {
-  const index = sessionData.value.spielerIdListe.indexOf(spielerId);
+  const index = sessionData.value.spielerIds.indexOf(spielerId);
   if (index > -1) {
-    sessionData.value.spielerIdListe.splice(index, 1);
+    sessionData.value.spielerIds.splice(index, 1);
   }
-  console.log('Spieler entfernt:', sessionData.value.spielerIdListe);
+  console.log('Spieler entfernt:', sessionData.value.spielerIds);
 };
 
 // Session speichern
 const saveSession = async () => {
-  if (sessionData.value.sessionName && sessionData.value.spielerIdListe.length > 0) {
+  if (sessionData.value.spielRundenName && sessionData.value.spielerIds.length > 0) {
     try {
-      const response = await axios.post('/api/createSession', sessionData.value);
+      const response = await axios.post('/api/createSpieleRunde', sessionData.value);
       console.log('Session erstellt:', response.data);
 
       // Session-ID aus dem Backend
-      sessionData.value.sessionId = response.data.sessionId; 
+      sessionData.value.spielRundenId = response.data.sessionId; 
 
       // Zurück zur Startseite nach Speichern der Session
       router.push('/');
