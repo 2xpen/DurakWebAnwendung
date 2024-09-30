@@ -17,7 +17,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const goToCreatePlayer = (): void => {
-  router.push('/create-player');
+  router.push('/createPlayer');
 };
 </script>
 
