@@ -5,6 +5,10 @@ const router = useRouter();
 const goToCreatePlayer = () => {
     router.push('/createPlayer');
 };
+const goToSeeAllPlayer = () => {
+    console.log("SeeallPlayer");
+    router.push('/seeAllPlayer');
+};
 const __VLS_fnComponent = (await import('vue')).defineComponent({});
 ;
 let __VLS_functionalComponentProps;
@@ -30,7 +34,7 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("buttons") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({});
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({});
-    __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({});
+    __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToSeeAllPlayer) }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToCreatePlayer) }, });
     __VLS_styleScopedClasses['home'];
     __VLS_styleScopedClasses['buttons'];
@@ -49,6 +53,7 @@ const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
             goToCreatePlayer: goToCreatePlayer,
+            goToSeeAllPlayer: goToSeeAllPlayer,
         };
     },
 });

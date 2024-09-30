@@ -4,7 +4,7 @@
     <div class="buttons">
       <button>Spielrunde Laden</button>
       <button>Spielrunde erstellen</button>
-      <button>Alle Spieler Einsehen</button>
+      <button @click="goToSeeAllPlayer" >Alle Spieler Einsehen</button>
       <button @click="goToCreatePlayer">Spieler erstellen</button>
     </div>
   </div>
@@ -18,6 +18,11 @@ const router = useRouter();
 
 const goToCreatePlayer = (): void => {
   router.push('/createPlayer');
+};
+
+const goToSeeAllPlayer = (): void => {
+  console.log("SeeallPlayer")
+  router.push('/seeAllPlayer');
 };
 </script>
 

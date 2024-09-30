@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../Views/Home.vue";
 import CreatePlayer from "../Views/CreatePlayer.vue";
+import SeeAllPlayer from "../Views/SeeAllPlayer.vue";
 const routes = [
     {
         path: "/",
@@ -11,6 +12,11 @@ const routes = [
         path: "/createPlayer",
         name: "CreatePlayer",
         component: CreatePlayer,
+    },
+    {
+        path: "/seeAllPlayer",
+        name: "SeeAllPlayer", // Hier sollte der Name "SeeAllPlayer" verwendet werden
+        component: SeeAllPlayer,
     },
 ];
 const router = createRouter({
