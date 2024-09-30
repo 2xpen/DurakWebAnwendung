@@ -89,7 +89,7 @@ const removePlayerFromSession = (spielerId: string) => {
 const saveSession = async () => {
   if (sessionData.value.spielRundenName && sessionData.value.spielerIds.length > 0) {
     try {
-      const response = await axios.post('/api/createSpieleRunde', sessionData.value);
+      const response = await axios.post('/api/createSpielRunde', sessionData.value);
       console.log('Session erstellt:', response.data);
 
       // Session-ID aus dem Backend
