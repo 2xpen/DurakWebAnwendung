@@ -3,7 +3,7 @@ const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, define
 // Vue Router verwenden, um zur Spielererstellungsseite zu navigieren
 const router = useRouter();
 const goToCreatePlayer = () => {
-    router.push('/create-player');
+    router.push('/createPlayer');
 };
 const __VLS_fnComponent = (await import('vue')).defineComponent({});
 ;
