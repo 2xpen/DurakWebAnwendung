@@ -43,26 +43,19 @@ const removePlayerFromSession = (spielerId) => {
     console.log('Spieler entfernt:', sessionData.value.spielerIdListe);
 };
 // Session speichern
-const saveSession = () => {
+const saveSession = async () => {
     if (sessionData.value.sessionName && sessionData.value.spielerIdListe.length > 0) {
-        const sessionJson = JSON.stringify(sessionData.value);
-        $.ajax({
-            url: '/api/createSpielRunde',
-            method: 'POST',
-            contentType: 'application/json', // Content-Type als JSON
-            data: sessionJson, // Session-Daten im Body
-            dataType: 'json',
-        })
-            .done((response) => {
-            console.log('Session erstellt:', response);
-            // Session-ID aus dem Backend setzen
-            //   sessionData.value.sessionId = response.sessionId;
+        try {
+            const response = await axios.post('/api/createSession', sessionData.value);
+            console.log('Session erstellt:', response.data);
+            // Session-ID aus dem Backend
+            sessionData.value.sessionId = response.data.sessionId;
             // Zurück zur Startseite nach Speichern der Session
             router.push('/');
-        })
-            .fail((jqXHR, textStatus, errorThrown) => {
-            console.error('Fehler beim Erstellen der Session:', textStatus, errorThrown);
-        });
+        }
+        catch (error) {
+            console.error('Fehler beim Erstellen der Session:', error);
+        }
     }
     else {
         alert('Bitte gib einen Sessionnamen ein und wähle mindestens einen Spieler aus.');
