@@ -4,7 +4,7 @@
     <div class="spieler-list" v-if="spieler.length > 0">
       <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
         <h3>{{ spieler.name }}</h3>
-        <img :src="getImageFromBase64(spieler.profilePicture)" :alt="`Profilbild`" class="profilbild" />
+        <img :src="spieler.profilePicture" :alt="`Profilbild von ${spieler.name}`" class="profilbild" />
       </div>
     </div>
     <p v-else>Keine Spieler gefunden.</p>
@@ -34,9 +34,8 @@ const fetchSpieler = async () => {
         spieler.value.push({
           spielerId: spielerData.spielerId.id,
           name: spielerData.name,
-          profilePicture: spielerData.profilePicture,
+          profilePicture: spielerData.profilePicture, // Hier ist der vollständige Base64-String
         });
-        console.log(getImageFromBase64(spielerData.profilePicture))
       });
     } else {
       console.error('Erwartetes Array, aber erhalten:', spielerArray);
@@ -46,12 +45,6 @@ const fetchSpieler = async () => {
   } catch (error) {
     console.error('Fehler beim Abrufen der Spieler:', error);
   }
-};
-
-// Funktion zur Umwandlung von Base64 in ein Bild-URL
-const getImageFromBase64 = (base64String: string) => {
-  // Hier setzen wir den passenden Präfix für die Base64-Daten
-  return `data:image/png;base64,${base64String}`;
 };
 
 onMounted(() => {

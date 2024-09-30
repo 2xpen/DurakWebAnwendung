@@ -70,23 +70,27 @@ const profilePictures = [
 ];
 
 
-// Funktion zur Umwandlung des Bildes in Base64
-const toBase64 = (file: File): Promise<string> => {
+// Funktion zur Umwandlung der Bild-URL in ein Base64-Bild
+const getBase64Image = (url: string): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    
-    reader.onload = () => {
-      // Den Base64-String ohne Präfix extrahieren
-      const base64String = (reader.result as string).split(',')[1];
-      resolve(base64String);
+    const img = new Image();
+    img.src = url;
+    img.crossOrigin = 'Anonymous'; // Wichtig für die CORS-Politik
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0);
+      const base64 = canvas.toDataURL('image/png'); // Hier kannst du das gewünschte Format angeben
+      resolve(base64); // Gebe das gesamte Base64-Format zurück
     };
 
-    reader.onerror = error => reject(error);
-    
-    // FileReader sollte die Datei lesen, nicht einen Blob aus einem string erstellen
-    reader.readAsDataURL(file); 
+    img.onerror = (error) => reject(error);
   });
 };
+
 
 const selectProfilePicture = (picture: string) => {
   selectedProfilePicture.value = picture;
@@ -102,7 +106,7 @@ const goHome = () => {
 const SaveAndHome = async () => {
   if (playerName.value && selectedProfilePicture.value) {
     // Hier verwenden wir das ausgewählte Profilbild direkt
-    const base64Image = selectedProfilePicture.value; // Nimm das Bild direkt als Base64-String
+    const base64Image = await getBase64Image(selectedProfilePicture.value); // Verwende die URL, um das Bild in Base64 umzuwandeln
 
     const newPlayer: Player = {
       name: playerName.value,

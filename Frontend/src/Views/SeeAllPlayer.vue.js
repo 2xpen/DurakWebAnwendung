@@ -15,9 +15,8 @@ const fetchSpieler = async () => {
                 spieler.value.push({
                     spielerId: spielerData.spielerId.id,
                     name: spielerData.name,
-                    profilePicture: spielerData.profilePicture,
+                    profilePicture: spielerData.profilePicture, // Hier ist der vollständige Base64-String
                 });
-                console.log(getImageFromBase64(spielerData.profilePicture));
             });
         }
         else {
@@ -28,11 +27,6 @@ const fetchSpieler = async () => {
     catch (error) {
         console.error('Fehler beim Abrufen der Spieler:', error);
     }
-};
-// Funktion zur Umwandlung von Base64 in ein Bild-URL
-const getImageFromBase64 = (base64String) => {
-    // Hier setzen wir den passenden Präfix für die Base64-Daten
-    return `data:image/png;base64,${base64String}`;
 };
 onMounted(() => {
     fetchSpieler();
@@ -68,7 +62,7 @@ function __VLS_template() {
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (spieler.name);
-            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((__VLS_ctx.getImageFromBase64(spieler.profilePicture))), alt: ((`Profilbild`)), ...{ class: ("profilbild") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((spieler.profilePicture)), alt: ((`Profilbild von ${spieler.name}`)), ...{ class: ("profilbild") }, });
         }
     }
     else {
@@ -96,7 +90,6 @@ const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
             spieler: spieler,
-            getImageFromBase64: getImageFromBase64,
             goHome: goHome,
         };
     },
