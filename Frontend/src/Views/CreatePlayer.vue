@@ -114,7 +114,7 @@ const SaveAndHome = async () => {
       dataType: 'json',
     }).done((response: any) => {
       console.log('Erfolg:', response);
-      console.log(response.body.statusIndicator);
+      console.log(response.statusIndicator);
 
     }).fail((jqXHR: JQuery.jqXHR, textStatus: string, errorThrown: string) => {
       console.error('Fehler:', textStatus, errorThrown); 
