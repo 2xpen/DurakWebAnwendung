@@ -57,9 +57,9 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-liste") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({ ...{ class: ("titel") }, });
     if (__VLS_ctx.spieler.length > 0) {
-        __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-list") }, });
+        __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-grid") }, });
         for (const [spieler] of __VLS_getVForSourceType((__VLS_ctx.spieler))) {
-            __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler-item") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (spieler.name);
             __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((spieler.profilePicture)), alt: ((`Profilbild von ${spieler.name}`)), ...{ class: ("profilbild") }, });
@@ -71,8 +71,8 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goHome) }, ...{ class: ("buttons") }, });
     __VLS_styleScopedClasses['spieler-liste'];
     __VLS_styleScopedClasses['titel'];
-    __VLS_styleScopedClasses['spieler-list'];
-    __VLS_styleScopedClasses['spieler'];
+    __VLS_styleScopedClasses['spieler-grid'];
+    __VLS_styleScopedClasses['spieler-item'];
     __VLS_styleScopedClasses['profilbild'];
     __VLS_styleScopedClasses['buttons'];
     var __VLS_slots;

@@ -9,6 +9,9 @@ const goToSeeAllPlayer = () => {
     console.log("SeeallPlayer");
     router.push('/seeAllPlayer');
 };
+const goToCreateSession = () => {
+    router.push('/createSession');
+};
 const __VLS_fnComponent = (await import('vue')).defineComponent({});
 ;
 let __VLS_functionalComponentProps;
@@ -33,7 +36,7 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({});
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("buttons") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({});
-    __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({});
+    __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToCreateSession) }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToSeeAllPlayer) }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToCreatePlayer) }, });
     __VLS_styleScopedClasses['home'];
@@ -54,6 +57,7 @@ const __VLS_self = (await import('vue')).defineComponent({
         return {
             goToCreatePlayer: goToCreatePlayer,
             goToSeeAllPlayer: goToSeeAllPlayer,
+            goToCreateSession: goToCreateSession,
         };
     },
 });

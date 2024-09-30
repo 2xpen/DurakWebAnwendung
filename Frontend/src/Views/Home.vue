@@ -3,9 +3,9 @@
     <h1>Die Durak-Liste des Zorns</h1>
     <div class="buttons">
       <button>Spielrunde Laden</button>
-      <button>Spielrunde erstellen</button>
+      <button @click="goToCreateSession" >Spielrunde erstellen</button>
       <button @click="goToSeeAllPlayer" >Alle Spieler Einsehen</button>
-      <button @click="goToCreatePlayer">Spieler erstellen</button>
+      <button @click="goToCreatePlayer" >Spieler erstellen</button>
     </div>
   </div>
 </template>
@@ -24,6 +24,10 @@ const goToSeeAllPlayer = (): void => {
   console.log("SeeallPlayer")
   router.push('/seeAllPlayer');
 };
+
+const goToCreateSession = (): void => {
+  router.push('/createSession')
+}
 </script>
 
 <style scoped>

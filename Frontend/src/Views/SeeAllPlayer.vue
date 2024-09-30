@@ -1,8 +1,8 @@
 <template>
   <div class="spieler-liste">
     <h1 class="titel">Spielerliste</h1>
-    <div class="spieler-list" v-if="spieler.length > 0">
-      <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
+    <div class="spieler-grid" v-if="spieler.length > 0">
+      <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler-item">
         <h3>{{ spieler.name }}</h3>
         <img :src="spieler.profilePicture" :alt="`Profilbild von ${spieler.name}`" class="profilbild" />
       </div>
@@ -16,7 +16,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import router from '../router';
-import { Player } from '@/Types/Player';
+import { Player } from '../Types/Player';
 
 const spieler = ref<Player[]>([]);
 
@@ -67,19 +67,26 @@ const goHome = () => {
   margin-bottom: 20px;
 }
 
-.spieler-list {
+.spieler-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 54px); /* 5 Spalten, jede 54px breit */
+  gap: 10px; /* Abstand zwischen den Bildern */
+  justify-content: center; /* Zentriert das Grid innerhalb des Containers */
+}
+
+.spieler-item {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.spieler {
-  margin: 20px;
+.profilbild {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%; /* Runde Ecken für ein Profilbild */
 }
 
-.profilbild {
-  width: 50px; /* Setze die Breite des Profilbilds */
-  height: 50px; /* Behalte das Seitenverhältnis */
-  border-radius: 50%; /* Runde Ecken für ein Profilbild */
+.buttons {
+  margin-top: 20px;
 }
 </style>
