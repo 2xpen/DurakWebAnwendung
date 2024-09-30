@@ -42,7 +42,7 @@ public class SpielerController {
         service.addSpieler(spieler);
 
         wrapper.setData(spieler);
-        wrapper.setStatusCode(StatusCode.ALLESHUGE);
+        wrapper.setStatusIndicator(StatusCode.ALLESHUGE);
         wrapper.addMeldungen("Allet Tuti");
 
         return ResponseEntity.ok(wrapper);
@@ -54,7 +54,7 @@ public class SpielerController {
         ResponseWrapper<List<Spieler>> wrapper = new ResponseWrapper<>();
         wrapper.setData(service.getAllSpieler());
         wrapper.addMeldungen("Allet Tuti");
-        wrapper.setStatusCode(StatusCode.ALLESHUGE);
+        wrapper.setStatusIndicator(StatusCode.ALLESHUGE);
 
         return ResponseEntity.ok(wrapper);
 

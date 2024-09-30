@@ -10,13 +10,13 @@ import java.util.UUID;
 public class Spieler {
 
     private String name;
-    private String profilBild = "";
+    private String profilePicture = "";
     private final SpielerId spielerId;
 
 
     Spieler(String name,String profilBild){
         this.name = name;
-        this.profilBild = profilBild;
+        this.profilePicture = profilBild;
         this.spielerId = new SpielerId();
     }
 
@@ -26,7 +26,7 @@ public class Spieler {
     }
 
     public void setProfilBild(String profilBild) {
-        this.profilBild = profilBild;
+        this.profilePicture = profilBild;
     }
 
     public String getName() {
@@ -38,7 +38,7 @@ public class Spieler {
     }
 
     public String getProfilBild() {
-        return profilBild;
+        return profilePicture;
     }
 
 

@@ -12,7 +12,7 @@ public class ResponseWrapper<DATA_TYPE> {
 
    private DATA_TYPE data;
     private List<String> meldungen = new ArrayList<String>();
-    private StatusCode statusCode = StatusCode.ALLESHUGE;
+    private StatusCode statusIndicator = StatusCode.ALLESHUGE;
 
 
     public ResponseWrapper() {
@@ -29,14 +29,14 @@ public class ResponseWrapper<DATA_TYPE> {
         return this;
     }
 
-    public ResponseWrapper<DATA_TYPE> setStatusCode(StatusCode statusCode){
-        this.statusCode = statusCode;
+    public ResponseWrapper<DATA_TYPE> setStatusIndicator(StatusCode statusIndicator){
+        this.statusIndicator = statusIndicator;
         return this;
     }
 
 
-    public StatusCode getStatusCode() {
-        return statusCode;
+    public StatusCode getStatusIndicator() {
+        return statusIndicator;
     }
 
     public DATA_TYPE getData() {
