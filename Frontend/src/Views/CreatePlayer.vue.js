@@ -40,13 +40,14 @@ const selectProfilePicture = (picture) => {
 const toBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.readAsDataURL(new Blob([file]));
         reader.onload = () => {
             // Den Base64-String ohne Präfix extrahieren
             const base64String = reader.result.split(',')[1];
             resolve(base64String);
         };
         reader.onerror = error => reject(error);
+        // FileReader sollte die Datei lesen, nicht einen Blob aus einem string erstellen
+        reader.readAsDataURL(file);
     });
 };
 const goHome = () => {
@@ -56,11 +57,11 @@ const goHome = () => {
 };
 const SaveAndHome = async () => {
     if (playerName.value && selectedProfilePicture.value) {
-        const base64Image = await toBase64(selectedProfilePicture.value);
-        console.log(base64Image);
+        // Hier verwenden wir das ausgewählte Profilbild direkt
+        const base64Image = selectedProfilePicture.value; // Nimm das Bild direkt als Base64-String
         const newPlayer = {
             name: playerName.value,
-            profilePicture: base64Image,
+            profilePicture: base64Image, // Verwende den Base64-String direkt
         };
         const playerJson = JSON.stringify(newPlayer);
         $.ajax({
@@ -82,12 +83,10 @@ const SaveAndHome = async () => {
         showAllert.value = true;
         // Warten auf das Schließen des Alerts
         await new Promise((resolve) => {
-            // Event Listener für das Schließen des Alerts
             const closeAlert = () => {
                 showAllert.value = false; // Setze showAllert zurück
                 resolve(); // Auflösen des Promises
             };
-            // Warte darauf, dass der Alert geschlossen wird
             watch(showAllert, (newValue) => {
                 if (!newValue) {
                     closeAlert();
@@ -110,7 +109,6 @@ const SaveAndHome = async () => {
                 showAllert.value = false; // Setze showAllert zurück
                 resolve(); // Auflösen des Promises
             };
-            // Warte darauf, dass der Alert geschlossen wird
             watch(showAllert, (newValue) => {
                 if (!newValue) {
                     closeAlert();
