@@ -8,11 +8,9 @@ import org.hacienda.durakweb.constants.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -61,6 +59,16 @@ public class SpielerController {
 
 
     }
+
+    @GetMapping("/getSpieler")
+    public ResponseEntity<ResponseWrapper<List<Spieler>>> getSpieler(@RequestBody String[] spielerIds) {
+        ResponseWrapper<List<Spieler>> wrapper = new ResponseWrapper<>();
+
+//        List<Spieler> gefundeneSpieler = service.getSpielerById(spielerIds);
+//
+                return null;
+    }
+
 
 
 }
