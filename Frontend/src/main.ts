@@ -6,3 +6,4 @@ const app = createApp(App);
 
 app.use(router); // Verwende den Router in der App
 app.mount("#app");
+
