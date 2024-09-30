@@ -32,10 +32,6 @@ const profilePictures = [
     profile9,
     profile10
 ];
-// Funktion zur Auswahl des Profilbildes
-const selectProfilePicture = (picture) => {
-    selectedProfilePicture.value = picture;
-};
 // Funktion zur Umwandlung des Bildes in Base64
 const toBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -49,6 +45,10 @@ const toBase64 = (file) => {
         // FileReader sollte die Datei lesen, nicht einen Blob aus einem string erstellen
         reader.readAsDataURL(file);
     });
+};
+const selectProfilePicture = (picture) => {
+    selectedProfilePicture.value = picture;
+    console.log(selectedProfilePicture.value, "selected ProfilePicture");
 };
 const goHome = () => {
     playerName.value = ''; // Zurücksetzen des Spielernamens
