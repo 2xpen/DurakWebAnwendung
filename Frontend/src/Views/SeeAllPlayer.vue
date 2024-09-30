@@ -4,7 +4,7 @@
     <div class="spieler-list" v-if="spieler.length > 0">
       <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
         <h3>{{ spieler.name }}</h3>
-        <img :src="getImageFromBase64(spieler.profilePicture)" :alt="`${spieler.name} Profilbild`" class="profilbild" />
+        <img :src="getImageFromBase64(spieler.profilePicture)" :alt="`Profilbild`" class="profilbild" />
       </div>
     </div>
     <p v-else>Keine Spieler gefunden.</p>
@@ -36,6 +36,7 @@ const fetchSpieler = async () => {
           name: spielerData.name,
           profilePicture: spielerData.profilePicture,
         });
+        console.log(getImageFromBase64(spielerData.profilePicture))
       });
     } else {
       console.error('Erwartetes Array, aber erhalten:', spielerArray);

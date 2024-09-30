@@ -17,6 +17,7 @@ const fetchSpieler = async () => {
                     name: spielerData.name,
                     profilePicture: spielerData.profilePicture,
                 });
+                console.log(getImageFromBase64(spielerData.profilePicture));
             });
         }
         else {
@@ -67,7 +68,7 @@ function __VLS_template() {
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (spieler.name);
-            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((__VLS_ctx.getImageFromBase64(spieler.profilePicture))), alt: ((`${spieler.name} Profilbild`)), ...{ class: ("profilbild") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((__VLS_ctx.getImageFromBase64(spieler.profilePicture))), alt: ((`Profilbild`)), ...{ class: ("profilbild") }, });
         }
     }
     else {
