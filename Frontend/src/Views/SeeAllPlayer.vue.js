@@ -7,15 +7,15 @@ const fetchSpieler = async () => {
     try {
         const response = await axios.get('/api/getAlleSpieler');
         console.log('API Response:', response); // API Antwort überprüfen
-        // Überprüfen, ob response.data.data ein Array ist
-        const spielerArray = response.data.data; // Zugriff auf das Array mit den Spielern
+        // Zugriff auf das Array mit den Spielern
+        const spielerArray = response.data.data;
         if (Array.isArray(spielerArray)) {
             spielerArray.forEach((spielerData) => {
                 // Spieler zur spieler-Referenz hinzufügen
                 spieler.value.push({
-                    spielerId: spielerData.spielerId.id, // Zugriff auf die ID
-                    name: spielerData.name, // Zugriff auf den Namen
-                    profilePicture: spielerData.profilePicture, // Zugriff auf das Profilbild
+                    spielerId: spielerData.spielerId.id,
+                    name: spielerData.name,
+                    profilePicture: spielerData.profilePicture,
                 });
             });
         }
@@ -27,6 +27,11 @@ const fetchSpieler = async () => {
     catch (error) {
         console.error('Fehler beim Abrufen der Spieler:', error);
     }
+};
+// Funktion zur Umwandlung von Base64 in ein Bild-URL
+const getImageFromBase64 = (base64String) => {
+    // Hier setzen wir den passenden Präfix für die Base64-Daten
+    return `data:image/png;base64,${base64String}`;
 };
 onMounted(() => {
     fetchSpieler();
@@ -62,7 +67,7 @@ function __VLS_template() {
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (spieler.name);
-            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((spieler.profilePicture)), alt: ((`${spieler.name} Profilbild`)), ...{ class: ("profilbild") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((__VLS_ctx.getImageFromBase64(spieler.profilePicture))), alt: ((`${spieler.name} Profilbild`)), ...{ class: ("profilbild") }, });
         }
     }
     else {
@@ -90,6 +95,7 @@ const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
             spieler: spieler,
+            getImageFromBase64: getImageFromBase64,
             goHome: goHome,
         };
     },

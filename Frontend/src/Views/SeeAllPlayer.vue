@@ -4,7 +4,7 @@
     <div class="spieler-list" v-if="spieler.length > 0">
       <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
         <h3>{{ spieler.name }}</h3>
-        <img :src="spieler.profilePicture" :alt="`${spieler.name} Profilbild`" class="profilbild" />
+        <img :src="getImageFromBase64(spieler.profilePicture)" :alt="`${spieler.name} Profilbild`" class="profilbild" />
       </div>
     </div>
     <p v-else>Keine Spieler gefunden.</p>
@@ -25,16 +25,16 @@ const fetchSpieler = async () => {
     const response = await axios.get('/api/getAlleSpieler');
     console.log('API Response:', response); // API Antwort überprüfen
 
-    // Überprüfen, ob response.data.data ein Array ist
-    const spielerArray = response.data.data; // Zugriff auf das Array mit den Spielern
+    // Zugriff auf das Array mit den Spielern
+    const spielerArray = response.data.data;
 
     if (Array.isArray(spielerArray)) {
       spielerArray.forEach((spielerData: any) => {
         // Spieler zur spieler-Referenz hinzufügen
         spieler.value.push({
-          spielerId: spielerData.spielerId.id, // Zugriff auf die ID
-          name: spielerData.name, // Zugriff auf den Namen
-          profilePicture: spielerData.profilePicture, // Zugriff auf das Profilbild
+          spielerId: spielerData.spielerId.id,
+          name: spielerData.name,
+          profilePicture: spielerData.profilePicture,
         });
       });
     } else {
@@ -47,13 +47,19 @@ const fetchSpieler = async () => {
   }
 };
 
+// Funktion zur Umwandlung von Base64 in ein Bild-URL
+const getImageFromBase64 = (base64String: string) => {
+  // Hier setzen wir den passenden Präfix für die Base64-Daten
+  return `data:image/png;base64,${base64String}`;
+};
 
 onMounted(() => {
   fetchSpieler();
 });
+
 const goHome = () => {
   router.push('/'); // Navigiere zur Startseite
-}
+};
 </script>
 
 <style scoped>
