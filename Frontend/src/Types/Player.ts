@@ -1,6 +1,6 @@
 // src/types/Player.ts
 export interface Player {
-  id?: string
+  spielerId?: string
   name: string;
   profilePicture: string;
 }

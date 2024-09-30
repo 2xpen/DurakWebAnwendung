@@ -10,7 +10,7 @@ const fetchSpieler = async () => {
         response.data.forEach((spielerData) => {
             // Ein neues Spielerobjekt erstellen und zur spieler-Referenz hinzufügen
             spieler.value.push({
-                id: spielerData.id, // ID vom Backend
+                spielerId: spielerData.spielerId, // ID vom Backend
                 name: spielerData.name,
                 profilePicture: spielerData.profilePicture,
             });
@@ -52,7 +52,7 @@ function __VLS_template() {
     if (__VLS_ctx.spieler.length > 0) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-list") }, });
         for (const [spieler] of __VLS_getVForSourceType((__VLS_ctx.spieler))) {
-            __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.id)), ...{ class: ("spieler") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (spieler.name);
             __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((spieler.profilePicture)), alt: ((`${spieler.name} Profilbild`)), ...{ class: ("profilbild") }, });
