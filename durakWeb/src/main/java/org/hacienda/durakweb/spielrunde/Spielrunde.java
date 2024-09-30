@@ -6,26 +6,25 @@ import org.hacienda.durakweb.identifier.SpielrundenId;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class Spielrunde {
 
     private final SpielrundenId spielRundenId;
-    private String name;
+    private String spielRundenName;
     private final List<SpielerStandRecord> spielerInfos = new ArrayList<>();
 
-    public Spielrunde(String name,List<SpielerId> spielerIds) {
-        this.name = name;
+    public Spielrunde(String spielRundenName, List<String> spielerIds) {
+        this.spielRundenName = spielRundenName;
         this.spielRundenId = new SpielrundenId();
 
-        for(SpielerId id : spielerIds){
-            this.spielerInfos.add(new SpielerStandRecord(id));
+        for (String id : spielerIds) {
+            this.spielerInfos.add(new SpielerStandRecord(new SpielerId(id)));
         }
     }
 
-    public String getName() {
-        return name;
+    public String getSpielRundenName() {
+        return spielRundenName;
     }
 
     public List<SpielerStandRecord> getSpielerInfos() {
@@ -36,9 +35,10 @@ public class Spielrunde {
         return spielRundenId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSpielRundenName(String spielRundenName) {
+        this.spielRundenName = spielRundenName;
     }
 
 
 }
+

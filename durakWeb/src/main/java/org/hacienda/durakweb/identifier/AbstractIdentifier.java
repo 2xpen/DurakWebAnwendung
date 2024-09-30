@@ -16,11 +16,17 @@ private final UUID id;
     }
 
     AbstractIdentifier(String id){
+
+        System.out.println(id +" EINE UUID WURDE MIT STRING ERZEUGT");
         this.id = UUID.fromString(id);
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public String getStringId(){
+        return id.toString();
     }
 
 }

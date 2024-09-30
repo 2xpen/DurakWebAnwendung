@@ -20,6 +20,11 @@ public class SpielerStandRecord {
         return stand;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     public void setStand(Integer stand) {
         this.stand = stand;
     }
