@@ -8,36 +8,58 @@ import org.hacienda.durakweb.constants.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @RequestMapping("/api")
 
 @Controller
 public class SpielerController {
 
+    /**
+     *
+     */
 
 
-    private final SpielerService spielerService;
+
+    private final SpielerService service;
 
     @Autowired
     SpielerController(SpielerService service){
-        this.spielerService = service;
+        this.service = service;
     }
 
 
     @PostMapping("/createSpieler")
-    public ResponseEntity<ResponseWrapper<Spieler>> createSpieler(@RequestParam String name, @RequestParam String profilePicture) {
+    public ResponseEntity<ResponseWrapper<Spieler>> createSpieler(@RequestBody Spieler spieler) {
         ResponseWrapper<Spieler> wrapper = new ResponseWrapper<>();
 
-        Spieler spieler = new Spieler(name, profilePicture);
+
+        service.addSpieler(spieler);
 
         wrapper.setData(spieler);
+        wrapper.setStatusCode(StatusCode.ALLESHUGE);
+        wrapper.addMeldungen("Allet Tuti");
+
+        return ResponseEntity.ok(wrapper);
+    }
+
+    @GetMapping("/getAlleSpieler")
+    public ResponseEntity<ResponseWrapper<List<Spieler>>> getAllPlayers() {
+
+        ResponseWrapper<List<Spieler>> wrapper = new ResponseWrapper<>();
+        wrapper.setData(service.getAllSpieler());
         wrapper.addMeldungen("Allet Tuti");
         wrapper.setStatusCode(StatusCode.ALLESHUGE);
 
         return ResponseEntity.ok(wrapper);
+
+
+
     }
 
 

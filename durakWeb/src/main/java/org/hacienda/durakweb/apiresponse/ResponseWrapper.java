@@ -18,18 +18,18 @@ public class ResponseWrapper<DATA_TYPE> {
     public ResponseWrapper() {
     }
 
-    public ResponseWrapper setData(DATA_TYPE data){
+    public ResponseWrapper<DATA_TYPE> setData(DATA_TYPE data){
         this.data = data;
         return this;
     }
 
 
-    public ResponseWrapper addMeldungen(String meldungen){
+    public ResponseWrapper<DATA_TYPE> addMeldungen(String meldungen){
         this.meldungen.add(meldungen);
         return this;
     }
 
-    public ResponseWrapper setStatusCode(StatusCode statusCode){
+    public ResponseWrapper<DATA_TYPE> setStatusCode(StatusCode statusCode){
         this.statusCode = statusCode;
         return this;
     }

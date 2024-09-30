@@ -18,6 +18,8 @@ public class SpielerRepo {
         spielerListe.add(spieler);
     }
 
-
+    public List<Spieler> getSpielerListe() {
+        return spielerListe;
+    }
 
 }
