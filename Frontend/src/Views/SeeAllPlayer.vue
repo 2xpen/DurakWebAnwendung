@@ -23,7 +23,7 @@ const spieler = ref<Player[]>([]);
 const fetchSpieler = async () => {
   try {
     const response = await axios.get('/api/getAlleSpieler');
-    
+    console.log("das ist die response", response)
     // Mit forEach durch das Array der Spieler iterieren
     response.data.forEach((spielerData: Player) => {
       // Ein neues Spielerobjekt erstellen und zur spieler-Referenz hinzufügen
