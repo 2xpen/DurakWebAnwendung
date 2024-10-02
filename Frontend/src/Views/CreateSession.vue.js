@@ -2,14 +2,13 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import router from '../router';
 const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
-const spieler = ref([]); // Hier werden die Spieler gespeichert
-// Session State
+const spieler = ref([]);
 const sessionData = ref({
     spielRundenNamen: '',
-    spielrundenId: '', // Dieses Feld wird nicht ins Backend gesendet
+    spielrundenId: '',
     spielerListe: [],
 });
-const searchQuery = ref(''); // Suchabfrage für die Spieler
+const searchQuery = ref('');
 const addedPlayerIds = ref(new Set()); // Set für die hinzugefügten Spieler-IDs
 // Spieler zur Session hinzufügen
 const addPlayerToSession = (spielerId) => {

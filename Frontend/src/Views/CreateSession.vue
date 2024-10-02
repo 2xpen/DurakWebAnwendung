@@ -56,16 +56,15 @@ import router from '../router';
 import { Session } from '../Types/Session'; 
 import { Player } from '../Types/Player';
 
-const spieler = ref<Player[]>([]); // Hier werden die Spieler gespeichert
+const spieler = ref<Player[]>([]); 
 
-// Session State
 const sessionData = ref<Session>({
   spielRundenNamen: '',
-  spielrundenId: '', // Dieses Feld wird nicht ins Backend gesendet
+  spielrundenId: '',
   spielerListe: [],
 });
 
-const searchQuery = ref(''); // Suchabfrage für die Spieler
+const searchQuery = ref(''); 
 const addedPlayerIds = ref<Set<string>>(new Set()); // Set für die hinzugefügten Spieler-IDs
 
 // Spieler zur Session hinzufügen
