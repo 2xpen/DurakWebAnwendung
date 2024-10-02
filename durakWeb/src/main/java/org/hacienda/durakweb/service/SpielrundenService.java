@@ -26,6 +26,7 @@ public class SpielrundenService {
     }
 
     public Spielrunde addSpielRunde(Spielrunde spielRunde){
+        System.out.println("diese spielrunde wurde geadded "+spielRunde.getSpielRundenName() + " " + spielRunde.getSpielRundenId());
         repo.addSpielRunde(spielRunde);
         return spielRunde;
     }

@@ -29,11 +29,18 @@ public class SpielerRepo {
     }
 
     public List<Spieler> getSpielerById(List<SpielerId> spielerIds) {
+
+        System.out.println("Spieler " + spielerIds.size() + " get" + "get SPieler by id getriggert");
         List<Spieler> gefundeneSpieler = new ArrayList<>();
 
         for (Spieler spieler : spielerListe) {
             for (SpielerId spielerId : spielerIds) {
+
+                System.out.println(spieler.getSpielerId() + " " + spielerId);
+
                 if (spieler.getSpielerId().equals(spielerId)) {
+
+                    System.out.println("Spieler " + spieler.getName() + " gefunden");
                     //todo PERFORMANCE
                     // hier wenn eine der SpielerIds gefunden aus der liste entfernen
                     gefundeneSpieler.add(spieler);

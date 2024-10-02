@@ -25,4 +25,9 @@ private final UUID id;
         return id;
     }
 
+
+    public boolean equals(AbstractIdentifier other) {
+    return getId().equals(other.getId());
+    }
+
 }

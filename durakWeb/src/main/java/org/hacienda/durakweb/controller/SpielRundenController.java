@@ -38,6 +38,8 @@ public class SpielRundenController {
     @PostMapping("/createSpielRunde")
     public ResponseEntity<ResponseWrapper<Spielrunde>> createSpielRunde(@RequestBody Spielrunde spielRunde) {
 
+        System.out.println("das ist der name der Spielrunde= "+spielRunde.getSpielRundenName());
+
         ResponseWrapper<Spielrunde> wrapper = new ResponseWrapper<>();
 
         wrapper.setData(spielrundenService.addSpielRunde(spielRunde));
@@ -46,19 +48,19 @@ public class SpielRundenController {
 
 
 
-        /**
-         * TEST
-         */
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println(mapper.writeValueAsString(spielRunde));
-        }catch (JsonProcessingException e){
-            e.getMessage();
-        }
-
-        /**
-         * TEST
-         */
+//        /**
+//         * TEST
+//         */
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            System.out.println(mapper.writeValueAsString(spielRunde));
+//        }catch (JsonProcessingException e){
+//            e.getMessage();
+//        }
+//
+//        /**
+//         * TEST
+//         */
 
 
         return ResponseEntity.ok(wrapper);
@@ -67,6 +69,8 @@ public class SpielRundenController {
 
     @GetMapping("/getAlleSpielrundenAuswahlView")
     public ResponseEntity<ResponseWrapper<List<SpielrundeAuswahlDTO>>> getAlleSpielrunden() {
+
+        System.out.println("ping");
 
         ResponseWrapper<List<SpielrundeAuswahlDTO>> wrapper = new ResponseWrapper<>();
 
@@ -79,7 +83,8 @@ public class SpielRundenController {
 
             //  es wird jeder spieler der spielrunde ermittelt → das spielrunden repo schaut alle spielerIds nach die es für die spielrunde hat, und im spielerRepo wird jeder spieler anhand seiner id ermittelt
             for(Spieler spieler : spielerService.getSpielerById(spielrundenService.getSpielerIdsOfSpielrunde(spielrunde))){
-                //umwandlung vom Spieler zum DTO
+                //umwandlung vom Spieler zum DTOS
+                System.out.println(spieler.getName() + " WURDE BEIM DOT SUCHEN GEFUNDEN");
                 spielerAnzeigenViewDTOS.add(new SpielerAnzeigenViewDTO(spieler));
             }
             spielrundeAuswahlDTOS.add(new SpielrundeAuswahlDTO(spielrunde, spielerAnzeigenViewDTOS));
@@ -94,7 +99,7 @@ public class SpielRundenController {
          */
         ObjectMapper mapper = new ObjectMapper();
         try {
-            System.out.println(mapper.writeValueAsString(spielrundeAuswahlDTOS));
+            System.out.println(mapper.writeValueAsString(wrapper.getData()));
         }catch (JsonProcessingException e){
             e.getMessage();
         }
@@ -106,27 +111,6 @@ public class SpielRundenController {
         return ResponseEntity.ok(wrapper);
     }
 
-
-//    @PostMapping("/createSpielRunde")
-//    public ResponseEntity<ResponseWrapper<Spielrunde>> createSpielRunde(@RequestBody String json) {
-//
-//        System.out.println(json);
-//
-//        return null;
-//    }
-
-
-    //    @PostMapping("/createSpielRunde")
-//    public ResponseEntity<ResponseWrapper<Spielrunde>> createSpielRunde(@RequestBody SpielRundeCreateParamDTO dto) {
-//
-//        ResponseWrapper<Spielrunde> wrapper = new ResponseWrapper<>();
-//
-//        wrapper.setData(service.addSpielRunde(new Spielrunde(dto.getSpielRundenName(), Arrays.asList(dto.getSpielerIds() ))));
-//        wrapper.addMeldungen("Allet Tuti");
-//        wrapper.setStatusIndicator(StatusCode.ALLESHUGE);
-//
-//        return ResponseEntity.ok(wrapper);
-//    }
 
 
 
