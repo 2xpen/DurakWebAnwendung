@@ -73,7 +73,8 @@ const session = ref<Session | null>(null);
 
 // Funktion zum Abrufen der Session-Details
 const fetchSessionDetails = async () => {
-  const sessionId = route.params.sessionId as string; // Holen der sessionId aus den Routenparametern
+  const sessionId = route.params.sessionId as string;
+  console.log(sessionId, "<-------- sessionId")
   try {
     const response = await axios.get(`/api/getSpielrundeById/${sessionId}`); // API-Call
     session.value = response.data; // Setze die Session-Daten

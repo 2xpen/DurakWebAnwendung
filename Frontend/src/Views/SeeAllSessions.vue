@@ -140,10 +140,7 @@ const fetchSessions = async () => {
 // Funktion zum Starten der Session
 const startSession = async (sessionId: string) => {
   try {
-    // Sende die sessionId an das Backend
-    await axios.post('/api/startSession', { sessionId });
 
-    // Nach erfolgreichem Start der Session, weiter zur Detailansicht
     router.push({ name: 'sessionDetail', params: { sessionId } });
   } catch (error) {
     router.push({ name: 'sessionDetail', params: { sessionId } });
