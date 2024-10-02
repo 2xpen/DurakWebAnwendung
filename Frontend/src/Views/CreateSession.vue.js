@@ -1,38 +1,14 @@
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import router from '../router';
 const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
-// import profile1 from '../assets/Profilbilder/ProfilBild1.png';
-// import profile2 from '../assets/Profilbilder/ProfilBild2.png';
-// import profile3 from '../assets/Profilbilder/ProfilBild3.png';
-// import profile4 from '../assets/Profilbilder/ProfilBild4.png';
-// import profile5 from '../assets/Profilbilder/ProfilBild5.png';
-// import profile6 from '../assets/Profilbilder/ProfilBild6.png';
-// import profile7 from '../assets/Profilbilder/ProfilBild7.png';
-// import profile8 from '../assets/Profilbilder/ProfilBild8.png';
-// import profile9 from '../assets/Profilbilder/ProfilBild9.png';
-// import profile10 from '../assets/Profilbilder/ProfilBild10.png';
-const spieler = ref([]);
+const spieler = ref([]); // Hier werden die Spieler gespeichert
 // Session State
 const sessionData = ref({
     spielRundenNamen: '',
     spielrundenId: '', // Dieses Feld wird nicht ins Backend gesendet
     spielerListe: [],
 });
-// const spieler = ref<Player[]>([
-//   { spielerId: '1', name: 'Tom', profilePicture: profile1 },
-//   { spielerId: '2', name: 'Weyo', profilePicture: profile2 },
-//   { spielerId: '3', name: 'Weyo', profilePicture: profile3 },
-//   { spielerId: '4', name: 'Weyo', profilePicture: profile4 },
-//   { spielerId: '5', name: 'Weyo', profilePicture: profile5 },
-//   { spielerId: '6', name: 'Weyo', profilePicture: profile6 },
-//   { spielerId: '7', name: 'Weyo', profilePicture: profile7 },
-//   { spielerId: '8', name: 'Weyo', profilePicture: profile8 },
-//   { spielerId: '9', name: 'Weyo', profilePicture: profile9 },
-//   { spielerId: '10', name: 'Weyo', profilePicture: profile10 },
-//   // Weitere Spieler hier...
-// ]);
-// weyo brauch hilfeeee
 const searchQuery = ref(''); // Suchabfrage für die Spieler
 const addedPlayerIds = ref(new Set()); // Set für die hinzugefügten Spieler-IDs
 // Spieler zur Session hinzufügen
@@ -45,14 +21,6 @@ const removePlayerFromSession = (spielerId) => {
     addedPlayerIds.value.delete(spielerId);
     console.log('Spieler entfernt:', Array.from(addedPlayerIds.value));
 };
-// Gefilterte Spieler basierend auf der Suchanfrage
-const filteredSpieler = computed(() => {
-    if (!searchQuery.value) {
-        return spieler.value; // Rückgabe aller Spieler, wenn keine Suchanfrage besteht
-    }
-    const query = searchQuery.value.toLowerCase();
-    return spieler.value.filter(spieler => spieler.name.toLowerCase().includes(query));
-});
 // Session speichern (Sessionnamen und Spieler-IDs ans Backend schicken)
 const saveSession = async () => {
     if (sessionData.value.spielRundenNamen && addedPlayerIds.value.size > 0) {
@@ -130,23 +98,23 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-suche") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.input)({ placeholder: ("Spieler suchen..."), });
     (__VLS_ctx.searchQuery);
-    if (__VLS_ctx.filteredSpieler.length > 0) {
+    if (__VLS_ctx.spieler.length > 0) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-list") }, });
         __VLS_elementAsFunction(__VLS_intrinsicElements.h2, __VLS_intrinsicElements.h2)({});
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-grid") }, });
-        for (const [spieler] of __VLS_getVForSourceType((__VLS_ctx.filteredSpieler))) {
+        for (const [spieler] of __VLS_getVForSourceType((__VLS_ctx.spieler))) {
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (spieler.name);
             __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((spieler.profilePicture)), alt: ("Profilbild"), ...{ class: ("profilbild") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("actions") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
-                        if (!((__VLS_ctx.filteredSpieler.length > 0)))
+                        if (!((__VLS_ctx.spieler.length > 0)))
                             return;
                         __VLS_ctx.addPlayerToSession(spieler.spielerId);
                     } }, disabled: ((__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), ...{ class: (({ 'disabled': __VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
-                        if (!((__VLS_ctx.filteredSpieler.length > 0)))
+                        if (!((__VLS_ctx.spieler.length > 0)))
                             return;
                         __VLS_ctx.removePlayerFromSession(spieler.spielerId);
                     } }, disabled: ((!__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), ...{ class: (({ 'disabled': !__VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, });
@@ -184,12 +152,12 @@ function __VLS_template() {
 const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
+            spieler: spieler,
             sessionData: sessionData,
             searchQuery: searchQuery,
             addedPlayerIds: addedPlayerIds,
             addPlayerToSession: addPlayerToSession,
             removePlayerFromSession: removePlayerFromSession,
-            filteredSpieler: filteredSpieler,
             saveSession: saveSession,
             goHome: goHome,
         };

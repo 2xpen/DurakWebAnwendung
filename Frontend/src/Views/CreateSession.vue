@@ -7,16 +7,16 @@
       <input v-model="sessionData.spielRundenNamen" placeholder="Sessionname eingeben" />
     </div>
 
-    <!-- Eingabefeld für die Spieler-Suche -->
+    <!-- Eingabefeld für die Spieler-Suche (optional, kann entfernt werden) -->
     <div class="spieler-suche">
       <input v-model="searchQuery" placeholder="Spieler suchen..." />
     </div>
 
     <!-- Spieler-Liste -->
-    <div class="spieler-list" v-if="filteredSpieler.length > 0">
+    <div class="spieler-list" v-if="spieler.length > 0">
       <h2>Verfügbare Spieler</h2>
       <div class="spieler-grid">
-        <div v-for="spieler in filteredSpieler" :key="spieler.spielerId" class="spieler">
+        <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
           <h3>{{ spieler.name }}</h3>
           <img :src="spieler.profilePicture" alt="Profilbild" class="profilbild" />
           <div class="actions">
@@ -52,47 +52,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import router from '../router';
 import { Session } from '../Types/Session'; 
 import { Player } from '../Types/Player';
 
-// import profile1 from '../assets/Profilbilder/ProfilBild1.png';
-// import profile2 from '../assets/Profilbilder/ProfilBild2.png';
-// import profile3 from '../assets/Profilbilder/ProfilBild3.png';
-// import profile4 from '../assets/Profilbilder/ProfilBild4.png';
-// import profile5 from '../assets/Profilbilder/ProfilBild5.png';
-// import profile6 from '../assets/Profilbilder/ProfilBild6.png';
-// import profile7 from '../assets/Profilbilder/ProfilBild7.png';
-// import profile8 from '../assets/Profilbilder/ProfilBild8.png';
-// import profile9 from '../assets/Profilbilder/ProfilBild9.png';
-// import profile10 from '../assets/Profilbilder/ProfilBild10.png';
+const spieler = ref<Player[]>([]); // Hier werden die Spieler gespeichert
 
-
-const spieler = ref <Player[]>([])
 // Session State
 const sessionData = ref<Session>({
   spielRundenNamen: '',
   spielrundenId: '', // Dieses Feld wird nicht ins Backend gesendet
   spielerListe: [],
 });
-
-// const spieler = ref<Player[]>([
-//   { spielerId: '1', name: 'Tom', profilePicture: profile1 },
-//   { spielerId: '2', name: 'Weyo', profilePicture: profile2 },
-//   { spielerId: '3', name: 'Weyo', profilePicture: profile3 },
-//   { spielerId: '4', name: 'Weyo', profilePicture: profile4 },
-//   { spielerId: '5', name: 'Weyo', profilePicture: profile5 },
-//   { spielerId: '6', name: 'Weyo', profilePicture: profile6 },
-//   { spielerId: '7', name: 'Weyo', profilePicture: profile7 },
-//   { spielerId: '8', name: 'Weyo', profilePicture: profile8 },
-//   { spielerId: '9', name: 'Weyo', profilePicture: profile9 },
-//   { spielerId: '10', name: 'Weyo', profilePicture: profile10 },
-//   // Weitere Spieler hier...
-// ]);
-
-// weyo brauch hilfeeee
 
 const searchQuery = ref(''); // Suchabfrage für die Spieler
 const addedPlayerIds = ref<Set<string>>(new Set()); // Set für die hinzugefügten Spieler-IDs
@@ -108,15 +81,6 @@ const removePlayerFromSession = (spielerId: string) => {
   addedPlayerIds.value.delete(spielerId);
   console.log('Spieler entfernt:', Array.from(addedPlayerIds.value));
 };
-
-// Gefilterte Spieler basierend auf der Suchanfrage
-const filteredSpieler = computed(() => {
-  if (!searchQuery.value) {
-    return spieler.value; // Rückgabe aller Spieler, wenn keine Suchanfrage besteht
-  }
-  const query = searchQuery.value.toLowerCase();
-  return spieler.value.filter(spieler => spieler.name.toLowerCase().includes(query));
-});
 
 // Session speichern (Sessionnamen und Spieler-IDs ans Backend schicken)
 const saveSession = async () => {
@@ -163,11 +127,10 @@ const fetchPlayers = async () => {
 onMounted(() => {
   fetchPlayers(); // Spieler laden
 });
-
 </script>
 
-
 <style scoped>
+/* (Style bleibt unverändert) */
 .session-erstellen {
   text-align: center;
   margin-top: 50px;
