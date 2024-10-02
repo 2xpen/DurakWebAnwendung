@@ -13,7 +13,7 @@
     </div>
 
     <!-- Spieler-Liste -->
-    <div class="spieler-list" v-if="spieler.length > 0">
+    <div class="spieler-list">
       <h2>Verfügbare Spieler</h2>
       <div class="spieler-grid">
         <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
@@ -38,8 +38,6 @@
         </div>
       </div>
     </div>
-
-    <p v-else>Keine Spieler gefunden.</p>
 
     <!-- Schaltfläche zum Speichern der Session -->
     <div class="save-session">

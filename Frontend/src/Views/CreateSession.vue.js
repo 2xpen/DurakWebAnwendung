@@ -98,30 +98,21 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-suche") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.input)({ placeholder: ("Spieler suchen..."), });
     (__VLS_ctx.searchQuery);
-    if (__VLS_ctx.spieler.length > 0) {
-        __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-list") }, });
-        __VLS_elementAsFunction(__VLS_intrinsicElements.h2, __VLS_intrinsicElements.h2)({});
-        __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-grid") }, });
-        for (const [spieler] of __VLS_getVForSourceType((__VLS_ctx.spieler))) {
-            __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
-            __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
-            (spieler.name);
-            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((spieler.profilePicture)), alt: ("Profilbild"), ...{ class: ("profilbild") }, });
-            __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("actions") }, });
-            __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
-                        if (!((__VLS_ctx.spieler.length > 0)))
-                            return;
-                        __VLS_ctx.addPlayerToSession(spieler.spielerId);
-                    } }, disabled: ((__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), ...{ class: (({ 'disabled': __VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, });
-            __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
-                        if (!((__VLS_ctx.spieler.length > 0)))
-                            return;
-                        __VLS_ctx.removePlayerFromSession(spieler.spielerId);
-                    } }, disabled: ((!__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), ...{ class: (({ 'disabled': !__VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, });
-        }
-    }
-    else {
-        __VLS_elementAsFunction(__VLS_intrinsicElements.p, __VLS_intrinsicElements.p)({});
+    __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-list") }, });
+    __VLS_elementAsFunction(__VLS_intrinsicElements.h2, __VLS_intrinsicElements.h2)({});
+    __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-grid") }, });
+    for (const [spieler] of __VLS_getVForSourceType((__VLS_ctx.spieler))) {
+        __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
+        __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
+        (spieler.name);
+        __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((spieler.profilePicture)), alt: ("Profilbild"), ...{ class: ("profilbild") }, });
+        __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("actions") }, });
+        __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
+                    __VLS_ctx.addPlayerToSession(spieler.spielerId);
+                } }, disabled: ((__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), ...{ class: (({ 'disabled': __VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, });
+        __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
+                    __VLS_ctx.removePlayerFromSession(spieler.spielerId);
+                } }, disabled: ((!__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), ...{ class: (({ 'disabled': !__VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, });
     }
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("save-session") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.saveSession) }, });
