@@ -135,15 +135,15 @@ function __VLS_template() {
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (session.spielRundenName);
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-container") }, });
-            for (const [player, index] of __VLS_getVForSourceType((__VLS_ctx.getLimitedPlayers(session.spielerAnzeigenViewDTOS)))) {
+            for (const [player, index] of __VLS_getVForSourceType((__VLS_ctx.getLimitedPlayers(session.spielerInRundeAnzeigenDTOS)))) {
                 __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((index)), ...{ class: ("spieler") }, });
                 __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
                 (player.name);
                 __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((player.profilePicture)), alt: ((`Profilbild von ${player.name}`)), ...{ class: ("profilbild") }, });
             }
-            if (session.spielerAnzeigenViewDTOS.length > 4) {
+            if (session.spielerInRundeAnzeigenDTOS.length > 4) {
                 __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("mehr-spieler") }, });
-                (session.spielerAnzeigenViewDTOS.length - 4);
+                (session.spielerInRundeAnzeigenDTOS.length - 4);
             }
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("start-button-container") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {

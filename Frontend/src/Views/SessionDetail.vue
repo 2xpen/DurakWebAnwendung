@@ -4,7 +4,7 @@
     
     <div class="spieler-container">
       <div 
-        v-for="player in session?.spielerAnzeigenViewDTOS" 
+        v-for="player in session?.spielerInRundeAnzeigenDTOS" 
         :key="player.spielerId" 
         class="spieler"
       >

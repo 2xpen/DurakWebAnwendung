@@ -85,7 +85,7 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({ ...{ class: ("session-title") }, });
     (__VLS_ctx.session?.spielRundenName || 'Keine Session gefunden');
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-container") }, });
-    for (const [player] of __VLS_getVForSourceType((__VLS_ctx.session?.spielerAnzeigenViewDTOS))) {
+    for (const [player] of __VLS_getVForSourceType((__VLS_ctx.session?.spielerInRundeAnzeigenDTOS))) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((player.spielerId)), ...{ class: ("spieler") }, });
         __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
         (player.name);
