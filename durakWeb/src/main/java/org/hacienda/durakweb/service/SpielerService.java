@@ -28,20 +28,14 @@ public class SpielerService {
         return repo.getSpielerListe();
     }
 
-    public List<Spieler> getSpielerById(List<SpielerId> spielerIds){
+    public List<Spieler> getSpielerById(List<SpielerId> spielerIds) {
         return repo.getSpielerById(spielerIds);
     }
 
-
-
-
-
-
-
     // eigentlich utility
-    public List<SpielerId> convertStringToSpielerId(String[] idStrings){
+    public List<SpielerId> convertStringToSpielerId(String[] idStrings) {
         List<SpielerId> convertierteSpielerIds = new ArrayList<>();
-        for(String id : idStrings){
+        for (String id : idStrings) {
             convertierteSpielerIds.add(new SpielerId(id));
         }
         return convertierteSpielerIds;

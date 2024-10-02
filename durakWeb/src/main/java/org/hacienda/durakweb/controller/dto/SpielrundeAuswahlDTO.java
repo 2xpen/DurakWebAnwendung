@@ -6,13 +6,14 @@ import org.hacienda.durakweb.data.identifier.SpielrundenId;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
 public class SpielrundeAuswahlDTO {
     private final SpielrundenId spielRundenId;
     private final String spielRundenNamen;
     private final List<SpielerAnzeigenViewDTO> spielerAnzeigenViewDTOS = new ArrayList<>();
 
-    public SpielrundeAuswahlDTO(Spielrunde spielrunde,List<SpielerAnzeigenViewDTO> spielerAnzeigenViewDTOS){
+    public SpielrundeAuswahlDTO(Spielrunde spielrunde, List<SpielerAnzeigenViewDTO> spielerAnzeigenViewDTOS) {
         this.spielRundenId = spielrunde.getSpielRundenId();
         this.spielRundenNamen = spielrunde.getSpielRundenName();
         this.spielerAnzeigenViewDTOS.addAll(spielerAnzeigenViewDTOS);
@@ -29,7 +30,6 @@ public class SpielrundeAuswahlDTO {
     public String getSpielRundenNamen() {
         return spielRundenNamen;
     }
-
 
 
 }

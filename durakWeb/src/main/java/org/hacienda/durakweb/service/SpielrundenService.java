@@ -1,6 +1,8 @@
 package org.hacienda.durakweb.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.data.Spieler;
+import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.data.identifier.SpielrundenId;
@@ -10,6 +12,7 @@ import org.hacienda.durakweb.repo.SpielRundenRepo;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class SpielrundenService {
 
@@ -21,21 +24,27 @@ public class SpielrundenService {
     }
 
 
-    public List<Spielrunde> getAlleSpielrunde(){
+    public List<Spielrunde> getAlleSpielrunde() {
         return repo.getSpielRunden();
     }
 
-    public Spielrunde addSpielRunde(Spielrunde spielRunde){
-        System.out.println("diese spielrunde wurde geadded "+spielRunde.getSpielRundenName() + " " + spielRunde.getSpielRundenId());
+    public Spielrunde addSpielRunde(Spielrunde spielRunde) {
+
+        log.info("diese spielrunde wurde geadded {} {}", spielRunde.getSpielRundenName(), spielRunde.getSpielRundenId());
         repo.addSpielRunde(spielRunde);
         return spielRunde;
     }
 
-    public List<SpielerId> getSpielerIdsOfSpielrunde(Spielrunde spielrunde){
+    public List<SpielerId> getSpielerIdsOfSpielrunde(Spielrunde spielrunde) {
         return repo.getSpielerIdsOfSpielerRunde(spielrunde);
     }
 
+    public Spielrunde getSpielRundeById(SpielrundenId spielRundeId) {
+        return repo.getSpielRundeById(spielRundeId);
+    }
 
-
+    public SpielerStandRecord getSpielerStandRecordById(SpielrundenId spielrundenId, SpielerId spielerId) {
+        return repo.getSpielerStandRecordBySpielerId(spielerId, spielrundenId);
+    }
 
 }

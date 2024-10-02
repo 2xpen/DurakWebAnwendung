@@ -2,9 +2,9 @@ package org.hacienda.durakweb.constants;
 
 public enum StatusCode {
 
-    ALLESMAMBOHUGE,FEHLER;
+    ALLESMAMBOHUGE, ALLESDISCO, FEHLER;
 
-    StatusCode(){
+    StatusCode() {
 
     }
 

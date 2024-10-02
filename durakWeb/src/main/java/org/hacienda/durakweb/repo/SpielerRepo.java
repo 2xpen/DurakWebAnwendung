@@ -1,6 +1,7 @@
 package org.hacienda.durakweb.repo;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class SpielerRepo {
 
@@ -30,7 +32,8 @@ public class SpielerRepo {
 
     public List<Spieler> getSpielerById(List<SpielerId> spielerIds) {
 
-        System.out.println("Spieler " + spielerIds.size() + " get" + "get SPieler by id getriggert");
+        log.info("Spieler liste: " + spielerListe.toString());
+
         List<Spieler> gefundeneSpieler = new ArrayList<>();
 
         for (Spieler spieler : spielerListe) {

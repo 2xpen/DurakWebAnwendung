@@ -1,5 +1,6 @@
 package org.hacienda.durakweb.repo;
 
+import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.data.identifier.SpielrundenId;
@@ -29,14 +30,20 @@ public class SpielRundenRepo {
     }
 
 
-
-    public List<SpielerId> getSpielerIdsOfSpielerRunde(Spielrunde spielRunde){
+    public List<SpielerId> getSpielerIdsOfSpielerRunde(Spielrunde spielRunde) {
         Spielrunde spielrunde = getSpielRundeById(spielRunde.getSpielRundenId());
 
         List<SpielerId> spielerIds = new ArrayList<>();
 
         spielrunde.getSpielerInfos().forEach(s -> spielerIds.add(s.getSpielerId()));
         return spielerIds;
+    }
+
+    public SpielerStandRecord getSpielerStandRecordBySpielerId(SpielerId spielerId, SpielrundenId spielRundeId) {
+        return
+                getSpielRundeById(spielRundeId).
+                        getSpielerInfos().stream().filter
+                                (s -> s.getSpielerId().equals(spielerId)).findFirst().orElse(null);
     }
 
 
