@@ -92,6 +92,8 @@ const sessionData = ref<Session>({
 //   // Weitere Spieler hier...
 // ]);
 
+// weyo brauch hilfeeee
+
 const searchQuery = ref(''); // Suchabfrage für die Spieler
 const addedPlayerIds = ref<Set<string>>(new Set()); // Set für die hinzugefügten Spieler-IDs
 

@@ -32,6 +32,7 @@ const sessionData = ref({
 //   { spielerId: '10', name: 'Weyo', profilePicture: profile10 },
 //   // Weitere Spieler hier...
 // ]);
+// weyo brauch hilfeeee
 const searchQuery = ref(''); // Suchabfrage für die Spieler
 const addedPlayerIds = ref(new Set()); // Set für die hinzugefügten Spieler-IDs
 // Spieler zur Session hinzufügen
