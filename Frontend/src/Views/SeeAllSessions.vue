@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="start-button-container">
-          <button @click="startSession(session.spielrundenId)" class="start-button">Session starten</button>
+          <button @click="startSession(session)" class="start-button">Session starten</button>
         </div>
       </div>
     </div>
@@ -142,11 +142,14 @@ const fetchSessions = async () => {
 };
 
 // Funktion zum Starten der Session
-const startSession = (spielrundenId: string) => {
-  console.log(sessions, "dies ist die Session")
-  console.log(spielrundenId, "sessionId in startSession"); // Dies gibt `undefined` aus?
-  if (spielrundenId) {
-    router.push({ name: 'sessionDetail', params: { spielrundenId } });
+const startSession = (session: Session) => {
+  // Überprüfen, ob die Session vorhanden ist und ob sie eine gültige spielrundenId hat
+  if (session && session.spielrundenId) {
+    console.log(session, "Session ausgewählt"); // Log für die Session
+    console.log(session.spielrundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
+
+    // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
+    router.push({ name: 'sessionDetail', params: { spielrundenId: session.spielrundenId } });
   } else {
     console.error("Keine gültige sessionId vorhanden");
   }

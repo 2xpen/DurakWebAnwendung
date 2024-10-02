@@ -94,11 +94,13 @@ const fetchSessions = async () => {
     }
 };
 // Funktion zum Starten der Session
-const startSession = (spielrundenId) => {
-    console.log(sessions, "dies ist die Session");
-    console.log(spielrundenId, "sessionId in startSession"); // Dies gibt `undefined` aus?
-    if (spielrundenId) {
-        router.push({ name: 'sessionDetail', params: { spielrundenId } });
+const startSession = (session) => {
+    // Überprüfen, ob die Session vorhanden ist und ob sie eine gültige spielrundenId hat
+    if (session && session.spielrundenId) {
+        console.log(session, "Session ausgewählt"); // Log für die Session
+        console.log(session.spielrundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
+        // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
+        router.push({ name: 'sessionDetail', params: { spielrundenId: session.spielrundenId } });
     }
     else {
         console.error("Keine gültige sessionId vorhanden");
@@ -154,7 +156,7 @@ function __VLS_template() {
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
                         if (!((__VLS_ctx.sessions.length > 0)))
                             return;
-                        __VLS_ctx.startSession(session.spielrundenId);
+                        __VLS_ctx.startSession(session);
                     } }, ...{ class: ("start-button") }, });
         }
     }
