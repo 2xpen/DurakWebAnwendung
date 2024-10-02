@@ -2,7 +2,36 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import router from '../router';
 const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
+// import profile1 from '../assets/Profilbilder/ProfilBild1.png';
+// import profile3 from '../assets/Profilbilder/ProfilBild3.png';
+// import profile2 from '../assets/Profilbilder/ProfilBild2.png';
 const sessions = ref([]);
+// sessions.value = [
+//    {
+//   "spielRundenName": "Testspiel Runde 1",
+//   "spielrundenId": "12345",
+//   "spielerAnzeigenViewDTOS": [
+//     {
+//       "spielerId": "1",
+//       "name": "Max Mustermann",
+//       "profilePicture": profile1,
+//       "durakStand": 0
+//     },
+//     {
+//       "spielerId": "2",
+//       "name": "Lisa Müller",
+//       "profilePicture": profile2,
+//       "durakStand": 1
+//     },
+//     {
+//       "spielerId": "3",
+//       "name": "Hans Schmidt",
+//       "profilePicture": profile3,
+//       "durakStand": -1
+//     }
+//   ]
+// }
+// ]
 // import profile1 from '../assets/Profilbilder/ProfilBild1.png';
 // import profile2 from '../assets/Profilbilder/ProfilBild2.png';
 // import profile3 from '../assets/Profilbilder/ProfilBild3.png';
@@ -65,8 +94,17 @@ const fetchSessions = async () => {
     }
 };
 // Funktion zum Starten der Session
-const startSession = (sessionId) => {
-    router.push({ name: 'sessionDetail', params: { sessionId } }); // sessionId an die Detailansicht übergeben
+const startSession = async (sessionId) => {
+    try {
+        // Sende die sessionId an das Backend
+        await axios.post('/api/startSession', { sessionId });
+        // Nach erfolgreichem Start der Session, weiter zur Detailansicht
+        router.push({ name: 'sessionDetail', params: { sessionId } });
+    }
+    catch (error) {
+        router.push({ name: 'sessionDetail', params: { sessionId } });
+        console.error('Fehler beim Starten der Session:', error);
+    }
 };
 // Lade die Sessions beim Mounten der Komponente
 onMounted(() => {

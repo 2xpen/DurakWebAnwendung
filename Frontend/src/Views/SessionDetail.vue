@@ -1,15 +1,24 @@
 <template>
   <div class="session-detail">
-    <h1 class="session-title">{{ session?.spielRundenNamen }}</h1>
+    <h1 class="session-title">{{ session?.spielRundenName }}</h1>
     
     <div class="spieler-container">
-      <div v-for="player in session?.spielerListe" :key="player.name" class="spieler">
+      <div 
+        v-for="player in session?.spielerAnzeigenViewDTOS" 
+        :key="player.spielerId" 
+        class="spieler"
+      >
         <h3>{{ player.name }}</h3>
-        <img :src="player.profilBild" :alt="`Profilbild von ${player.name}`" class="profilbild" />
+        <h3>{{ player.durakStand }}</h3>
+        <img 
+          :src="player.profilePicture" 
+          :alt="`Profilbild von ${player.name}`" 
+          class="profilbild" 
+        />
         
         <div class="buttons-container">
-          <button @click="incrementLosses(player.name, -1)">Verloren -1</button>
-          <button @click="incrementLosses(player.name, 1)">Gewonnen +1</button>
+          <button @click="addLosses(player, 1)">Verloren (+1)</button>
+          <button @click="removeLosses(player, -1)">Gewonnen (-1)</button>
         </div>
       </div>
     </div>
@@ -19,39 +28,98 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-
-// Dummy-Daten für die Session
-const dummySession = {
-  spielRundenNamen: "Test Session",
-  spielrundenId: "12345",
-  spielerListe: [
-    { name: "Tom", profilBild: "https://via.placeholder.com/50" },
-    { name: "Weyo", profilBild: "https://via.placeholder.com/50" },
-    { name: "Jan", profilBild: "https://via.placeholder.com/50" },
-    { name: "Mathis", profilBild: "https://via.placeholder.com/50" }
-  ]
-};
+import axios from 'axios';
+import { Player } from '../Types/Player'; 
+import { Session } from '../Types/Session';
+// import profile1 from '../assets/Profilbilder/ProfilBild1.png';
+// import profile3 from '../assets/Profilbilder/ProfilBild3.png';
+// import profile2 from '../assets/Profilbilder/ProfilBild2.png';
 
 // Router Setup
 const route = useRoute();
 const router = useRouter();
 
 // Reaktive Variable für die Session
-const session = ref(dummySession); // Verwende die Dummy-Daten
+const session = ref<Session | null>(null);
+// session.value = 
+//   {
+//   "spielRundenName": "Testspiel Runde 1",
+//   "spielrundenId": "12345",
+//   "spielerAnzeigenViewDTOS": [
+//     {
+//       "spielerId": "1",
+//       "name": "Max Mustermann",
+//       "profilePicture": profile1,
+//       "durakStand": 0
+//     },
+//     {
+//       "spielerId": "2",
+//       "name": "Lisa Müller",
+//       "profilePicture": profile2,
+//       "durakStand": 1
+//     },
+//     {
+//       "spielerId": "3",
+//       "name": "Hans Schmidt",
+//       "profilePicture": profile3,
+//       "durakStand": -1
+//     }
+//   ]
+// }
+
+
+
+// Funktion zum Abrufen der Session-Details
+const fetchSessionDetails = async () => {
+  const sessionId = route.params.sessionId as string; // Holen der sessionId aus den Routenparametern
+  try {
+    const response = await axios.get(`/api/getSpielrundeById/${sessionId}`); // API-Call
+    session.value = response.data; // Setze die Session-Daten
+    console.log('Session Details:', session.value);
+  } catch (error) {
+    console.error('Fehler beim Abrufen der Session-Details:', error);
+  }
+};
 
 // Funktion zum Zurückgehen zur Übersicht
 const goBack = () => {
-  router.push('/');
+  router.push('/'); // Navigation zur Hauptseite
 };
 
-// Funktion zum Aktualisieren der Verluste (z.B. zum Testen)
-const incrementLosses = (playerName: string, change: number) => {
-  // Hier kannst du die Logik zum Aktualisieren der Verluste implementieren
- 
+// Funktion zum Hinzufügen von Verlusten
+const addLosses = async (player: Player, change: number) => {
+  if (player.durakStand !== undefined) {
+    player.durakStand += change; // Aktualisiere den lokalen durakStand
+    const payload = { 
+      playerId: player.spielerId,  // Hier den Spieler-ID verwenden
+      durakStand: player.durakStand 
+    }; // Payload erstellen
+    try {
+      const response = await axios.post('/api/updateDurakStand', payload); // POST-Request an das Backend
+      console.log(`Erfolgreich aktualisiert: ${player.spielerId} mit DurakStand: ${player.durakStand}`);
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren des DurakStand:', error);
+    }
+  } else {
+    console.error('durakStand ist nicht definiert');
+  }
 };
 
+// Funktion zum Entfernen von Verlusten
+const removeLosses = (player: Player, change: number) => {
+  if (player.durakStand !== undefined) {
+    player.durakStand -= change; // Aktualisiere den lokalen durakStand
+  } else {
+    console.error('durakStand ist nicht definiert');
+  }
+};
+
+// Lade die Session-Details beim Mounten der Komponente
+onMounted(() => {
+  fetchSessionDetails(); // Rufe die Funktion auf, um die Session-Details zu laden
+});
 </script>
 
 <style scoped>
