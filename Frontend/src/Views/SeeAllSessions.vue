@@ -149,7 +149,7 @@ const startSession = (session: Session) => {
     console.log(session.spielRundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
 
     // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
-    router.push({ name: 'sessionDetail', params: { sessionId: session.spielRundenId } });
+    router.push({ name: 'sessionDetail', params: { spielRundenId: session.spielRundenId } });
   
   
 };
