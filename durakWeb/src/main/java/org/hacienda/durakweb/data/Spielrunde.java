@@ -1,8 +1,8 @@
-package org.hacienda.durakweb.spielrunde;
+package org.hacienda.durakweb.data;
 
 import lombok.Getter;
-import org.hacienda.durakweb.identifier.SpielerId;
-import org.hacienda.durakweb.identifier.SpielrundenId;
+import org.hacienda.durakweb.data.identifier.SpielerId;
+import org.hacienda.durakweb.data.identifier.SpielrundenId;
 
 import java.util.ArrayList;
 import java.util.List;

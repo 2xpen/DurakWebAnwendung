@@ -1,7 +1,12 @@
-package org.hacienda.durakweb.spielrunde;
+package org.hacienda.durakweb.service;
 
+import org.hacienda.durakweb.data.Spieler;
+import org.hacienda.durakweb.data.Spielrunde;
+import org.hacienda.durakweb.data.identifier.SpielerId;
+import org.hacienda.durakweb.data.identifier.SpielrundenId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.hacienda.durakweb.repo.SpielRundenRepo;
 
 import java.util.List;
 
@@ -24,6 +29,12 @@ public class SpielrundenService {
         repo.addSpielRunde(spielRunde);
         return spielRunde;
     }
+
+    public List<SpielerId> getSpielerIdsOfSpielrunde(Spielrunde spielrunde){
+        return repo.getSpielerIdsOfSpielerRunde(spielrunde);
+    }
+
+
 
 
 }

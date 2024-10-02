@@ -1,7 +1,8 @@
-package org.hacienda.durakweb.spieler;
+package org.hacienda.durakweb.repo;
 
 
-import org.hacienda.durakweb.identifier.SpielerId;
+import org.hacienda.durakweb.data.Spieler;
+import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class SpielerRepo {
         spielerListe.forEach(spieler -> {if(spieler.getSpielerId().equals(spielerId)){spielerListe.remove(spieler);}});
     }
 
-    public List<Spieler> getSpielerById(SpielerId[] spielerIds) {
+    public List<Spieler> getSpielerById(List<SpielerId> spielerIds) {
         List<Spieler> gefundeneSpieler = new ArrayList<>();
 
         for (Spieler spieler : spielerListe) {

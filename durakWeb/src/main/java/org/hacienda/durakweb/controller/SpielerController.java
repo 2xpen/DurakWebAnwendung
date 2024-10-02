@@ -1,16 +1,17 @@
 
 
-package org.hacienda.durakweb.spieler;
+package org.hacienda.durakweb.controller;
 
 
+import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.apiresponse.ResponseWrapper;
 import org.hacienda.durakweb.constants.StatusCode;
+import org.hacienda.durakweb.service.SpielerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -40,7 +41,7 @@ public class SpielerController {
         service.addSpieler(spieler);
 
         wrapper.setData(spieler);
-        wrapper.setStatusIndicator(StatusCode.ALLESHUGE);
+        wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
         wrapper.addMeldungen("Allet Tuti");
 
         return ResponseEntity.ok(wrapper);
@@ -52,21 +53,24 @@ public class SpielerController {
         ResponseWrapper<List<Spieler>> wrapper = new ResponseWrapper<>();
         wrapper.setData(service.getAllSpieler());
         wrapper.addMeldungen("Allet Tuti");
-        wrapper.setStatusIndicator(StatusCode.ALLESHUGE);
+        wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
 
         return ResponseEntity.ok(wrapper);
-
-
-
     }
 
-    @GetMapping("/getSpieler")
+    @GetMapping("/getSpielerById")
     public ResponseEntity<ResponseWrapper<List<Spieler>>> getSpieler(@RequestBody String[] spielerIds) {
         ResponseWrapper<List<Spieler>> wrapper = new ResponseWrapper<>();
 
-//        List<Spieler> gefundeneSpieler = service.getSpielerById(spielerIds);
-//
-                return null;
+
+        wrapper.setData(
+                service.getSpielerById(
+                service.convertStringToSpielerId(spielerIds)));
+
+        wrapper.addMeldungen("Alle Tuti");
+        wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
+
+        return ResponseEntity.ok(wrapper);
     }
 
 
