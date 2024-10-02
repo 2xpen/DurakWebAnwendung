@@ -31,7 +31,7 @@ const saveSession = async () => {
             console.log(sessionPayload, "<--- Sessionpayload");
             // Sende die Daten ans Backend
             const response = await axios.post('/api/createSpielRunde', sessionPayload);
-            sessionData.value = response.data;
+            sessionData.value = response.data.data;
             console.log(response);
             // Zurück zur Startseite nach dem Speichern der Session
             router.push('/');
