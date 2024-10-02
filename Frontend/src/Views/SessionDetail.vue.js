@@ -17,6 +17,7 @@ const fetchSessionDetails = async () => {
     try {
         const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); // API-Call
         session.value = response.data; // Setze die Session-Daten
+        console.log(session.value, "session.value");
     }
     catch (error) {
         console.error('Fehler beim Abrufen der Session-Details:', error);

@@ -138,7 +138,6 @@ const fetchSessions = async () => {
   try {
     const response = await axios.get('/api/getAlleSpielrundenAuswahlView'); // API-Endpunkt
     sessions.value = response.data.data; // Daten der Sessions zuweisen
-    console.log(sessions.value, "<------- empfangene session")
   } catch (error) {
     console.error('Fehler beim Abrufen der Sessions:', error);
   }
@@ -146,11 +145,6 @@ const fetchSessions = async () => {
 
 // Funktion zum Starten der Session
 const startSession = (session: Session) => {
-  // Überprüfen, ob die Session vorhanden ist und ob sie eine gültige spielrundenId hat
-  
-    console.log(session, "Session ausgewählt"); // Log für die Session
-    console.log(session.spielRundenId, "spielrundenId in startSession");
-    console.log(props.spielRundenId , "props.spielrundenId")
 
     // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
     router.push({ name: 'sessionDetail', params: { spielRundenId: session.spielRundenId } });
