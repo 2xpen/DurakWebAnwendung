@@ -4,7 +4,7 @@
     <div class="sessions-list" v-if="sessions.length > 0">
       <div v-for="session in sessions" :key="session.spielrundenId" class="session-row">
         <div class="session-name">
-          <h3>{{ session.spielRundenNamen }}</h3> <!-- Name der Session -->
+          <h3>{{ session.spielRundenName }}</h3> <!-- Name der Session -->
         </div>
         <div class="spieler-container">
           <div 

@@ -4,7 +4,7 @@ import router from '../router';
 const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
 const spieler = ref([]);
 const sessionData = ref({
-    spielRundenNamen: '',
+    spielRundenName: '',
     spielrundenId: '',
     spielerListe: [],
 });
@@ -20,15 +20,16 @@ const removePlayerFromSession = (spielerId) => {
 };
 // Session speichern (Sessionnamen und Spieler-IDs ans Backend schicken)
 const saveSession = async () => {
-    if (sessionData.value.spielRundenNamen && addedPlayerIds.value.size > 0) {
+    if (sessionData.value.spielRundenName && addedPlayerIds.value.size > 0) {
         try {
             // Erstelle ein Objekt, das nur den Sessionnamen und die Spieler-IDs enthält
             const sessionPayload = {
-                spielRundenNamen: sessionData.value.spielRundenNamen,
+                spielRundenName: sessionData.value.spielRundenName,
                 spielerIds: Array.from(addedPlayerIds.value),
             };
             // Sende die Daten ans Backend
             const response = await axios.post('/api/createSpielRunde', sessionPayload);
+            console.log(response);
             // Zurück zur Startseite nach dem Speichern der Session
             router.push('/');
         }
@@ -68,6 +69,7 @@ const fetchSpieler = async () => {
 // Aufruf der fetchPlayers Funktion beim Mounten
 onMounted(() => {
     fetchSpieler(); // Spieler laden
+    console.log(spieler);
 });
 const __VLS_fnComponent = (await import('vue')).defineComponent({});
 ;
@@ -100,7 +102,7 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({});
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("session-name") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.input)({ placeholder: ("Sessionname eingeben"), });
-    (__VLS_ctx.sessionData.spielRundenNamen);
+    (__VLS_ctx.sessionData.spielRundenName);
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-suche") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.input)({ placeholder: ("Spieler suchen..."), });
     (__VLS_ctx.searchQuery);

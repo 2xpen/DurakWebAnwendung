@@ -4,7 +4,7 @@
 
     <!-- Eingabefeld für Sessionnamen -->
     <div class="session-name">
-      <input v-model="sessionData.spielRundenNamen" placeholder="Sessionname eingeben" />
+      <input v-model="sessionData.spielRundenName" placeholder="Sessionname eingeben" />
     </div>
 
     <!-- Eingabefeld für die Spieler-Suche (optional, kann entfernt werden) -->
@@ -59,7 +59,7 @@ import { Player } from '../Types/Player';
 const spieler = ref<Player[]>([]); 
 
 const sessionData = ref<Session>({
-  spielRundenNamen: '',
+  spielRundenName: '',
   spielrundenId: '',
   spielerListe: [],
 });
@@ -79,17 +79,17 @@ const removePlayerFromSession = (spielerId: string) => {
 
 // Session speichern (Sessionnamen und Spieler-IDs ans Backend schicken)
 const saveSession = async () => {
-  if (sessionData.value.spielRundenNamen && addedPlayerIds.value.size > 0) {
+  if (sessionData.value.spielRundenName && addedPlayerIds.value.size > 0) {
     try {
       // Erstelle ein Objekt, das nur den Sessionnamen und die Spieler-IDs enthält
       const sessionPayload = {
-        spielRundenNamen: sessionData.value.spielRundenNamen,
+        spielRundenName: sessionData.value.spielRundenName,
         spielerIds: Array.from(addedPlayerIds.value),
       };
 
       // Sende die Daten ans Backend
       const response = await axios.post('/api/createSpielRunde', sessionPayload);
-
+      console.log(response)
       // Zurück zur Startseite nach dem Speichern der Session
       router.push('/');
     } catch (error) {
@@ -134,6 +134,7 @@ const fetchSpieler = async () => {
 // Aufruf der fetchPlayers Funktion beim Mounten
 onMounted(() => {
   fetchSpieler(); // Spieler laden
+  console.log(spieler)
 });
 </script>
 

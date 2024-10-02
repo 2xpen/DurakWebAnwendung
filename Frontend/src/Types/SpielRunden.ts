@@ -1,7 +1,7 @@
 import { Player } from "./Player"
 
 export interface spielRunden{
-    spielRundenNamen: string,
+    spielRundenName: string,
     spielRundenId: string,
     spielerListe:[Player]
 }
