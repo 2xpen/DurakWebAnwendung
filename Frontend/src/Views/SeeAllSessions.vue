@@ -8,7 +8,7 @@
         </div>
         <div class="spieler-container">
           <div 
-            v-for="(player, index) in getLimitedPlayers(session.spielerListe)" 
+            v-for="(player, index) in getLimitedPlayers(session.spielerAnzeigenViewDTOS)" 
             :key="index" 
             class="spieler"
           >
@@ -20,8 +20,8 @@
             />
           </div>
           <!-- Anzeige von "+ x mehr", wenn mehr als 4 Spieler vorhanden sind -->
-          <div v-if="session.spielerListe.length > 4" class="mehr-spieler">
-            +{{ session.spielerListe.length - 4 }} mehr
+          <div v-if="session.spielerAnzeigenViewDTOS.length > 4" class="mehr-spieler">
+            +{{ session.spielerAnzeigenViewDTOS.length - 4 }} mehr
           </div>
         </div>
         <div class="start-button-container">

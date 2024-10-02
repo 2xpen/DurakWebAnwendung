@@ -6,7 +6,7 @@ const spieler = ref([]);
 const sessionData = ref({
     spielRundenName: '',
     spielrundenId: '',
-    spielerListe: [],
+    spielerAnzeigenViewDTOS: [],
 });
 const searchQuery = ref('');
 const addedPlayerIds = ref(new Set()); // Set für die hinzugefügten Spieler-IDs

@@ -61,7 +61,7 @@ const spieler = ref<Player[]>([]);
 const sessionData = ref<Session>({
   spielRundenName: '',
   spielrundenId: '',
-  spielerListe: [],
+  spielerAnzeigenViewDTOS: [],
 });
 
 const searchQuery = ref(''); 
