@@ -5,7 +5,7 @@ const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, define
 const spieler = ref([]);
 const sessionData = ref({
     spielRundenName: '',
-    spielrundenId: '',
+    spielRundenId: '',
     spielerAnzeigenViewDTOS: [],
 });
 const searchQuery = ref('');

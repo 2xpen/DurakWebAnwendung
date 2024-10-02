@@ -97,9 +97,9 @@ const fetchSessions = async () => {
 const startSession = (session) => {
     // Überprüfen, ob die Session vorhanden ist und ob sie eine gültige spielrundenId hat
     console.log(session, "Session ausgewählt"); // Log für die Session
-    console.log(session.spielrundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
+    console.log(session.spielRundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
     // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
-    router.push({ name: 'sessionDetail', params: { spielrundenId: session.spielrundenId } });
+    router.push({ name: 'sessionDetail', params: { spielrundenId: session.spielRundenId } });
 };
 // Lade die Sessions beim Mounten der Komponente
 onMounted(() => {
@@ -132,7 +132,7 @@ function __VLS_template() {
     if (__VLS_ctx.sessions.length > 0) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("sessions-list") }, });
         for (const [session] of __VLS_getVForSourceType((__VLS_ctx.sessions))) {
-            __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((session.spielrundenId)), ...{ class: ("session-row") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((session.spielRundenId)), ...{ class: ("session-row") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("session-name") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (session.spielRundenName);

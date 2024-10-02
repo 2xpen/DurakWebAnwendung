@@ -2,7 +2,7 @@
   <div class="sessions-view">
     <h1 class="titel">Sessions</h1>
     <div class="sessions-list" v-if="sessions.length > 0">
-      <div v-for="session in sessions" :key="session.spielrundenId" class="session-row">
+      <div v-for="session in sessions" :key="session.spielRundenId" class="session-row">
         <div class="session-name">
           <h3>{{ session.spielRundenName }}</h3> <!-- Name der Session -->
         </div>
@@ -146,10 +146,10 @@ const startSession = (session: Session) => {
   // Überprüfen, ob die Session vorhanden ist und ob sie eine gültige spielrundenId hat
   
     console.log(session, "Session ausgewählt"); // Log für die Session
-    console.log(session.spielrundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
+    console.log(session.spielRundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
 
     // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
-    router.push({ name: 'sessionDetail', params: { spielrundenId: session.spielrundenId } });
+    router.push({ name: 'sessionDetail', params: { spielrundenId: session.spielRundenId } });
   
   
 };
