@@ -1,7 +1,7 @@
 import { Player } from "./Player";
 
 export interface Session {
-  spielRundenNamen: string;
+  spielRundenName: string;
   spielrundenId: string;
   spielerListe: Player[];
 }
