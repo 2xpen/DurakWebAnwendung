@@ -124,6 +124,9 @@ const sessions = ref<Session[]>([])
 const goHome = () => {
   router.push('/');
 };
+const props = defineProps<{
+  spielRundenId: string; // Typ des Props
+}>();
 
 // Funktion, um nur die ersten 4 Spieler zurückzugeben
 const getLimitedPlayers = (spielerListe: Player[]): Player[] => {
@@ -146,12 +149,11 @@ const startSession = (session: Session) => {
   // Überprüfen, ob die Session vorhanden ist und ob sie eine gültige spielrundenId hat
   
     console.log(session, "Session ausgewählt"); // Log für die Session
-    console.log(session.spielRundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
+    console.log(session.spielRundenId, "spielrundenId in startSession");
+    console.log(props.spielRundenId , "props.spielrundenId")
 
     // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
-    router.push({ name: 'sessionDetail', params: { spielRundenId: session.spielRundenId } });
-  
-  
+    router.push({ name: 'sessionDetail', params: { spielRundenId: props.spielRundenId } });
 };
 
 // Lade die Sessions beim Mounten der Komponente

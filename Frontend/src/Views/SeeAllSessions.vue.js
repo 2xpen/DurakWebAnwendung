@@ -78,6 +78,8 @@ const sessions = ref([]);
 const goHome = () => {
     router.push('/');
 };
+let __VLS_typeProps;
+const props = defineProps();
 // Funktion, um nur die ersten 4 Spieler zurückzugeben
 const getLimitedPlayers = (spielerListe) => {
     return spielerListe.slice(0, 4); // Nur die ersten 4 Spieler zurückgeben
@@ -97,9 +99,10 @@ const fetchSessions = async () => {
 const startSession = (session) => {
     // Überprüfen, ob die Session vorhanden ist und ob sie eine gültige spielrundenId hat
     console.log(session, "Session ausgewählt"); // Log für die Session
-    console.log(session.spielRundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
+    console.log(session.spielRundenId, "spielrundenId in startSession");
+    console.log(props.spielRundenId, "props.spielrundenId");
     // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
-    router.push({ name: 'sessionDetail', params: { spielRundenId: session.spielRundenId } });
+    router.push({ name: 'sessionDetail', params: { spielRundenId: props.spielRundenId } });
 };
 // Lade die Sessions beim Mounten der Komponente
 onMounted(() => {
@@ -191,10 +194,12 @@ const __VLS_self = (await import('vue')).defineComponent({
             startSession: startSession,
         };
     },
+    __typeProps: {},
 });
 export default (await import('vue')).defineComponent({
     setup() {
         return {};
     },
+    __typeProps: {},
 });
 ;
