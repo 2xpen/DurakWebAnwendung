@@ -27,6 +27,7 @@ const saveSession = async () => {
                 spielRundenName: sessionData.value.spielRundenName,
                 spielerIds: Array.from(addedPlayerIds.value),
             };
+            console.log(sessionPayload, "<--- Sessionpayload");
             // Sende die Daten ans Backend
             const response = await axios.post('/api/createSpielRunde', sessionPayload);
             console.log(response);
