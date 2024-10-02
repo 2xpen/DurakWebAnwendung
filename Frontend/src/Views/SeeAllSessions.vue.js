@@ -87,21 +87,20 @@ const fetchSessions = async () => {
     try {
         const response = await axios.get('/api/getAlleSpielrundenAuswahlView'); // API-Endpunkt
         sessions.value = response.data.data; // Daten der Sessions zuweisen
-        console.log(sessions, "<------- empfangene session");
+        console.log(sessions.value, "<------- empfangene session");
     }
     catch (error) {
         console.error('Fehler beim Abrufen der Sessions:', error);
     }
 };
 // Funktion zum Starten der Session
-const startSession = async (sessionId) => {
-    try {
-        console.log(sessionId);
+const startSession = (sessionId) => {
+    console.log(sessionId, "sessionId in startSession"); // Dies gibt `undefined` aus?
+    if (sessionId) {
         router.push({ name: 'sessionDetail', params: { sessionId } });
     }
-    catch (error) {
-        router.push({ name: 'sessionDetail', params: { sessionId } });
-        console.error('Fehler beim Starten der Session:', error);
+    else {
+        console.error("Keine gültige sessionId vorhanden");
     }
 };
 // Lade die Sessions beim Mounten der Komponente

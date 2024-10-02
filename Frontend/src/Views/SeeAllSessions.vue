@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import { Session } from '@/Types/Session'; // Überprüfe, ob der Typ korrekt definiert ist
+import { Session } from '../Types/Session'; // Überprüfe, ob der Typ korrekt definiert ist
 import router from '../router';
 import { Player } from '../Types/Player';
 // import profile1 from '../assets/Profilbilder/ProfilBild1.png';
@@ -131,22 +131,22 @@ const fetchSessions = async () => {
   try {
     const response = await axios.get('/api/getAlleSpielrundenAuswahlView'); // API-Endpunkt
     sessions.value = response.data.data; // Daten der Sessions zuweisen
-    console.log(sessions, "<------- empfangene session")
+    console.log(sessions.value, "<------- empfangene session")
   } catch (error) {
     console.error('Fehler beim Abrufen der Sessions:', error);
   }
 };
 
 // Funktion zum Starten der Session
-const startSession = async (sessionId: string) => {
-  try {
-    console.log(sessionId)
+const startSession = (sessionId: string) => {
+  console.log(sessionId, "sessionId in startSession"); // Dies gibt `undefined` aus?
+  if (sessionId) {
     router.push({ name: 'sessionDetail', params: { sessionId } });
-  } catch (error) {
-    router.push({ name: 'sessionDetail', params: { sessionId } });
-    console.error('Fehler beim Starten der Session:', error);
+  } else {
+    console.error("Keine gültige sessionId vorhanden");
   }
 };
+
 // Lade die Sessions beim Mounten der Komponente
 onMounted(() => {
   fetchSessions(); // Rufe die Funktion auf, um die Sessions zu laden
