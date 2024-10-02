@@ -94,10 +94,11 @@ const fetchSessions = async () => {
     }
 };
 // Funktion zum Starten der Session
-const startSession = (sessionId) => {
-    console.log(sessionId, "sessionId in startSession"); // Dies gibt `undefined` aus?
-    if (sessionId) {
-        router.push({ name: 'sessionDetail', params: { sessionId } });
+const startSession = (spielrundenId) => {
+    console.log(sessions, "dies ist die Session");
+    console.log(spielrundenId, "sessionId in startSession"); // Dies gibt `undefined` aus?
+    if (spielrundenId) {
+        router.push({ name: 'sessionDetail', params: { spielrundenId } });
     }
     else {
         console.error("Keine gültige sessionId vorhanden");

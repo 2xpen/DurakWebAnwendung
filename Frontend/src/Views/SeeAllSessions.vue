@@ -44,7 +44,11 @@ import { Player } from '../Types/Player';
 // import profile3 from '../assets/Profilbilder/ProfilBild3.png';
 // import profile2 from '../assets/Profilbilder/ProfilBild2.png';
 
-const sessions = ref<Session[]>([]);
+const sessions = ref<Session[]>([])
+
+
+
+
 // sessions.value = [
 //    {
 //   "spielRundenName": "Testspiel Runde 1",
@@ -138,10 +142,11 @@ const fetchSessions = async () => {
 };
 
 // Funktion zum Starten der Session
-const startSession = (sessionId: string) => {
-  console.log(sessionId, "sessionId in startSession"); // Dies gibt `undefined` aus?
-  if (sessionId) {
-    router.push({ name: 'sessionDetail', params: { sessionId } });
+const startSession = (spielrundenId: string) => {
+  console.log(sessions, "dies ist die Session")
+  console.log(spielrundenId, "sessionId in startSession"); // Dies gibt `undefined` aus?
+  if (spielrundenId) {
+    router.push({ name: 'sessionDetail', params: { spielrundenId } });
   } else {
     console.error("Keine gültige sessionId vorhanden");
   }
