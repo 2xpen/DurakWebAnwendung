@@ -79,6 +79,7 @@ const removePlayerFromSession = (spielerId: string) => {
 
 // Session speichern (Sessionnamen und Spieler-IDs ans Backend schicken)
 const saveSession = async () => {
+console.log(sessionData.value.spielRundenName, "sessionData.value.spielRundenName")
   if (sessionData.value.spielRundenName && addedPlayerIds.value.size > 0) {
     try {
       // Erstelle ein Objekt, das nur den Sessionnamen und die Spieler-IDs enthält

@@ -56,7 +56,7 @@ const getLimitedPlayers = (spielerListe) => {
 // Funktion zum Abrufen der Sessions
 const fetchSessions = async () => {
     try {
-        const response = await axios.get('/getAlleSpielrundenAuswahlView'); // API-Endpunkt
+        const response = await axios.get('/api/getAlleSpielrundenAuswahlView'); // API-Endpunkt
         sessions.value = response.data.data; // Daten der Sessions zuweisen
     }
     catch (error) {
