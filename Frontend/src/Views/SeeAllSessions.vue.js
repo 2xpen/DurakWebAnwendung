@@ -96,15 +96,10 @@ const fetchSessions = async () => {
 // Funktion zum Starten der Session
 const startSession = (session) => {
     // Überprüfen, ob die Session vorhanden ist und ob sie eine gültige spielrundenId hat
-    if (session && session.spielrundenId) {
-        console.log(session, "Session ausgewählt"); // Log für die Session
-        console.log(session.spielrundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
-        // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
-        router.push({ name: 'sessionDetail', params: { spielrundenId: session.spielrundenId } });
-    }
-    else {
-        console.error("Keine gültige sessionId vorhanden");
-    }
+    console.log(session, "Session ausgewählt"); // Log für die Session
+    console.log(session.spielrundenId, "spielrundenId in startSession"); // Log für die Spielrunden-ID
+    // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
+    router.push({ name: 'sessionDetail', params: { spielrundenId: session.spielrundenId } });
 };
 // Lade die Sessions beim Mounten der Komponente
 onMounted(() => {
