@@ -36,66 +36,59 @@ import { Player } from '../Types/Player';
 import { Session } from '../Types/Session';
 import { defineProps } from 'vue';
 
-// Router Setup
 const route = useRoute();
 const router = useRouter();
 
-// Reaktive Variable für die Session
 const session = ref<Session | null>(null);
 
-// Deklaration der Props
+
 const props = defineProps<{
-  spielRundenId: string; // Die übergebene spielRundenId
+  spielRundenId: string; 
 }>();
 
-// Funktion zum Abrufen der Session-Details
 const fetchSessionDetails = async () => {
-  const sessionId = props.spielRundenId; // Verwendung von props.spielRundenId  
+  const sessionId = props.spielRundenId; 
   try {
-    const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); // API-Call
-    session.value = response.data; // Setze die Session-Daten
+    const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); 
+    session.value = response.data; 
     console.log(session.value, "session.value")
   } catch (error) {
     console.error('Fehler beim Abrufen der Session-Details:', error);
   }
 };
 
-// Funktion zum Zurückgehen zur Übersicht
 const goBack = () => {
-  router.push('/'); // Navigation zur Hauptseite
+  router.push('/'); 
 };
 
-// Funktion zum Hinzufügen von Verlusten
 const addLosses = async (player: Player, change: number) => {
-  if (player.durakStand !== undefined) {
-    player.durakStand += change; // Aktualisiere den lokalen durakStand
-    const payload = { 
-      playerId: player.spielerId,  // Hier den Spieler-ID verwenden
-      durakStand: player.durakStand 
-    }; // Payload erstellen
-    try {
-      const response = await axios.post('/api/updateDurakStand', payload); // POST-Request an das Backend
-      console.log(`Erfolgreich aktualisiert: ${player.spielerId} mit DurakStand: ${player.durakStand}`);
-    } catch (error) {
-      console.error('Fehler beim Aktualisieren des DurakStand:', error);
-    }
-  } else {
-    console.error('durakStand ist nicht definiert');
-  }
+  // if (player.durakStand !== undefined) {
+  //   player.durakStand += change; 
+  //   const payload = { 
+  //     playerId: player.spielerId,  
+  //     durakStand: player.durakStand 
+  //   };
+  //   try {
+  //     const response = await axios.post('/api/updateDurakStand', payload);
+  //     console.log(`Erfolgreich aktualisiert: ${player.spielerId} mit DurakStand: ${player.durakStand}`);
+  //   } catch (error) {
+  //     console.error('Fehler beim Aktualisieren des DurakStand:', error);
+  //   }
+  // } else {
+  //   console.error('durakStand ist nicht definiert');
+  // }
 };
 
-// Funktion zum Entfernen von Verlusten
 const removeLosses = (player: Player, change: number) => {
-  if (player.durakStand !== undefined) {
-    player.durakStand -= change; // Aktualisiere den lokalen durakStand
-  } else {
-    console.error('durakStand ist nicht definiert');
-  }
+  // if (player.durakStand !== undefined) {
+  //   player.durakStand -= change; 
+  // } else {
+  //   console.error('durakStand ist nicht definiert');
+  // }
 };
 
-// Lade die Session-Details beim Mounten der Komponente
 onMounted(() => {
-  fetchSessionDetails(); // Rufe die Funktion auf, um die Session-Details zu laden
+  fetchSessionDetails(); 
 });
 </script>
 
