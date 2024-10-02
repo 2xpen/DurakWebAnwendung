@@ -96,6 +96,7 @@ const fetchSessions = async () => {
 // Funktion zum Starten der Session
 const startSession = async (sessionId) => {
     try {
+        console.log(sessionId);
         router.push({ name: 'sessionDetail', params: { sessionId } });
     }
     catch (error) {
