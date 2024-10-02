@@ -33,9 +33,7 @@ import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import { Player } from '../Types/Player'; 
 import { Session } from '../Types/Session';
-// import profile1 from '../assets/Profilbilder/ProfilBild1.png';
-// import profile3 from '../assets/Profilbilder/ProfilBild3.png';
-// import profile2 from '../assets/Profilbilder/ProfilBild2.png';
+import { defineProps } from 'vue';
 
 // Router Setup
 const route = useRoute();
@@ -43,38 +41,17 @@ const router = useRouter();
 
 // Reaktive Variable für die Session
 const session = ref<Session | null>(null);
-// session.value = 
-//   {
-//   "spielRundenName": "Testspiel Runde 1",
-//   "spielrundenId": "12345",
-//   "spielerAnzeigenViewDTOS": [
-//     {
-//       "spielerId": "1",
-//       "name": "Max Mustermann",
-//       "profilePicture": profile1,
-//       "durakStand": 0
-//     },
-//     {
-//       "spielerId": "2",
-//       "name": "Lisa Müller",
-//       "profilePicture": profile2,
-//       "durakStand": 1
-//     },
-//     {
-//       "spielerId": "3",
-//       "name": "Hans Schmidt",
-//       "profilePicture": profile3,
-//       "durakStand": -1
-//     }
-//   ]
-// }
 
-
+// Deklaration der Props
+const props = defineProps<{
+  spielRundenId: string; // Die übergebene spielRundenId
+}>();
 
 // Funktion zum Abrufen der Session-Details
 const fetchSessionDetails = async () => {
-  const sessionId = route.params.sessionId as string;
-  console.log(sessionId, "<-------- sessionId")
+  const sessionId = props.spielRundenId; // Verwendung von props.spielRundenId
+  console.log(sessionId, "<-------- spielRundenId");
+  
   try {
     const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); // API-Call
     session.value = response.data; // Setze die Session-Daten

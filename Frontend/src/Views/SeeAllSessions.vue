@@ -153,7 +153,7 @@ const startSession = (session: Session) => {
     console.log(props.spielRundenId , "props.spielrundenId")
 
     // Navigieren zur Detailseite der Session mit der spielrundenId als Parameter
-    router.push({ name: 'sessionDetail', params: { spielRundenId: props.spielRundenId } });
+    router.push({ name: 'sessionDetail', params: { spielRundenId: session.spielRundenId } });
 };
 
 // Lade die Sessions beim Mounten der Komponente
