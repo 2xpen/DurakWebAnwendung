@@ -58,6 +58,7 @@ const fetchSessions = async () => {
     try {
         const response = await axios.get('/api/getAlleSpielrundenAuswahlView'); // API-Endpunkt
         sessions.value = response.data.data; // Daten der Sessions zuweisen
+        console.log(sessions, "<------- empfangene session");
     }
     catch (error) {
         console.error('Fehler beim Abrufen der Sessions:', error);
