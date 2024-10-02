@@ -9,10 +9,9 @@ import java.util.List;
 @Getter
 public class ResponseWrapper<DATA_TYPE> {
 
-
-   private DATA_TYPE data;
+    private DATA_TYPE data;
     private List<String> meldungen = new ArrayList<String>();
-    private StatusCode statusIndicator = StatusCode.ALLESHUGE;
+    private StatusCode statusIndicator = StatusCode.ALLESMAMBOHUGE;
 
 
     public ResponseWrapper() {

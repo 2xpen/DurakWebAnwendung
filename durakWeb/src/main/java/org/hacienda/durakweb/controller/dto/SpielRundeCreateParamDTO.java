@@ -1,9 +1,11 @@
-package org.hacienda.durakweb.spielrunde;
+package org.hacienda.durakweb.controller.dto;
 
+import lombok.Getter;
+
+@Getter
 public class SpielRundeCreateParamDTO {
     String[] spielerIds;
     String spielRundenName;
-
 
     public SpielRundeCreateParamDTO(String[] spielerIds, String spielRundenName) {
         this.spielerIds = spielerIds;
@@ -13,7 +15,6 @@ public class SpielRundeCreateParamDTO {
     SpielRundeCreateParamDTO(){
 
     }
-
     public String[] getSpielerIds() {
         return spielerIds;
     }
@@ -21,12 +22,13 @@ public class SpielRundeCreateParamDTO {
     public String getSpielRundenName() {
         return spielRundenName;
     }
+//
+//    public void setSpielerIds(String[] spielerIds) {
+//        this.spielerIds = spielerIds;
+//    }
+//
+//    public void setSpielRundenName(String spielRundenName) {
+//        this.spielRundenName = spielRundenName;
+//    }
 
-    public void setSpielerIds(String[] spielerIds) {
-        this.spielerIds = spielerIds;
-    }
-
-    public void setSpielRundenName(String spielRundenName) {
-        this.spielRundenName = spielRundenName;
-    }
 }

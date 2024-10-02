@@ -1,13 +1,13 @@
-package org.hacienda.durakweb.spielrunde;
+package org.hacienda.durakweb.data;
 
-import org.hacienda.durakweb.identifier.SpielerId;
+import org.hacienda.durakweb.data.identifier.SpielerId;
 
 public class SpielerStandRecord {
 
     private final SpielerId spielerId;
     private Integer stand;
 
-    SpielerStandRecord(SpielerId spielerId) {
+    public SpielerStandRecord(SpielerId spielerId) {
         this.spielerId = spielerId;
         this.stand = 0;
     }

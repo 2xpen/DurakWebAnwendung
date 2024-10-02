@@ -1,6 +1,8 @@
-package org.hacienda.durakweb.spielrunde;
+package org.hacienda.durakweb.repo;
 
-import org.hacienda.durakweb.identifier.SpielrundenId;
+import org.hacienda.durakweb.data.Spielrunde;
+import org.hacienda.durakweb.data.identifier.SpielerId;
+import org.hacienda.durakweb.data.identifier.SpielrundenId;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -24,6 +26,17 @@ public class SpielRundenRepo {
 
     public void addSpielRunde(Spielrunde spielRunde) {
         spielRunden.add(spielRunde);
+    }
+
+
+
+    public List<SpielerId> getSpielerIdsOfSpielerRunde(Spielrunde spielRunde){
+        Spielrunde spielrunde = getSpielRundeById(spielRunde.getSpielRundenId());
+
+        List<SpielerId> spielerIds = new ArrayList<>();
+
+        spielrunde.getSpielerInfos().forEach(s -> spielerIds.add(s.getSpielerId()));
+        return spielerIds;
     }
 
 
