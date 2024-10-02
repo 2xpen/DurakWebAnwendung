@@ -33,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     component: SeeAllSessions,
   },
   {
-    path: "/session/:sessionId", // Routen-Parameter für die Session-ID
+    path: "/session/:spielRundenId", // Routen-Parameter für die Session-ID
     name: "sessionDetail",
     component: SessionDetail,
     props: true, // Übergibt den Parameter als Prop

@@ -40,7 +40,7 @@ const fetchSessionDetails = async () => {
     const sessionId = route.params.sessionId;
     console.log(sessionId, "<-------- sessionId");
     try {
-        const response = await axios.get(`/api/getSpielrundeById/${sessionId}`); // API-Call
+        const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); // API-Call
         session.value = response.data; // Setze die Session-Daten
         console.log('Session Details:', session.value);
     }
