@@ -1,6 +1,6 @@
 <template>
   <div class="session-detail">
-    <h1 class="session-title">{{ session?.spielRundenName }}</h1>
+    <h1 class="session-title">{{ session?.spielRundenName || 'Keine Session gefunden' }}</h1>
     
     <div class="spieler-container">
       <div 
@@ -12,7 +12,7 @@
         <h3>{{ player.durakStand }}</h3>
         <img 
           :src="player.profilePicture" 
-          :alt="`Profilbild von ${player.name}`" 
+          :alt="`Profilbild von ${player.name}`"  
           class="profilbild" 
         />
         
@@ -26,6 +26,7 @@
     <button @click="goBack" class="back-button">Zurück zur Übersicht</button>
   </div>
 </template>
+
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
@@ -49,13 +50,10 @@ const props = defineProps<{
 
 // Funktion zum Abrufen der Session-Details
 const fetchSessionDetails = async () => {
-  const sessionId = props.spielRundenId; // Verwendung von props.spielRundenId
-  console.log(sessionId, "<-------- spielRundenId");
-  
+  const sessionId = props.spielRundenId; // Verwendung von props.spielRundenId  
   try {
     const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); // API-Call
     session.value = response.data; // Setze die Session-Daten
-    console.log('Session Details:', session.value);
   } catch (error) {
     console.error('Fehler beim Abrufen der Session-Details:', error);
   }

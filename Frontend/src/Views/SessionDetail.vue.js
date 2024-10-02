@@ -13,12 +13,10 @@ let __VLS_typeProps;
 const props = defineProps();
 // Funktion zum Abrufen der Session-Details
 const fetchSessionDetails = async () => {
-    const sessionId = props.spielRundenId; // Verwendung von props.spielRundenId
-    console.log(sessionId, "<-------- spielRundenId");
+    const sessionId = props.spielRundenId; // Verwendung von props.spielRundenId  
     try {
         const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); // API-Call
         session.value = response.data; // Setze die Session-Daten
-        console.log('Session Details:', session.value);
     }
     catch (error) {
         console.error('Fehler beim Abrufen der Session-Details:', error);
@@ -84,7 +82,7 @@ function __VLS_template() {
     let __VLS_resolvedLocalAndGlobalComponents;
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("session-detail") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({ ...{ class: ("session-title") }, });
-    (__VLS_ctx.session?.spielRundenName);
+    (__VLS_ctx.session?.spielRundenName || 'Keine Session gefunden');
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-container") }, });
     for (const [player] of __VLS_getVForSourceType((__VLS_ctx.session?.spielerAnzeigenViewDTOS))) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((player.spielerId)), ...{ class: ("spieler") }, });
