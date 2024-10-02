@@ -3,6 +3,8 @@ import Home from "../Views/Home.vue";
 import CreatePlayer from "../Views/CreatePlayer.vue";
 import SeeAllPlayer from "../Views/SeeAllPlayer.vue";
 import CreateSession from "../Views/CreateSession.vue";
+import SeeAllSessions from "../Views/SeeAllSessions.vue";
+import SessionDetail from "../Views/SessionDetail.vue";
 const routes = [
     {
         path: "/",
@@ -23,7 +25,18 @@ const routes = [
         path: "/createSession",
         name: "CreateSession",
         component: CreateSession,
-    }
+    },
+    {
+        path: "/seeAllSessions",
+        name: "SeeAllSessions",
+        component: SeeAllSessions,
+    },
+    {
+        path: "/session/:sessionId", // Routen-Parameter für die Session-ID
+        name: "sessionDetail",
+        component: SessionDetail,
+        props: true, // Übergibt den Parameter als Prop
+    },
 ];
 const router = createRouter({
     history: createWebHistory(),

@@ -4,27 +4,34 @@
 
     <!-- Eingabefeld für Sessionnamen -->
     <div class="session-name">
-      <input v-model="sessionData.spielRundenName" placeholder="Sessionname eingeben" />
+      <input v-model="sessionData.spielRundenNamen" placeholder="Sessionname eingeben" />
+    </div>
+
+    <!-- Eingabefeld für die Spieler-Suche -->
+    <div class="spieler-suche">
+      <input v-model="searchQuery" placeholder="Spieler suchen..." />
     </div>
 
     <!-- Spieler-Liste -->
-    <div class="spieler-list" v-if="spieler.length > 0">
+    <div class="spieler-list" v-if="filteredSpieler.length > 0">
       <h2>Verfügbare Spieler</h2>
       <div class="spieler-grid">
-        <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
+        <div v-for="spieler in filteredSpieler" :key="spieler.spielerId" class="spieler">
           <h3>{{ spieler.name }}</h3>
           <img :src="spieler.profilePicture" alt="Profilbild" class="profilbild" />
           <div class="actions">
+            <!-- Spieler zur Session hinzufügen -->
             <button 
               @click="addPlayerToSession(spieler.spielerId!)" 
-              :disabled="addedPlayers.has(spieler.spielerId!)" 
-              :class="{ 'disabled': addedPlayers.has(spieler.spielerId!) }">
+              :disabled="addedPlayerIds.has(spieler.spielerId!)" 
+              :class="{ 'disabled': addedPlayerIds.has(spieler.spielerId!) }">
               Hinzufügen
             </button>
+            <!-- Spieler aus der Session entfernen -->
             <button 
               @click="removePlayerFromSession(spieler.spielerId!)" 
-              :disabled="!addedPlayers.has(spieler.spielerId!)" 
-              :class="{ 'disabled': !addedPlayers.has(spieler.spielerId!) }">
+              :disabled="!addedPlayerIds.has(spieler.spielerId!)" 
+              :class="{ 'disabled': !addedPlayerIds.has(spieler.spielerId!) }">
               Entfernen
             </button>
           </div>
@@ -44,16 +51,13 @@
   </div>
 </template>
 
-
 <script lang="ts" setup>
-// Importiere den Session-Typ
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import router from '../router';
-import { Session } from '@/Types/Session'; // Importiere das Session Interface
-import { Player } from '@/Types/Player';  // Player Interface importieren
+import { Session } from '../Types/Session'; 
+import { Player } from '../Types/Player';
 
-const spieler = ref<Player[]>([])
 // import profile1 from '../assets/Profilbilder/ProfilBild1.png';
 // import profile2 from '../assets/Profilbilder/ProfilBild2.png';
 // import profile3 from '../assets/Profilbilder/ProfilBild3.png';
@@ -64,78 +68,71 @@ const spieler = ref<Player[]>([])
 // import profile8 from '../assets/Profilbilder/ProfilBild8.png';
 // import profile9 from '../assets/Profilbilder/ProfilBild9.png';
 // import profile10 from '../assets/Profilbilder/ProfilBild10.png';
+
+
+const spieler = ref <Player[]>([])
 // Session State
 const sessionData = ref<Session>({
-  spielRundenName: '',          // Sessionname leer initialisieren
-  spielerIds: [],       // Leere Liste von Spieler-IDs
+  spielRundenNamen: '',
+  spielrundenId: '', // Dieses Feld wird nicht ins Backend gesendet
+  spielerListe: [],
 });
 
-// Alle Spieler abrufen
 // const spieler = ref<Player[]>([
 //   { spielerId: '1', name: 'Tom', profilePicture: profile1 },
 //   { spielerId: '2', name: 'Weyo', profilePicture: profile2 },
-//   { spielerId: '3', name: 'Jan', profilePicture: profile3 },
-//   { spielerId: '4', name: 'Mathis', profilePicture: profile4 },
-//   { spielerId: '5', name: 'Mobamboficker', profilePicture: profile5 },
-//   { spielerId: '6', name: 'Peter Jökel', profilePicture: profile6 },
-//   { spielerId: '7', name: 'Spieler 7', profilePicture: profile7 },
-//   { spielerId: '8', name: 'Spieler 8', profilePicture: profile8 },
-//   { spielerId: '9', name: 'Spieler 9', profilePicture: profile9 },
-//   { spielerId: '10', name: 'Spieler 10', profilePicture: profile10 },
+//   { spielerId: '3', name: 'Weyo', profilePicture: profile3 },
+//   { spielerId: '4', name: 'Weyo', profilePicture: profile4 },
+//   { spielerId: '5', name: 'Weyo', profilePicture: profile5 },
+//   { spielerId: '6', name: 'Weyo', profilePicture: profile6 },
+//   { spielerId: '7', name: 'Weyo', profilePicture: profile7 },
+//   { spielerId: '8', name: 'Weyo', profilePicture: profile8 },
+//   { spielerId: '9', name: 'Weyo', profilePicture: profile9 },
+//   { spielerId: '10', name: 'Weyo', profilePicture: profile10 },
+//   // Weitere Spieler hier...
 // ]);
 
-
-
-const fetchSpieler = async () => {
-  try {
-    const response = await axios.get('/api/getAlleSpieler');
-    const spielerArray = response.data.data;
-
-    if (Array.isArray(spielerArray)) {
-      spielerArray.forEach((spielerData: any) => {
-        spieler.value.push({
-          spielerId: spielerData.spielerId.id,
-          name: spielerData.name,
-          profilePicture: spielerData.profilePicture, // Base64-Bild
-        });
-      });
-    }
-  } catch (error) {
-    console.error('Fehler beim Abrufen der Spieler:', error);
-  }
-};
-
-const addedPlayers = ref<Set<string>>(new Set());
+const searchQuery = ref(''); // Suchabfrage für die Spieler
+const addedPlayerIds = ref<Set<string>>(new Set()); // Set für die hinzugefügten Spieler-IDs
 
 // Spieler zur Session hinzufügen
 const addPlayerToSession = (spielerId: string) => {
-  if (!sessionData.value.spielerIds.includes(spielerId)) {
-    sessionData.value.spielerIds.push(spielerId);
-    addedPlayers.value.add(spielerId); // Spieler-ID zum Set hinzufügen
-  }
-  console.log('Spieler hinzugefügt:', sessionData.value.spielerIds);
+  addedPlayerIds.value.add(spielerId);
+  console.log('Spieler hinzugefügt:', Array.from(addedPlayerIds.value));
 };
 
 // Spieler aus der Session entfernen
 const removePlayerFromSession = (spielerId: string) => {
-  const index = sessionData.value.spielerIds.indexOf(spielerId);
-  if (index > -1) {
-    sessionData.value.spielerIds.splice(index, 1);
-    addedPlayers.value.delete(spielerId); // Spieler-ID aus dem Set entfernen
-  }
-  console.log('Spieler entfernt:', sessionData.value.spielerIds);
+  addedPlayerIds.value.delete(spielerId);
+  console.log('Spieler entfernt:', Array.from(addedPlayerIds.value));
 };
-// Session speichern
+
+// Gefilterte Spieler basierend auf der Suchanfrage
+const filteredSpieler = computed(() => {
+  if (!searchQuery.value) {
+    return spieler.value; // Rückgabe aller Spieler, wenn keine Suchanfrage besteht
+  }
+  const query = searchQuery.value.toLowerCase();
+  return spieler.value.filter(spieler => spieler.name.toLowerCase().includes(query));
+});
+
+// Session speichern (Sessionnamen und Spieler-IDs ans Backend schicken)
 const saveSession = async () => {
-  if (sessionData.value.spielRundenName && sessionData.value.spielerIds.length > 0) {
+  if (sessionData.value.spielRundenNamen && addedPlayerIds.value.size > 0) {
     try {
-      const response = await axios.post('/api/createSpielRunde', sessionData.value);
+      // Erstelle ein Objekt, das nur den Sessionnamen und die Spieler-IDs enthält
+      const sessionPayload = {
+        spielRundenNamen: sessionData.value.spielRundenNamen,
+        spielerIds: Array.from(addedPlayerIds.value),
+      };
+
+      console.log(sessionPayload)
+
+      // Sende die Daten ans Backend
+      const response = await axios.post('/api/createSpielRunde', sessionPayload);
       console.log('Session erstellt:', response.data);
 
-      // Session-ID aus dem Backend
-      sessionData.value.spielRundenId = response.data.sessionId; 
-
-      // Zurück zur Startseite nach Speichern der Session
+      // Zurück zur Startseite nach dem Speichern der Session
       router.push('/');
     } catch (error) {
       console.error('Fehler beim Erstellen der Session:', error);
@@ -145,16 +142,28 @@ const saveSession = async () => {
   }
 };
 
-// Initialisierung - Spieler abrufen
-onMounted(() => {
-  fetchSpieler();
-});
-
 // Zurück zur Startseite
 const goHome = () => {
   router.push('/');
 };
+
+const fetchPlayers = async () => {
+  try {
+    const response = await axios.get('/api/getAlleSpieler'); // Endpunkt zum Abrufen der Spieler
+    spieler.value = response.data; // Setze die Spieler-Daten in die Reaktiv-Variable
+    console.log('Spieler erfolgreich geladen:', spieler.value);
+  } catch (error) {
+    console.error('Fehler beim Laden der Spieler:', error);
+  }
+};
+
+// Aufruf der fetchPlayers Funktion beim Mounten
+onMounted(() => {
+  fetchPlayers(); // Spieler laden
+});
+
 </script>
+
 
 <style scoped>
 .session-erstellen {
@@ -171,15 +180,24 @@ const goHome = () => {
   margin: 0 auto;
 }
 
+.spieler-suche input {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+}
+
 .spieler-list {
   margin: 20px 0;
 }
 
 .spieler-grid {
   display: grid;
-  grid-template-columns: repeat(5, 150px); /* 5 Spalten, jede 120px breit */
-  gap: 20px; /* Abstand zwischen den Items */
-  justify-content: center; /* Zentriert das Grid innerhalb des Containers */
+  grid-template-columns: repeat(5, 150px);
+  gap: 40px;
+  justify-content: center;
 }
 
 .spieler {
@@ -188,9 +206,9 @@ const goHome = () => {
   align-items: center;
   border: 1px solid #ddd;
   border-radius: 8px;
-  width: 150px; /* Breite des Containers */
-  padding: 10; /* Innenabstand */
-  text-align: center; /* Text zentrieren */
+  width: 150px;
+  padding: 10px;
+  text-align: center;
 }
 
 .profilbild {
@@ -198,13 +216,13 @@ const goHome = () => {
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 10px; /* Abstand unter dem Bild */
+  margin-bottom: 10px;
 }
 
 .actions {
   display: flex;
-  flex-direction: column; /* Buttons untereinander anordnen */
-  gap: 5px; /* Abstand zwischen den Buttons */
+  flex-direction: column;
+  gap: 5px;
   padding-bottom: 10px;
 }
 
@@ -216,17 +234,17 @@ const goHome = () => {
 }
 
 .actions button:first-child {
-  background-color: #4CAF50; /* Grün für Hinzufügen */
+  background-color: #4CAF50; 
   color: white;
 }
 
 .actions button:last-child {
-  background-color: #f44336; /* Rot für Entfernen */
+  background-color: #f44336; 
   color: white;
 }
 
 .actions button:hover {
-  opacity: 0.8; /* Transparenz beim Hover */
+  opacity: 0.8; 
 }
 
 .save-session button {
@@ -259,10 +277,9 @@ const goHome = () => {
 }
 
 .actions button.disabled {
-  background-color: #ccc; /* Grauer Hintergrund für deaktivierte Buttons */
-  color: #666; /* Graue Schriftfarbe */
-  cursor: not-allowed; /* Zeiger wird zu einer durchgestrichenen Hand */
-  opacity: 0.6; /* Leichte Transparenz */
+  background-color: #ccc; 
+  color: #666; 
+  cursor: not-allowed; 
+  opacity: 0.6; 
 }
-
 </style>

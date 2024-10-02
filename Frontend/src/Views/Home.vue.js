@@ -5,6 +5,9 @@ const router = useRouter();
 const goToCreatePlayer = () => {
     router.push('/createPlayer');
 };
+const goToSeeAllSessions = () => {
+    router.push('/seeAllSessions');
+};
 const goToSeeAllPlayer = () => {
     console.log("SeeallPlayer");
     router.push('/seeAllPlayer');
@@ -35,7 +38,7 @@ function __VLS_template() {
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("home") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({});
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("buttons") }, });
-    __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({});
+    __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToSeeAllSessions) }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToCreateSession) }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToSeeAllPlayer) }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goToCreatePlayer) }, });
@@ -56,6 +59,7 @@ const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
             goToCreatePlayer: goToCreatePlayer,
+            goToSeeAllSessions: goToSeeAllSessions,
             goToSeeAllPlayer: goToSeeAllPlayer,
             goToCreateSession: goToCreateSession,
         };

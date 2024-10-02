@@ -1,6 +1,7 @@
-// src/Types/Session.ts
+import { Player } from "./Player";
+
 export interface Session {
-  spielRundenId?: string; // Optional, da es vom Backend vergeben wird
-  spielRundenName: string; // Name der Session
-  spielerIds: string[]; // Array von Spieler-IDs (string)
+  spielRundenNamen: string;
+  spielrundenId: string;
+  spielerListe: Player[];
 }

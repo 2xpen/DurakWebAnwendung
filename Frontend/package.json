@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview",
-    "update:dist": "tsc updateDist.ts && node updateDist.js"
-  },
+ "scripts": {
+  "dev": "vite",
+  "build": "vue-tsc -b && vite build",
+  "preview": "vite preview",
+  "update:dist": "tsc updateDist.ts && node updateDist.js"
+},
   "dependencies": {
     "vue": "^3.4.37",
     "vue-router": "^4.4.5"

@@ -111,12 +111,6 @@ const goHome = () => {
   padding: 0 20px; /* Innenabstand links und rechts */
 }
 
-.spieler-grid {
-  display: grid; /* Ändert das Layout zu einem Grid */
-  grid-template-columns: repeat(5, 1fr); /* 5 gleichmäßige Spalten */
-  gap: 20px; /* Abstand zwischen den Spielern */
-  justify-items: center; /* Zentriert die Spieler in den Zellen */
-}
 
 .spieler {
   border: 1px solid #ddd;
@@ -126,6 +120,12 @@ const goHome = () => {
   text-align: center; /* Text zentrieren */
 }
 
+.spieler-grid {
+  display: grid; /* Ändert das Layout zu einem Grid */
+  grid-template-columns: repeat(5, 1fr); /* 5 gleichmäßige Spalten */
+  gap: 20px; /* Abstand zwischen den Spielern */
+  justify-items: center; /* Zentriert die Spieler in den Zellen */
+}
 .bild-container {
   padding: 4px;
   margin-bottom: 10px;
