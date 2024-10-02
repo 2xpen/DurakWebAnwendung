@@ -25,7 +25,6 @@ const goToSeeAllSessions = (): void => {
 };
 
 const goToSeeAllPlayer = (): void => {
-  console.log("SeeallPlayer")
   router.push('/seeAllPlayer');
 };
 

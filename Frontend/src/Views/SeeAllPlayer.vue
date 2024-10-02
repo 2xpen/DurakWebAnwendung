@@ -53,7 +53,7 @@ const spieler = ref<Player[]>([])
 const fetchSpieler = async () => {
   try {
     const response = await axios.get('/api/getAlleSpieler');
-    console.log('API Response:', response); // API Antwort überprüfen
+   
 
     // Zugriff auf das Array mit den Spielern
     const spielerArray = response.data.data;
@@ -68,23 +68,22 @@ const fetchSpieler = async () => {
         });
       });
     } else {
-      console.error('Erwartetes Array, aber erhalten:', spielerArray);
+    
     }
     
-    console.log('Spieler-Daten:', spieler.value);
+   
   } catch (error) {
-    console.error('Fehler beim Abrufen der Spieler:', error);
   }
 };
 
 const bearbeiten = (spieler: Player) => {
   // Logik für Bearbeiten hinzufügen
-  console.log('Bearbeiten:', spieler.name);
+
 };
 
 const loeschen = (spieler: Player) => {
   // Logik für Löschen hinzufügen
-  console.log('Löschen:', spieler.name);
+
 };
 
 onMounted(() => {

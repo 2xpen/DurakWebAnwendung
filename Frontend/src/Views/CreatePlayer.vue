@@ -94,7 +94,6 @@ const getBase64Image = (url: string): Promise<string> => {
 
 const selectProfilePicture = (picture: string) => {
   selectedProfilePicture.value = picture;
-  console.log(selectedProfilePicture.value, "selected ProfilePicture")
 };
 
 const goHome = () => {
@@ -122,13 +121,9 @@ const SaveAndHome = async () => {
       data: playerJson, 
       dataType: 'json',
     }).done((response: any) => {
-      console.log('Erfolg:', response);
-      console.log(response.statusIndicator);
     }).fail((jqXHR: JQuery.jqXHR, textStatus: string, errorThrown: string) => {
-      console.error('Fehler:', textStatus, errorThrown); 
     });
 
-    console.log("json-Object Spieler", playerJson); 
 
     // Setze den Alert-Text und zeige ihn an
     allertTitle.value = `Spieler ${playerName.value} erstellt!`;

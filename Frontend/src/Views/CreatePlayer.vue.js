@@ -52,7 +52,6 @@ const getBase64Image = (url) => {
 };
 const selectProfilePicture = (picture) => {
     selectedProfilePicture.value = picture;
-    console.log(selectedProfilePicture.value, "selected ProfilePicture");
 };
 const goHome = () => {
     playerName.value = ''; // Zurücksetzen des Spielernamens
@@ -75,12 +74,8 @@ const SaveAndHome = async () => {
             data: playerJson,
             dataType: 'json',
         }).done((response) => {
-            console.log('Erfolg:', response);
-            console.log(response.statusIndicator);
         }).fail((jqXHR, textStatus, errorThrown) => {
-            console.error('Fehler:', textStatus, errorThrown);
         });
-        console.log("json-Object Spieler", playerJson);
         // Setze den Alert-Text und zeige ihn an
         allertTitle.value = `Spieler ${playerName.value} erstellt!`;
         allertMessage.value = `Spieler ${playerName.value} mit Profilbild erstellt!`;

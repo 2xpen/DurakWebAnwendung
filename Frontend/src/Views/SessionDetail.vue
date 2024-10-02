@@ -49,7 +49,7 @@ const goBack = () => {
 // Funktion zum Aktualisieren der Verluste (z.B. zum Testen)
 const incrementLosses = (playerName: string, change: number) => {
   // Hier kannst du die Logik zum Aktualisieren der Verluste implementieren
-  console.log(`Aktualisiere Verluste für ${playerName}: ${change}`);
+ 
 };
 
 </script>

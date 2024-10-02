@@ -70,13 +70,11 @@ const addedPlayerIds = ref<Set<string>>(new Set()); // Set für die hinzugefügt
 // Spieler zur Session hinzufügen
 const addPlayerToSession = (spielerId: string) => {
   addedPlayerIds.value.add(spielerId);
-  console.log('Spieler hinzugefügt:', Array.from(addedPlayerIds.value));
 };
 
 // Spieler aus der Session entfernen
 const removePlayerFromSession = (spielerId: string) => {
   addedPlayerIds.value.delete(spielerId);
-  console.log('Spieler entfernt:', Array.from(addedPlayerIds.value));
 };
 
 // Session speichern (Sessionnamen und Spieler-IDs ans Backend schicken)
@@ -89,11 +87,8 @@ const saveSession = async () => {
         spielerIds: Array.from(addedPlayerIds.value),
       };
 
-      console.log(sessionPayload)
-
       // Sende die Daten ans Backend
       const response = await axios.post('/api/createSpielRunde', sessionPayload);
-      console.log('Session erstellt:', response.data);
 
       // Zurück zur Startseite nach dem Speichern der Session
       router.push('/');
@@ -110,19 +105,35 @@ const goHome = () => {
   router.push('/');
 };
 
-const fetchPlayers = async () => {
+const fetchSpieler = async () => {
   try {
-    const response = await axios.get('/api/getAlleSpieler'); // Endpunkt zum Abrufen der Spieler
-    spieler.value = response.data; // Setze die Spieler-Daten in die Reaktiv-Variable
-    console.log('Spieler erfolgreich geladen:', spieler.value);
+    const response = await axios.get('/api/getAlleSpieler');
+   
+
+    // Zugriff auf das Array mit den Spielern
+    const spielerArray = response.data.data;
+
+    if (Array.isArray(spielerArray)) {
+      spielerArray.forEach((spielerData: any) => {
+        // Spieler zur spieler-Referenz hinzufügen
+        spieler.value.push({
+          spielerId: spielerData.spielerId.id,
+          name: spielerData.name,
+          profilePicture: spielerData.profilePicture, // Hier ist der vollständige Base64-String
+        });
+      });
+    } else {
+    
+    }
+    
+   
   } catch (error) {
-    console.error('Fehler beim Laden der Spieler:', error);
   }
 };
 
 // Aufruf der fetchPlayers Funktion beim Mounten
 onMounted(() => {
-  fetchPlayers(); // Spieler laden
+  fetchSpieler(); // Spieler laden
 });
 </script>
 

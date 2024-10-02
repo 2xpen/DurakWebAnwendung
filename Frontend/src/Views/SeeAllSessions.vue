@@ -111,7 +111,7 @@ const fetchSessions = async () => {
 const startSession = (sessionId: string) => {
   router.push({ name: 'sessionDetail', params: { sessionId } }); // sessionId an die Detailansicht übergeben
   
-  console.log('Session starten mit ID:', sessionId);
+ 
 };
 
 // Lade die Sessions beim Mounten der Komponente

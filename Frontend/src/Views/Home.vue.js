@@ -9,7 +9,6 @@ const goToSeeAllSessions = () => {
     router.push('/seeAllSessions');
 };
 const goToSeeAllPlayer = () => {
-    console.log("SeeallPlayer");
     router.push('/seeAllPlayer');
 };
 const goToCreateSession = () => {
