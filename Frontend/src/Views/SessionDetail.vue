@@ -124,7 +124,7 @@ const calculateLooses = async (player: PlayerInSession) => {
   console.log(payload)
   try{
     const response = await axios.post('/api/changedurakstand', payload);
-    player.durakStand = response.data.data.durakStand
+    player.durakStand = response.data.durakStand
     console.log(player.durakStand, "player.durakStand")
   } catch (error){
     console.log('Fehler', error)
