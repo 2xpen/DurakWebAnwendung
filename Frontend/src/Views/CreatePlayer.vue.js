@@ -19,8 +19,10 @@ import profile7 from '../assets/Profilbilder/ProfilBild7.png';
 import profile8 from '../assets/Profilbilder/ProfilBild8.png';
 import profile9 from '../assets/Profilbilder/ProfilBild9.png';
 import profile10 from '../assets/Profilbilder/ProfilBild10.png';
+import Weyo from '../assets/Profilbilder/Weyo.png';
 // Array mit Profilbildern
 const profilePictures = [
+    Weyo,
     profile1,
     profile2,
     profile3,
