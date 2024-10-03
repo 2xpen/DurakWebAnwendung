@@ -1,4 +1,5 @@
 <template>
+  <h1> huhu</h1>
   <div  v-if="spielrunde" class="session-detail">
     <h1 class="session-title">{{ spielrunde!.spielRundenName || 'Keine Session gefunden' }}</h1>
     
@@ -40,6 +41,30 @@ const route = useRoute();
 const router = useRouter();
 
 const spielrunde = ref<Spielrunde>();
+// spielrunde.value = {
+//   spielRundenName: "Testspielrunde",
+//   spielRundenId: "jklshdfghsdkljfgh",
+//   spielerInRundeAnzeigenDTOS: [
+//     {
+//       spielerId: "1",
+//       name: "Max Mustermann",
+//       durakStand: 2,
+//       profilePicture: "https://via.placeholder.com/50"
+//     },
+//     {
+//       spielerId: "2",
+//       name: "Erika Musterfrau",
+//       durakStand: 0,
+//       profilePicture: "https://via.placeholder.com/50"
+//     },
+//     {
+//       spielerId: "3",
+//       name: "Hans Meier",
+//       durakStand: 1,
+//       profilePicture: "https://via.placeholder.com/50"
+//     }
+//   ]
+// };
 
 
 const props = defineProps<{
