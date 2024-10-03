@@ -10,9 +10,11 @@ import org.hacienda.durakweb.controller.dto.SpielRundeDetailsDTO;
 import org.hacienda.durakweb.controller.dto.SpielerAnzeigenViewDTO;
 import org.hacienda.durakweb.controller.dto.SpielerInRundeAnzeigenDTO;
 import org.hacienda.durakweb.controller.dto.SpielrundeAuswahlDTO;
+import org.hacienda.durakweb.controller.requests.ChangeDurakStandRequest;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
+import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.data.identifier.SpielrundenId;
 import org.hacienda.durakweb.service.SpielerService;
 import org.hacienda.durakweb.service.SpielrundenService;
@@ -134,6 +136,34 @@ public class SpielRundenController {
         /**
          * TEST
          */
+        return ResponseEntity.ok(wrapper);
+    }
+
+
+    @PostMapping("/changedurakstand")
+    public ResponseEntity<ResponseWrapper<SpielerStandRecord>> changeSpielerStandRecord(@RequestBody ChangeDurakStandRequest request) {
+
+        ResponseWrapper<SpielerStandRecord> wrapper = new ResponseWrapper<>();
+
+        wrapper.setData(spielrundenService.changeSpielerstandRecord(request.getSpielerId(), request.getSpielrundenId(), request.getVerrechungszahl()));
+        wrapper.addMeldungen("banutti titi");
+        wrapper.setStatusIndicator(StatusCode.ALLESDISCO);
+
+
+        /**
+         * TEST
+         * */
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            log.info("response /changeDurakstand = " + mapper.writeValueAsString(wrapper.getData()));
+        } catch (JsonProcessingException e) {
+            e.getMessage();
+        }
+        /**
+         * TEST
+         */
+
         return ResponseEntity.ok(wrapper);
     }
 

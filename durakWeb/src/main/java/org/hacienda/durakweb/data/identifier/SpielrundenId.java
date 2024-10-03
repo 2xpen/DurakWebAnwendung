@@ -7,8 +7,8 @@ public class SpielrundenId extends AbstractIdentifier {
         super();
     }
 
-    public SpielrundenId(String spielRundenid) {
-        super(spielRundenid);
+    public SpielrundenId(String spielRundenId) {
+        super(spielRundenId);
     }
 
 }
