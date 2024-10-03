@@ -1,7 +1,7 @@
 import { PlayerInSession } from "./PlayerInSession";
 
 export interface Spielrunde {
-  spielRundenName: string;
   spielRundenId: string;
+  spielRundenName: string;
   spielerInRundeAnzeigenDTOS: PlayerInSession[];
 }

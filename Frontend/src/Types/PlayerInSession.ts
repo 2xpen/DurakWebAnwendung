@@ -1,6 +1,6 @@
 export interface PlayerInSession {
-  spielerId: string;
+  durakStand: number;
   name: string;
   profilePicture: string;
-  durakStand: number;
+  spielerId: string;
 }
