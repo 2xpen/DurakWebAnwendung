@@ -1,10 +1,10 @@
 <template>
   <div class="session-detail">
-    <h1 class="session-title">{{ spielrunde?.spielRundenName || 'Keine Session gefunden' }}</h1>
+    <h1 class="session-title">{{ spielrunde!.spielRundenName || 'Keine Session gefunden' }}</h1>
     
     <div class="spieler-container">
       <div 
-        v-for="player in spielrunde?.spielerInRundeAnzeigenDTOS" 
+        v-for="player in spielrunde!.spielerInRundeAnzeigenDTOS" 
         :key="player.spielerId" 
         class="spieler"
       >
