@@ -1,5 +1,4 @@
 <template>
-  <h1> huhu</h1>
   <div  v-if="spielrunde" class="session-detail">
     <h1 class="session-title">{{ spielrunde!.spielRundenName || 'Keine Session gefunden' }}</h1>
     
@@ -18,8 +17,8 @@
         />
         
         <div class="buttons-container">
-          <button @click="addLosses(player, 1)">Verloren (+1)</button>
-          <button @click="removeLosses(player, -1)">Gewonnen (-1)</button>
+          <button @click="addLosses(player, 1)" class="duDurakKnopf">Du Durak</button>
+          <button @click="removeLosses(player, -1)" class="korrekturKnopf">Korrektur</button>
         </div>
       </div>
     </div>
@@ -36,34 +35,41 @@ import axios from 'axios';
 import { Player } from '../Types/Player'; 
 import { Spielrunde } from '../Types/Spielrunde';
 import { defineProps } from 'vue';
+// import Weyo from '../assets/Profilbilder/Weyo.png'
 
 const route = useRoute();
 const router = useRouter();
 
 const spielrunde = ref<Spielrunde>();
-//  spielrunde.value = {
-//   spielRundenName: "Testspielrunde",
-//    spielRundenId: "jklshdfghsdkljfgh",
-//   spielerInRundeAnzeigenDTOS: [
+//   spielrunde.value = {
+//    spielRundenName: "Testspielrunde",
+//     spielRundenId: "jklshdfghsdkljfgh",
+//    spielerInRundeAnzeigenDTOS: [
+//      {
+//        spielerId: "1",
+//        name: "Weyo",
+//        durakStand: 2,
+//        profilePicture: Weyo
+//       },
 //     {
-//       spielerId: "1",
-//       name: "Max Mustermann",
-//       durakStand: 2,
-//       profilePicture: "https://via.placeholder.com/50"
+//        spielerId: "2",
+//       name: "Jan",
+//        durakStand: 0,
+//       profilePicture: Weyo
+//     },
+//      {
+//       spielerId: "3",
+//       name: "Mathis",
+//       durakStand: 1,
+//         profilePicture: Weyo
 //      },
-//    {
-//       spielerId: "2",
-//      name: "Erika Musterfrau",
-//       durakStand: 0,
-//      profilePicture: "https://via.placeholder.com/50"
-//    },
-//     {
-//      spielerId: "3",
-//      name: "Hans Meier",
-//      durakStand: 1,
-//        profilePicture: "https://via.placeholder.com/50"
-//     }
-//   ]
+//      {
+//       spielerId: "4",
+//       name: "Tom",
+//       durakStand: 1,
+//         profilePicture: Weyo
+//      }
+//    ]
 // };
 
 
@@ -117,8 +123,7 @@ onMounted(() => {
   fetchSessionDetails(); 
 });
 </script>
-
-<style scoped>
+<style>
 .session-detail {
   display: flex;
   flex-direction: column;
@@ -132,8 +137,11 @@ onMounted(() => {
 
 .spieler-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap; /* Allow the items to wrap to the next line */
+  justify-content: center; /* Center the player divs horizontally */
+  align-items: center; /* Center the player divs vertically */
+  max-width: 800px; /* Optional: Set a maximum width for the container */
+  margin: 0 auto; /* Center the container within the parent */
 }
 
 .spieler {
@@ -142,6 +150,8 @@ onMounted(() => {
   padding: 10px;
   margin: 10px;
   text-align: center;
+  width: calc(50% - 20px); /* Set width to 50% minus margin for two side by side */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
 }
 
 .profilbild {
@@ -168,4 +178,37 @@ onMounted(() => {
 .back-button:hover {
   background-color: #0056b3;
 }
+
+.duDurakKnopf {
+  padding: 15px 30px; /* Increased padding for a larger button */
+  font-size: 1.2rem; /* Larger font size */
+  font-weight: bold; /* Make the text bold */
+  background-color: #007bff; /* Green background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s; /* Transition effect */
+}
+
+.duDurakKnopf:hover {
+  background-color: #0056b3; /* Darker green on hover */
+}
+
+.korrekturKnopf {
+  padding: 8px 16px; /* Smaller padding for a more subtle button */
+  font-size: 1rem; /* Normal font size */
+  background-color: #550019; /* Yellow background */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s; /* Transition effect */
+  margin-left: 10px;
+}
+
+.korrekturKnopf:hover {
+  background-color: #2b000d; /* Darker yellow on hover */
+}
+
 </style>

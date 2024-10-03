@@ -3,32 +3,39 @@ import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import { defineProps } from 'vue';
 const { defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
+// import Weyo from '../assets/Profilbilder/Weyo.png'
 const route = useRoute();
 const router = useRouter();
 const spielrunde = ref();
-//  spielrunde.value = {
-//   spielRundenName: "Testspielrunde",
-//    spielRundenId: "jklshdfghsdkljfgh",
-//   spielerInRundeAnzeigenDTOS: [
+//   spielrunde.value = {
+//    spielRundenName: "Testspielrunde",
+//     spielRundenId: "jklshdfghsdkljfgh",
+//    spielerInRundeAnzeigenDTOS: [
+//      {
+//        spielerId: "1",
+//        name: "Weyo",
+//        durakStand: 2,
+//        profilePicture: Weyo
+//       },
 //     {
-//       spielerId: "1",
-//       name: "Max Mustermann",
-//       durakStand: 2,
-//       profilePicture: "https://via.placeholder.com/50"
+//        spielerId: "2",
+//       name: "Jan",
+//        durakStand: 0,
+//       profilePicture: Weyo
+//     },
+//      {
+//       spielerId: "3",
+//       name: "Mathis",
+//       durakStand: 1,
+//         profilePicture: Weyo
 //      },
-//    {
-//       spielerId: "2",
-//      name: "Erika Musterfrau",
-//       durakStand: 0,
-//      profilePicture: "https://via.placeholder.com/50"
-//    },
-//     {
-//      spielerId: "3",
-//      name: "Hans Meier",
-//      durakStand: 1,
-//        profilePicture: "https://via.placeholder.com/50"
-//     }
-//   ]
+//      {
+//       spielerId: "4",
+//       name: "Tom",
+//       durakStand: 1,
+//         profilePicture: Weyo
+//      }
+//    ]
 // };
 let __VLS_typeProps;
 const props = defineProps();
@@ -91,11 +98,9 @@ function __VLS_template() {
     };
     let __VLS_directives;
     let __VLS_styleScopedClasses;
-    __VLS_styleScopedClasses['back-button'];
     // CSS variable injection 
     // CSS variable injection end 
     let __VLS_resolvedLocalAndGlobalComponents;
-    __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({});
     if (__VLS_ctx.spielrunde) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("session-detail") }, });
         __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({ ...{ class: ("session-title") }, });
@@ -113,12 +118,12 @@ function __VLS_template() {
                         if (!((__VLS_ctx.spielrunde)))
                             return;
                         __VLS_ctx.addLosses(player, 1);
-                    } }, });
+                    } }, ...{ class: ("duDurakKnopf") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
                         if (!((__VLS_ctx.spielrunde)))
                             return;
                         __VLS_ctx.removeLosses(player, -1);
-                    } }, });
+                    } }, ...{ class: ("korrekturKnopf") }, });
         }
         __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goBack) }, ...{ class: ("back-button") }, });
     }
@@ -128,6 +133,8 @@ function __VLS_template() {
     __VLS_styleScopedClasses['spieler'];
     __VLS_styleScopedClasses['profilbild'];
     __VLS_styleScopedClasses['buttons-container'];
+    __VLS_styleScopedClasses['duDurakKnopf'];
+    __VLS_styleScopedClasses['korrekturKnopf'];
     __VLS_styleScopedClasses['back-button'];
     var __VLS_slots;
     var __VLS_inheritedAttrs;
