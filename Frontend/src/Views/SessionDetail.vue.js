@@ -36,7 +36,7 @@ const fetchSessionDetails = async () => {
     const sessionId = props.spielRundenId;
     try {
         const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`);
-        spielrunde.value = response.data;
+        spielrunde.value = response.data.data;
         console.log(spielrunde.value, "session.value");
         console.log(spielrunde.value.spielRundenName, "spielRundenName");
     }
