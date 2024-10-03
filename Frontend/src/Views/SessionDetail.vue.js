@@ -63,8 +63,9 @@ const goBack = () => {
 const calculateLooses = async (player) => {
     const sessionId = props.spielRundenId;
     let wert;
-    if (!bockrundeStarted) {
+    if (bockrundeStarted.value == false) {
         wert = 1;
+        console.log("keine Bockrunde", wert);
     }
     else {
         wert = 2;
@@ -88,7 +89,7 @@ const calculateLooses = async (player) => {
 const removeLosses = async (player) => {
     const sessionId = props.spielRundenId;
     let wert;
-    if (!bockrundeStarted) {
+    if (bockrundeStarted.value == false) {
         wert = -1;
     }
     else {

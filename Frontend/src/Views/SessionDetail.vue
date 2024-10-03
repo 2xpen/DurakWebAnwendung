@@ -110,8 +110,9 @@ const goBack = () => {
 const calculateLooses = async (player: PlayerInSession) => {
   const sessionId = props.spielRundenId; 
   let wert: number 
-  if(!bockrundeStarted){
+  if(bockrundeStarted.value == false){
     wert = 1
+    console.log("keine Bockrunde", wert)
   }else{
     wert = 2
     clickCount.value++
@@ -134,7 +135,7 @@ const calculateLooses = async (player: PlayerInSession) => {
 const removeLosses = async (player: PlayerInSession) => {
   const sessionId = props.spielRundenId; 
   let wert: number
-  if(!bockrundeStarted){
+  if(bockrundeStarted.value == false){
       wert = -1
     }else{
       wert = -2
