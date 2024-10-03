@@ -41,27 +41,27 @@ const route = useRoute();
 const router = useRouter();
 
 const spielrunde = ref<Spielrunde>();
-// spielrunde.value = {
+//  spielrunde.value = {
 //   spielRundenName: "Testspielrunde",
-//   spielRundenId: "jklshdfghsdkljfgh",
+//    spielRundenId: "jklshdfghsdkljfgh",
 //   spielerInRundeAnzeigenDTOS: [
 //     {
 //       spielerId: "1",
 //       name: "Max Mustermann",
 //       durakStand: 2,
 //       profilePicture: "https://via.placeholder.com/50"
-//     },
-//     {
+//      },
+//    {
 //       spielerId: "2",
-//       name: "Erika Musterfrau",
+//      name: "Erika Musterfrau",
 //       durakStand: 0,
-//       profilePicture: "https://via.placeholder.com/50"
-//     },
+//      profilePicture: "https://via.placeholder.com/50"
+//    },
 //     {
-//       spielerId: "3",
-//       name: "Hans Meier",
-//       durakStand: 1,
-//       profilePicture: "https://via.placeholder.com/50"
+//      spielerId: "3",
+//      name: "Hans Meier",
+//      durakStand: 1,
+//        profilePicture: "https://via.placeholder.com/50"
 //     }
 //   ]
 // };
@@ -77,6 +77,7 @@ const fetchSessionDetails = async () => {
     const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); 
     spielrunde.value = response.data; 
     console.log(spielrunde.value, "session.value")
+    console.log(spielrunde.value!.spielRundenName, "spielRundenName")
   } catch (error) {
     console.error('Fehler beim Abrufen der Session-Details:', error);
   }
