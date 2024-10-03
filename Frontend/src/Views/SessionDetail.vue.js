@@ -75,6 +75,7 @@ const calculateLooses = async (player) => {
         spielerId: player.spielerId,
         verrechnungszahl: wert
     };
+    console.log(payload);
     try {
         const response = await axios.post('/api/changedurakstand', payload);
         player.durakStand = response.data.data.durakStand;
@@ -99,6 +100,7 @@ const removeLosses = async (player) => {
         spielerId: player.spielerId,
         verrechnungszahl: wert
     };
+    console.log(payload);
     try {
         const response = await axios.post('/api/changedurakstand', payload);
         player.durakStand = response.data.data.durakStand;
