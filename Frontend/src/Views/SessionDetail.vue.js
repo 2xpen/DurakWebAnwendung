@@ -5,15 +5,15 @@ import { defineProps } from 'vue';
 const { defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
 const route = useRoute();
 const router = useRouter();
-const session = ref(null);
+const spielrunde = ref(null);
 let __VLS_typeProps;
 const props = defineProps();
 const fetchSessionDetails = async () => {
     const sessionId = props.spielRundenId;
     try {
         const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`);
-        session.value = response.data;
-        console.log(session.value, "session.value");
+        spielrunde.value = response.data;
+        console.log(spielrunde.value, "session.value");
     }
     catch (error) {
         console.error('Fehler beim Abrufen der Session-Details:', error);
@@ -72,9 +72,9 @@ function __VLS_template() {
     let __VLS_resolvedLocalAndGlobalComponents;
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("session-detail") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({ ...{ class: ("session-title") }, });
-    (__VLS_ctx.session?.spielRundenName || 'Keine Session gefunden');
+    (__VLS_ctx.spielrunde?.spielRundenName || 'Keine Session gefunden');
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-container") }, });
-    for (const [player] of __VLS_getVForSourceType((__VLS_ctx.session?.spielerInRundeAnzeigenDTOS))) {
+    for (const [player] of __VLS_getVForSourceType((__VLS_ctx.spielrunde?.spielerInRundeAnzeigenDTOS))) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((player.spielerId)), ...{ class: ("spieler") }, });
         __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
         (player.name);
@@ -111,7 +111,7 @@ function __VLS_template() {
 const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
-            session: session,
+            spielrunde: spielrunde,
             goBack: goBack,
             addLosses: addLosses,
             removeLosses: removeLosses,

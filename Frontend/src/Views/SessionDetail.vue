@@ -1,10 +1,10 @@
 <template>
   <div class="session-detail">
-    <h1 class="session-title">{{ session?.spielRundenName || 'Keine Session gefunden' }}</h1>
+    <h1 class="session-title">{{ spielrunde?.spielRundenName || 'Keine Session gefunden' }}</h1>
     
     <div class="spieler-container">
       <div 
-        v-for="player in session?.spielerInRundeAnzeigenDTOS" 
+        v-for="player in spielrunde?.spielerInRundeAnzeigenDTOS" 
         :key="player.spielerId" 
         class="spieler"
       >
@@ -33,13 +33,13 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import { Player } from '../Types/Player'; 
-import { Session } from '../Types/Session';
+import { Spielrunde } from '../Types/Spielrunde';
 import { defineProps } from 'vue';
 
 const route = useRoute();
 const router = useRouter();
 
-const session = ref<Session | null>(null);
+const spielrunde = ref<Spielrunde | null>(null);
 
 
 const props = defineProps<{
@@ -50,8 +50,8 @@ const fetchSessionDetails = async () => {
   const sessionId = props.spielRundenId; 
   try {
     const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); 
-    session.value = response.data; 
-    console.log(session.value, "session.value")
+    spielrunde.value = response.data; 
+    console.log(spielrunde.value, "session.value")
   } catch (error) {
     console.error('Fehler beim Abrufen der Session-Details:', error);
   }
