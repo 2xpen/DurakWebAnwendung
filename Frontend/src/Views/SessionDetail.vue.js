@@ -63,7 +63,7 @@ const goBack = () => {
 const calculateLooses = async (player) => {
     const sessionId = props.spielRundenId;
     let wert;
-    if (bockrundeStarted.value == false) {
+    if (!bockrundeStarted.value) {
         wert = 1;
         console.log("keine Bockrunde", wert);
     }
@@ -79,8 +79,9 @@ const calculateLooses = async (player) => {
     console.log(payload);
     try {
         const response = await axios.post('/api/changedurakstand', payload);
-        player.durakStand = response.data.durakStand;
-        console.log(player.durakStand, "player.durakStand");
+        player.durakStand = response.data.data.durakStand;
+        console.log(player.durakStand, "Aktualisierter player.durakStand");
+        console.log('Spieler-ID:', response.data.spielerId);
     }
     catch (error) {
         console.log('Fehler', error);

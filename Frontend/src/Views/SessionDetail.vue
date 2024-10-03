@@ -108,28 +108,32 @@ const goBack = () => {
 
 const calculateLooses = async (player: PlayerInSession) => {
   const sessionId = props.spielRundenId; 
-  let wert: number 
-  if(bockrundeStarted.value == false){
-    wert = 1
-    console.log("keine Bockrunde", wert)
-  }else{
-    wert = 2
-    clickCount.value++
+  let wert: number;
+
+  if (!bockrundeStarted.value) {
+    wert = 1;
+    console.log("keine Bockrunde", wert);
+  } else {
+    wert = 2;
+    clickCount.value++;
   }
+
   const payload = {
     spielRundenId: sessionId,
     spielerId: player.spielerId,
     verrechnungszahl: wert
-  }
-  console.log(payload)
-  try{
-    const response = await axios.post('/api/changedurakstand', payload);
-    player.durakStand = response.data.durakStand
-    console.log(player.durakStand, "player.durakStand")
-  } catch (error){
-    console.log('Fehler', error)
-  }
-  checkClickLimit()
+  };
+
+  console.log(payload);
+  try {
+  const response = await axios.post('/api/changedurakstand', payload);
+  player.durakStand = response.data.data.durakStand;
+  console.log(player.durakStand, "Aktualisierter player.durakStand");
+  console.log('Spieler-ID:', response.data.spielerId);
+} catch (error) {
+  console.log('Fehler', error);
+}
+  checkClickLimit();
 };
 
 const removeLosses = async (player: PlayerInSession) => {
