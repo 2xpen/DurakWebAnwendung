@@ -1,5 +1,5 @@
 <template>
-  <div class="session-detail">
+  <div  v-if="spielrunde" class="session-detail">
     <h1 class="session-title">{{ spielrunde!.spielRundenName || 'Keine Session gefunden' }}</h1>
     
     <div class="spieler-container">
