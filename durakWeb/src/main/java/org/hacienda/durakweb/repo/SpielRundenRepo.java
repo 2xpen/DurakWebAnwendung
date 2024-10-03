@@ -1,5 +1,7 @@
 package org.hacienda.durakweb.repo;
 
+
+import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
 import org.hacienda.durakweb.data.identifier.SpielerId;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class SpielRundenRepo {
 

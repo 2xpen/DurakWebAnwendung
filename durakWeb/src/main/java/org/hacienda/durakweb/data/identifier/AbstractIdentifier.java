@@ -8,16 +8,16 @@ import java.util.UUID;
 @Getter
 public abstract class AbstractIdentifier {
 
-private final UUID id;
+    private final UUID id;
 
 
-    AbstractIdentifier(){
+    AbstractIdentifier() {
         this.id = UUID.randomUUID();
     }
 
-    AbstractIdentifier(String id){
+    AbstractIdentifier(String id) {
 
-        System.out.println(id +" EINE UUID WURDE MIT STRING ERZEUGT");
+        System.out.println(id + " EINE UUID WURDE MIT STRING ERZEUGT");
         this.id = UUID.fromString(id);
     }
 
@@ -27,7 +27,12 @@ private final UUID id;
 
 
     public boolean equals(AbstractIdentifier other) {
-    return getId().equals(other.getId());
+        return getId().equals(other.getId());
+    }
+
+    @Override
+    public String toString() {
+        return id.toString();
     }
 
 }

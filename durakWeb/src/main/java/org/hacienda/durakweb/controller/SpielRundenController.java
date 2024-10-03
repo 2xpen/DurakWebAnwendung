@@ -13,7 +13,6 @@ import org.hacienda.durakweb.controller.dto.SpielrundeAuswahlDTO;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
-import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.data.identifier.SpielrundenId;
 import org.hacienda.durakweb.service.SpielerService;
 import org.hacienda.durakweb.service.SpielrundenService;
@@ -102,18 +101,19 @@ public class SpielRundenController {
         return ResponseEntity.ok(wrapper);
     }
 
-    @GetMapping("/getSpielrunde")
-    public ResponseEntity<ResponseWrapper<SpielRundeDetailsDTO>> getSpielrundeById(@RequestParam SpielrundenId spielrundenId) {
+    @GetMapping("/getSpielrundeById")
+    public ResponseEntity<ResponseWrapper<SpielRundeDetailsDTO>> getSpielrundeById(@RequestParam SpielrundenId spielRundenId) {
         ResponseWrapper<SpielRundeDetailsDTO> wrapper = new ResponseWrapper<>();
 
-
-        Spielrunde spielRunde = spielrundenService.getSpielRundeById(spielrundenId);
+        log.info("spielerRunde By Id ausgelöst");
+        System.out.println("spielerRunde By Id ausgelöst");
+        Spielrunde spielRunde = spielrundenService.getSpielRundeById(spielRundenId);
 
 
         List<SpielerInRundeAnzeigenDTO> spielerInRundeAnzeigenDTOS = new ArrayList<>();
 
         for (Spieler spieler : spielerService.getSpielerById(spielrundenService.getSpielerIdsOfSpielrunde(spielRunde))) {
-            SpielerStandRecord spielerStandRecord = spielrundenService.getSpielerStandRecordById(spielrundenId, spieler.getSpielerId());
+            SpielerStandRecord spielerStandRecord = spielrundenService.getSpielerStandRecordById(spielRundenId, spieler.getSpielerId());
             spielerInRundeAnzeigenDTOS.add(new SpielerInRundeAnzeigenDTO(spieler, spielerStandRecord));
         }
 
@@ -124,6 +124,7 @@ public class SpielRundenController {
         /**
          * TEST
          * */
+
         ObjectMapper mapper = new ObjectMapper();
         try {
             log.info("response /getSpielRundeById = " + mapper.writeValueAsString(wrapper.getData()));

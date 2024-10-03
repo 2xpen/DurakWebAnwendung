@@ -1,11 +1,11 @@
-
-
 package org.hacienda.durakweb.controller;
 
 
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.apiresponse.ResponseWrapper;
 import org.hacienda.durakweb.constants.StatusCode;
+import org.hacienda.durakweb.data.SpielerStandRecord;
+import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.service.SpielerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +24,10 @@ public class SpielerController {
      */
 
 
-
     private final SpielerService service;
 
     @Autowired
-    SpielerController(SpielerService service){
+    SpielerController(SpielerService service) {
         this.service = service;
     }
 
@@ -65,7 +64,7 @@ public class SpielerController {
 
         wrapper.setData(
                 service.getSpielerById(
-                service.convertStringToSpielerId(spielerIds)));
+                        service.convertStringToSpielerId(spielerIds)));
 
         wrapper.addMeldungen("Alle Tuti");
         wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
@@ -73,6 +72,11 @@ public class SpielerController {
         return ResponseEntity.ok(wrapper);
     }
 
+//
+//    @PostMapping("/updateDurakstand")
+//    public ResponseEntity<ResponseWrapper<SpielerStandRecord>> updateDurakstand(@RequestParam SpielerId spielerId, @RequestParam Integer wert) {
+//
+//    }
 
 
 }

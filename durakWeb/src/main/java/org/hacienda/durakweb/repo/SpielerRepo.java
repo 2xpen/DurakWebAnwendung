@@ -27,12 +27,16 @@ public class SpielerRepo {
     }
 
     public void removeSpielerById(SpielerId spielerId) {
-        spielerListe.forEach(spieler -> {if(spieler.getSpielerId().equals(spielerId)){spielerListe.remove(spieler);}});
+        spielerListe.forEach(spieler -> {
+            if (spieler.getSpielerId().equals(spielerId)) {
+                spielerListe.remove(spieler);
+            }
+        });
     }
 
     public List<Spieler> getSpielerById(List<SpielerId> spielerIds) {
 
-        log.info("Spieler liste: " + spielerListe.toString());
+        log.info("Spieler liste: " + spielerListe.stream().toString());
 
         List<Spieler> gefundeneSpieler = new ArrayList<>();
 

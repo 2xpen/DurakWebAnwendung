@@ -1,14 +1,14 @@
 package org.hacienda.durakweb.data.identifier;
 
-public class SpielrundenId extends AbstractIdentifier{
+public class SpielrundenId extends AbstractIdentifier {
 
 
-    public SpielrundenId(){
+    public SpielrundenId() {
         super();
     }
 
-    public SpielrundenId(String id){
-        super(id);
+    public SpielrundenId(String spielRundenid) {
+        super(spielRundenid);
     }
 
 }

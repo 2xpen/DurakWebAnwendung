@@ -7,31 +7,31 @@ import org.hacienda.durakweb.data.identifier.SpielerId;
 
 @Getter
 public class SpielerInRundeAnzeigenDTO {
-    private final String spielername;
-    private final SpielerId spielerId;
+    private final String name;
+    private final String spielerId;
     private final String profilePicture;
-    private final Integer stand;
+    private final Integer durakStand;
 
     public SpielerInRundeAnzeigenDTO(Spieler spieler, SpielerStandRecord spielerStandRecord) {
-        this.spielername = spieler.getName();
-        this.spielerId = spieler.getSpielerId();
+        this.name = spieler.getName();
+        this.spielerId = spieler.getSpielerId().toString();
         this.profilePicture = spieler.getprofilePicture();
-        this.stand = spielerStandRecord.getStand();
+        this.durakStand = spielerStandRecord.getStand();
     }
 
     public String getProfilePicture() {
         return profilePicture;
     }
 
-    public SpielerId getSpielerId() {
+    public String getSpielerId() {
         return spielerId;
     }
 
-    public Integer getStand() {
-        return stand;
+    public Integer getDurakStand() {
+        return durakStand;
     }
 
-    public String getSpielername() {
-        return spielername;
+    public String getName() {
+        return name;
     }
 }
