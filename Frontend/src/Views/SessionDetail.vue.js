@@ -118,7 +118,6 @@ onMounted(() => {
 });
 const startBockrunde = () => {
     bockrundeStarted.value = true;
-    clickCount.value = 0;
     bockrundeImageVisible.value = true;
 };
 const __VLS_fnComponent = (await import('vue')).defineComponent({});
@@ -138,6 +137,10 @@ function __VLS_template() {
     };
     let __VLS_directives;
     let __VLS_styleScopedClasses;
+    __VLS_styleScopedClasses['back-button'];
+    __VLS_styleScopedClasses['duDurakKnopf'];
+    __VLS_styleScopedClasses['korrekturKnopf'];
+    __VLS_styleScopedClasses['bockrundeKnopf'];
     // CSS variable injection 
     // CSS variable injection end 
     let __VLS_resolvedLocalAndGlobalComponents;

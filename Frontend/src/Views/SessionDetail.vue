@@ -166,11 +166,10 @@ onMounted(() => {
 
 const startBockrunde = () => {
   bockrundeStarted.value = true;
-  clickCount.value = 0
   bockrundeImageVisible.value = true;
 };
 </script>
-<style>
+<style scoped>
 .session-detail {
   display: flex;
   flex-direction: column;
