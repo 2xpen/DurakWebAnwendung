@@ -47,5 +47,9 @@ public class SpielrundenService {
         return repo.getSpielerStandRecordBySpielerId(spielerId, spielrundenId);
     }
 
+    public SpielerStandRecord changeSpielerstandRecord(SpielerId spielerId, SpielrundenId spielrundenId, Integer verrechnungsZahl) {
+        return repo.changeSpielerstandRecord(spielrundenId, spielerId, verrechnungsZahl);
+    }
+
 }
 

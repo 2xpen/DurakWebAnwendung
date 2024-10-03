@@ -49,6 +49,13 @@ public class SpielRundenRepo {
                                 (s -> s.getSpielerId().equals(spielerId)).findFirst().orElse(null);
     }
 
+    public SpielerStandRecord changeSpielerstandRecord(SpielrundenId spielrundenId, SpielerId spielerId, Integer verrechnungsZahl) {
+        SpielerStandRecord spielerStandRecord = getSpielerStandRecordBySpielerId(spielerId, spielrundenId);
+        spielerStandRecord.setStand(spielerStandRecord.getStand() + verrechnungsZahl);
+
+        return spielerStandRecord;
+    }
+
 
 }
 
