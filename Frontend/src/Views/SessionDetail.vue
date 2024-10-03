@@ -22,7 +22,7 @@
         <h2>{{ player.durakStand }}</h2>
         <div class="buttons-container">
           <button @click="calculateLooses(player)" class="duDurakKnopf">Du Durak</button>
-          <button @click="removeLosses(player)" class="korrekturKnopf">Korrektur</button>
+          <button @click="removeLosses(player)" class="korrekturKnopf" :disabled="!isDuDurakPressed">Korrektur</button>
         </div>
       </div>
     </div>
@@ -48,6 +48,7 @@ const spielrunde = ref<Spielrunde>();
 const bockrundeStarted = ref(false);
 const clickCount = ref(0); // Track clicks
 const bockrundeImageVisible = ref(false);
+const isDuDurakPressed = ref(false);
 //   spielrunde.value = {
 //    spielRundenName: "Testspielrunde",
 //     spielRundenId: "jklshdfghsdkljfgh",
@@ -132,6 +133,7 @@ const calculateLooses = async (player: PlayerInSession) => {
 } catch (error) {
   console.log('Fehler', error);
 }
+  isDuDurakPressed.value = true
   checkClickLimit();
 };
 

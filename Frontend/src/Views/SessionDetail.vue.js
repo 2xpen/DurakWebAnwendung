@@ -8,6 +8,7 @@ const spielrunde = ref();
 const bockrundeStarted = ref(false);
 const clickCount = ref(0); // Track clicks
 const bockrundeImageVisible = ref(false);
+const isDuDurakPressed = ref(false);
 //   spielrunde.value = {
 //    spielRundenName: "Testspielrunde",
 //     spielRundenId: "jklshdfghsdkljfgh",
@@ -86,6 +87,7 @@ const calculateLooses = async (player) => {
     catch (error) {
         console.log('Fehler', error);
     }
+    isDuDurakPressed.value = true;
     checkClickLimit();
 };
 const removeLosses = async (player) => {
@@ -171,7 +173,7 @@ function __VLS_template() {
                         if (!((__VLS_ctx.spielrunde)))
                             return;
                         __VLS_ctx.removeLosses(player);
-                    } }, ...{ class: ("korrekturKnopf") }, });
+                    } }, ...{ class: ("korrekturKnopf") }, disabled: ((!__VLS_ctx.isDuDurakPressed)), });
         }
         __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goBack) }, ...{ class: ("back-button") }, });
     }
@@ -204,6 +206,7 @@ const __VLS_self = (await import('vue')).defineComponent({
             bockRunde: bockRunde,
             spielrunde: spielrunde,
             bockrundeImageVisible: bockrundeImageVisible,
+            isDuDurakPressed: isDuDurakPressed,
             goBack: goBack,
             calculateLooses: calculateLooses,
             removeLosses: removeLosses,
