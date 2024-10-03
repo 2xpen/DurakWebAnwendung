@@ -115,9 +115,8 @@ const calculateLooses = async (player: PlayerInSession) => {
     console.log("keine Bockrunde", wert);
   } else {
     wert = 2;
-    clickCount.value++;
+    clickCount.value++
   }
-
   const payload = {
     spielRundenId: sessionId,
     spielerId: player.spielerId,
@@ -139,7 +138,12 @@ const calculateLooses = async (player: PlayerInSession) => {
 const removeLosses = async (player: PlayerInSession) => {
   const sessionId = props.spielRundenId; 
   let wert: number
+  if(!bockrundeStarted.value){
     wert = -1
+  }else{
+    wert = -2
+    clickCount.value--
+  }
   const payload = {
     spielRundenId: sessionId,
     spielerId: player.spielerId,

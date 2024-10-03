@@ -91,7 +91,13 @@ const calculateLooses = async (player) => {
 const removeLosses = async (player) => {
     const sessionId = props.spielRundenId;
     let wert;
-    wert = -1;
+    if (!bockrundeStarted.value) {
+        wert = -1;
+    }
+    else {
+        wert = -2;
+        clickCount.value--;
+    }
     const payload = {
         spielRundenId: sessionId,
         spielerId: player.spielerId,
