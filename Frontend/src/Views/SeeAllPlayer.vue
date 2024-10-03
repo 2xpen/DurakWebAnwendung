@@ -57,6 +57,7 @@ const fetchSpieler = async () => {
 
     // Zugriff auf das Array mit den Spielern
     const spielerArray = response.data.data;
+    console.log(spielerArray, "<------- empfangene Spieler")
 
     if (Array.isArray(spielerArray)) {
       spielerArray.forEach((spielerData: any) => {

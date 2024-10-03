@@ -30,6 +30,7 @@ const fetchSpieler = async () => {
         const response = await axios.get('/api/getAlleSpieler');
         // Zugriff auf das Array mit den Spielern
         const spielerArray = response.data.data;
+        console.log(spielerArray, "<------- empfangene Spieler");
         if (Array.isArray(spielerArray)) {
             spielerArray.forEach((spielerData) => {
                 // Spieler zur spieler-Referenz hinzufügen
