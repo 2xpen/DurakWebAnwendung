@@ -14,7 +14,7 @@ const bockrundeImageVisible = ref(false);
 //    spielerInRundeAnzeigenDTOS: [
 //      {
 //        spielerId: "1",
-//        name: "Weyo",
+//        name: "T",
 //        durakStand: 2,
 //        profilePicture: Weyo
 //       },
@@ -153,9 +153,9 @@ function __VLS_template() {
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((player.spielerId)), ...{ class: ("spieler") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (player.name);
-            __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
-            (player.durakStand);
             __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((player.profilePicture)), alt: ((`Profilbild von ${player.name}`)), ...{ class: ("profilbild") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.h2, __VLS_intrinsicElements.h2)({});
+            (player.durakStand);
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("buttons-container") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
                         if (!((__VLS_ctx.spielrunde)))

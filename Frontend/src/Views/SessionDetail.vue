@@ -14,13 +14,12 @@
         class="spieler"
       >
         <h3>{{ player.name }}</h3>
-        <h3>{{ player.durakStand }}</h3>
         <img 
           :src="player.profilePicture" 
           :alt="`Profilbild von ${player.name}`"  
           class="profilbild" 
         />
-        
+        <h2>{{ player.durakStand }}</h2>
         <div class="buttons-container">
           <button @click="calculateLooses(player)" class="duDurakKnopf">Du Durak</button>
           <button @click="removeLosses(player)" class="korrekturKnopf">Korrektur</button>
@@ -55,7 +54,7 @@ const bockrundeImageVisible = ref(false);
 //    spielerInRundeAnzeigenDTOS: [
 //      {
 //        spielerId: "1",
-//        name: "Weyo",
+//        name: "T",
 //        durakStand: 2,
 //        profilePicture: Weyo
 //       },
