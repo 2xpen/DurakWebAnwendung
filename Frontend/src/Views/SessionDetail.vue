@@ -139,25 +139,20 @@ const calculateLooses = async (player: PlayerInSession) => {
 const removeLosses = async (player: PlayerInSession) => {
   const sessionId = props.spielRundenId; 
   let wert: number
-  if(bockrundeStarted.value == false){
-      wert = -1
-    }else{
-      wert = -2
-      clickCount.value--
-    }
-    const payload = {
-      spielRundenId: sessionId,
-      spielerId: player.spielerId,
-      verrechnungszahl: wert
-    }
-    console.log(payload)
-    try{
-      const response = await axios.post('/api/changedurakstand', payload);
-      player.durakStand = response.data.data.durakStand
-    } catch (error){
-      console.log('Fehler', error)
-    }
-    checkClickLimit()
+    wert = -1
+  const payload = {
+    spielRundenId: sessionId,
+    spielerId: player.spielerId,
+    verrechnungszahl: wert
+  }
+  console.log(payload)
+  try{
+    const response = await axios.post('/api/changedurakstand', payload);
+    player.durakStand = response.data.data.durakStand
+  } catch (error){
+    console.log('Fehler', error)
+  }
+  checkClickLimit()
 };
 
 onMounted(() => {
