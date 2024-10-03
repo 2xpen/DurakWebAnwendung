@@ -1,6 +1,11 @@
 <template>
   <div  v-if="spielrunde" class="session-detail">
     <h1 class="session-title">{{ spielrunde!.spielRundenName || 'Keine Session gefunden' }}</h1>
+
+   <div class="bockrunde-container">
+      <button @click="startBockrunde" class="bockrundeKnopf">Bockrunde</button>
+      <img v-if="bockrundeImageVisible" :src=bockRunde alt="Bockrunde" class="bockrunde-image" />
+    </div>
     
     <div class="spieler-container">
       <div 
@@ -17,8 +22,8 @@
         />
         
         <div class="buttons-container">
-          <button @click="addLosses(player, 1)" class="duDurakKnopf">Du Durak</button>
-          <button @click="removeLosses(player, -1)" class="korrekturKnopf">Korrektur</button>
+          <button @click="calculateLooses(player)" class="duDurakKnopf">Du Durak</button>
+          <button @click="removeLosses(player)" class="korrekturKnopf">Korrektur</button>
         </div>
       </div>
     </div>
@@ -31,16 +36,19 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
-import { Player } from '../Types/Player'; 
+import axios from 'axios'; 
 import { Spielrunde } from '../Types/Spielrunde';
-import { defineProps } from 'vue';
-// import Weyo from '../assets/Profilbilder/Weyo.png'
+import { PlayerInSession } from '../Types/PlayerInSession';
+import bockRunde from '../assets/bockRunde.png'
+import Weyo from '../assets/Profilbilder/Weyo.png'
 
-const route = useRoute();
 const router = useRouter();
 
 const spielrunde = ref<Spielrunde>();
+
+const bockrundeStarted = ref(false);
+const clickCount = ref(0); // Track clicks
+const bockrundeImageVisible = ref(false);
 //   spielrunde.value = {
 //    spielRundenName: "Testspielrunde",
 //     spielRundenId: "jklshdfghsdkljfgh",
@@ -89,39 +97,71 @@ const fetchSessionDetails = async () => {
   }
 };
 
+const checkClickLimit = () => {
+  if (clickCount.value >= 3) {
+    router.push('/SeeAllSessions');
+  }
+}
+
 const goBack = () => {
   router.push('/'); 
 };
 
-const addLosses = async (player: Player, change: number) => {
-  // if (player.durakStand !== undefined) {
-  //   player.durakStand += change; 
-  //   const payload = { 
-  //     playerId: player.spielerId,  
-  //     durakStand: player.durakStand 
-  //   };
-  //   try {
-  //     const response = await axios.post('/api/updateDurakStand', payload);
-  //     console.log(`Erfolgreich aktualisiert: ${player.spielerId} mit DurakStand: ${player.durakStand}`);
-  //   } catch (error) {
-  //     console.error('Fehler beim Aktualisieren des DurakStand:', error);
-  //   }
-  // } else {
-  //   console.error('durakStand ist nicht definiert');
-  // }
+const calculateLooses = async (player: PlayerInSession) => {
+  const sessionId = props.spielRundenId; 
+  let wert: number 
+  if(!bockrundeStarted){
+    wert = 1
+  }else{
+    wert = 2
+    clickCount.value++
+  }
+  const payload = {
+    spielRundenId: sessionId,
+    spielerId: player.spielerId,
+    verrechnungszahl: wert
+  }
+  try{
+    const response = await axios.post('/api/changedurakstand', payload);
+    player.durakStand = response.data.data.durakStand
+  } catch (error){
+    console.log('Fehler', error)
+  }
+  checkClickLimit()
 };
 
-const removeLosses = (player: Player, change: number) => {
-  // if (player.durakStand !== undefined) {
-  //   player.durakStand -= change; 
-  // } else {
-  //   console.error('durakStand ist nicht definiert');
-  // }
+const removeLosses = async (player: PlayerInSession) => {
+  const sessionId = props.spielRundenId; 
+  let wert: number
+  if(!bockrundeStarted){
+      wert = -1
+    }else{
+      wert = -2
+      clickCount.value--
+    }
+    const payload = {
+      spielRundenId: sessionId,
+      spielerId: player.spielerId,
+      verrechnungszahl: wert
+    }
+    try{
+      const response = await axios.post('/api/changedurakstand', payload);
+      player.durakStand = response.data.data.durakStand
+    } catch (error){
+      console.log('Fehler', error)
+    }
+    checkClickLimit()
 };
 
 onMounted(() => {
   fetchSessionDetails(); 
 });
+
+const startBockrunde = () => {
+  bockrundeStarted.value = true;
+  clickCount.value = 0
+  bockrundeImageVisible.value = true;
+};
 </script>
 <style>
 .session-detail {
@@ -209,6 +249,34 @@ onMounted(() => {
 
 .korrekturKnopf:hover {
   background-color: #2b000d; /* Darker yellow on hover */
+}
+
+.bockrunde-container {
+  display: flex;
+  align-items: center; /* Center the button and image vertically */
+  margin-top: 20px; /* Space above the container */
+}
+
+.bockrundeKnopf {
+  padding: 15px 30px; /* Button padding */
+  font-size: 1.2rem; /* Font size */
+  font-weight: bold; /* Bold text */
+  background-color: #007bff; /* Primary color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s; /* Transition effect */
+}
+
+.bockrundeKnopf:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.bockrunde-image {
+  width: 50px; /* Adjust the size as needed */
+  height: auto; /* Maintain aspect ratio */
+  margin-left: 10px; /* Space between button and image */
 }
 
 </style>

@@ -1,12 +1,13 @@
 import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { defineProps } from 'vue';
-const { defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
-// import Weyo from '../assets/Profilbilder/Weyo.png'
-const route = useRoute();
+import bockRunde from '../assets/bockRunde.png';
+const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
 const router = useRouter();
 const spielrunde = ref();
+const bockrundeStarted = ref(false);
+const clickCount = ref(0); // Track clicks
+const bockrundeImageVisible = ref(false);
 //   spielrunde.value = {
 //    spielRundenName: "Testspielrunde",
 //     spielRundenId: "jklshdfghsdkljfgh",
@@ -51,36 +52,70 @@ const fetchSessionDetails = async () => {
         console.error('Fehler beim Abrufen der Session-Details:', error);
     }
 };
+const checkClickLimit = () => {
+    if (clickCount.value >= 3) {
+        router.push('/SeeAllSessions');
+    }
+};
 const goBack = () => {
     router.push('/');
 };
-const addLosses = async (player, change) => {
-    // if (player.durakStand !== undefined) {
-    //   player.durakStand += change; 
-    //   const payload = { 
-    //     playerId: player.spielerId,  
-    //     durakStand: player.durakStand 
-    //   };
-    //   try {
-    //     const response = await axios.post('/api/updateDurakStand', payload);
-    //     console.log(`Erfolgreich aktualisiert: ${player.spielerId} mit DurakStand: ${player.durakStand}`);
-    //   } catch (error) {
-    //     console.error('Fehler beim Aktualisieren des DurakStand:', error);
-    //   }
-    // } else {
-    //   console.error('durakStand ist nicht definiert');
-    // }
+const calculateLooses = async (player) => {
+    const sessionId = props.spielRundenId;
+    let wert;
+    if (!bockrundeStarted) {
+        wert = 1;
+    }
+    else {
+        wert = 2;
+        clickCount.value++;
+    }
+    const payload = {
+        spielRundenId: sessionId,
+        spielerId: player.spielerId,
+        verrechnungszahl: wert
+    };
+    try {
+        const response = await axios.post('/api/changedurakstand', payload);
+        player.durakStand = response.data.data.durakStand;
+    }
+    catch (error) {
+        console.log('Fehler', error);
+    }
+    checkClickLimit();
 };
-const removeLosses = (player, change) => {
-    // if (player.durakStand !== undefined) {
-    //   player.durakStand -= change; 
-    // } else {
-    //   console.error('durakStand ist nicht definiert');
-    // }
+const removeLosses = async (player) => {
+    const sessionId = props.spielRundenId;
+    let wert;
+    if (!bockrundeStarted) {
+        wert = -1;
+    }
+    else {
+        wert = -2;
+        clickCount.value--;
+    }
+    const payload = {
+        spielRundenId: sessionId,
+        spielerId: player.spielerId,
+        verrechnungszahl: wert
+    };
+    try {
+        const response = await axios.post('/api/changedurakstand', payload);
+        player.durakStand = response.data.data.durakStand;
+    }
+    catch (error) {
+        console.log('Fehler', error);
+    }
+    checkClickLimit();
 };
 onMounted(() => {
     fetchSessionDetails();
 });
+const startBockrunde = () => {
+    bockrundeStarted.value = true;
+    clickCount.value = 0;
+    bockrundeImageVisible.value = true;
+};
 const __VLS_fnComponent = (await import('vue')).defineComponent({});
 ;
 let __VLS_functionalComponentProps;
@@ -105,6 +140,11 @@ function __VLS_template() {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("session-detail") }, });
         __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({ ...{ class: ("session-title") }, });
         (__VLS_ctx.spielrunde.spielRundenName || 'Keine Session gefunden');
+        __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("bockrunde-container") }, });
+        __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.startBockrunde) }, ...{ class: ("bockrundeKnopf") }, });
+        if (__VLS_ctx.bockrundeImageVisible) {
+            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((__VLS_ctx.bockRunde)), alt: ("Bockrunde"), ...{ class: ("bockrunde-image") }, });
+        }
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-container") }, });
         for (const [player] of __VLS_getVForSourceType((__VLS_ctx.spielrunde.spielerInRundeAnzeigenDTOS))) {
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((player.spielerId)), ...{ class: ("spieler") }, });
@@ -117,18 +157,21 @@ function __VLS_template() {
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
                         if (!((__VLS_ctx.spielrunde)))
                             return;
-                        __VLS_ctx.addLosses(player, 1);
+                        __VLS_ctx.calculateLooses(player);
                     } }, ...{ class: ("duDurakKnopf") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
                         if (!((__VLS_ctx.spielrunde)))
                             return;
-                        __VLS_ctx.removeLosses(player, -1);
+                        __VLS_ctx.removeLosses(player);
                     } }, ...{ class: ("korrekturKnopf") }, });
         }
         __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goBack) }, ...{ class: ("back-button") }, });
     }
     __VLS_styleScopedClasses['session-detail'];
     __VLS_styleScopedClasses['session-title'];
+    __VLS_styleScopedClasses['bockrunde-container'];
+    __VLS_styleScopedClasses['bockrundeKnopf'];
+    __VLS_styleScopedClasses['bockrunde-image'];
     __VLS_styleScopedClasses['spieler-container'];
     __VLS_styleScopedClasses['spieler'];
     __VLS_styleScopedClasses['profilbild'];
@@ -150,10 +193,13 @@ function __VLS_template() {
 const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
+            bockRunde: bockRunde,
             spielrunde: spielrunde,
+            bockrundeImageVisible: bockrundeImageVisible,
             goBack: goBack,
-            addLosses: addLosses,
+            calculateLooses: calculateLooses,
             removeLosses: removeLosses,
+            startBockrunde: startBockrunde,
         };
     },
     __typeProps: {},
