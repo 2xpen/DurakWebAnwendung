@@ -39,7 +39,7 @@ import { defineProps } from 'vue';
 const route = useRoute();
 const router = useRouter();
 
-const spielrunde = ref<Spielrunde | null>(null);
+const spielrunde = ref<Spielrunde>();
 
 
 const props = defineProps<{

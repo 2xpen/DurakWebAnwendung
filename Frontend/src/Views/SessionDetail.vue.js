@@ -5,7 +5,7 @@ import { defineProps } from 'vue';
 const { defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
 const route = useRoute();
 const router = useRouter();
-const spielrunde = ref(null);
+const spielrunde = ref();
 let __VLS_typeProps;
 const props = defineProps();
 const fetchSessionDetails = async () => {
