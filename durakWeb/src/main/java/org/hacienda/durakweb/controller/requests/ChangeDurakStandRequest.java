@@ -10,8 +10,8 @@ public class ChangeDurakStandRequest {
     private final SpielerId spielerId;
     private final Integer verrechungszahl;
 
-    ChangeDurakStandRequest(SpielrundenId spielrundenId, SpielerId spielerId, Integer verrechnungszahl) {
-        this.spielrundenId = spielrundenId;
+    ChangeDurakStandRequest(SpielrundenId spielRundenId, SpielerId spielerId, Integer verrechnungszahl) {
+        this.spielrundenId = spielRundenId;
         this.spielerId = spielerId;
         this.verrechungszahl = verrechnungszahl;
     }

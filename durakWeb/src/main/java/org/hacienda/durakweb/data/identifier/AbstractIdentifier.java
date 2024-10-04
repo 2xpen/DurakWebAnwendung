@@ -20,6 +20,7 @@ public abstract class AbstractIdentifier {
         System.out.println(id + " EINE UUID WURDE MIT STRING ERZEUGT");
         this.id = UUID.fromString(id);
     }
+    
 
     public UUID getId() {
         return id;

@@ -1,7 +1,6 @@
 package org.hacienda.durakweb.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
 import org.hacienda.durakweb.data.identifier.SpielerId;
@@ -25,7 +24,7 @@ public class SpielrundenService {
 
 
     public List<Spielrunde> getAlleSpielrunde() {
-        return repo.getSpielRunden();
+        return repo.getSpielrunden();
     }
 
     public Spielrunde addSpielRunde(Spielrunde spielRunde) {

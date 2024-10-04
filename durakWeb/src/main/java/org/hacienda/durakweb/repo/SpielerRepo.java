@@ -1,25 +1,37 @@
 package org.hacienda.durakweb.repo;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.hacienda.durakweb.data.DateiPfade;
+import org.hacienda.durakweb.data.Serialisierbar;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Repository
-public class SpielerRepo {
+public class SpielerRepo implements Serialisierbar {
 
 
     List<Spieler> spielerListe = new ArrayList<>();
 
 
+    public SpielerRepo() {
+        load();
+    }
+
     public void addSpieler(Spieler spieler) {
         System.out.println("Spieler " + spieler.getName() + " added");
         spielerListe.add(spieler);
+        save();
     }
 
     public List<Spieler> getSpielerListe() {
@@ -32,6 +44,7 @@ public class SpielerRepo {
                 spielerListe.remove(spieler);
             }
         });
+        save();
     }
 
     public List<Spieler> getSpielerById(List<SpielerId> spielerIds) {
@@ -57,5 +70,36 @@ public class SpielerRepo {
         return gefundeneSpieler;
     }
 
+    @Override
+    public void save() {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            objectMapper.writeValue(new FileWriter(DateiPfade.SPIERLERREPO.getPath()), spielerListe);
+            System.out.println("Spieler wurden gespeichert");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            System.out.println("Fehler beim Serialisieren: " + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Fehler beim Schreiben in die Datei: " + e.getMessage());
+        }
+    }
+
+
+    public void load() {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            Spieler[] spielerArray = objectMapper.readValue(new File(DateiPfade.SPIERLERREPO.getPath()), Spieler[].class);
+            this.spielerListe = new ArrayList<>(List.of(spielerArray));
+            System.out.println("Spieler wurden geladen");
+        } catch (IOException e) {
+            this.spielerListe = new ArrayList<>();
+            e.printStackTrace();
+            System.out.println("Fehler beim Lesen aus der Datei: " + e.getMessage());
+        }
+    }
 
 }

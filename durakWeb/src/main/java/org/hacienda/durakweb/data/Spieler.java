@@ -1,5 +1,7 @@
 package org.hacienda.durakweb.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.data.identifier.SpielrundenId;
@@ -10,20 +12,19 @@ import java.util.List;
 @Getter
 public class Spieler {
 
+    private final SpielerId spielerId;
     private String name;
     private String profilePicture = "";
-    private final SpielerId spielerId;
-    private final List<SpielrundenId> spielrunden = new ArrayList<>();
 
-    Spieler(String name,String profilePicture){
+    @JsonCreator
+    public Spieler(@JsonProperty("name") String name,
+                   @JsonProperty("profilePicture") String profilePicture,
+                   @JsonProperty("spielerId") SpielerId spielerId) {
         this.name = name;
         this.profilePicture = profilePicture;
-        this.spielerId = new SpielerId();
+        this.spielerId = spielerId == null ? new SpielerId() : spielerId;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public void setProfilBild(String profilBild) {
         this.profilePicture = profilBild;
@@ -31,6 +32,10 @@ public class Spieler {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public SpielerId getSpielerId() {
@@ -41,14 +46,6 @@ public class Spieler {
         return profilePicture;
     }
 
-    // todo womeoglich eine aufgabe für das repo und nicht die Person klasse an sich
-    public void addSpielrunde(SpielrundenId id){
-        spielrunden.add(id);
-    }
-
-    public void removeSpielrunde(SpielrundenId id){
-        spielrunden.remove(id);
-    }
 
 }
 

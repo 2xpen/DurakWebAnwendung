@@ -6,11 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.apiresponse.ResponseWrapper;
 import org.hacienda.durakweb.constants.StatusCode;
-import org.hacienda.durakweb.controller.dto.SpielRundeDetailsDTO;
-import org.hacienda.durakweb.controller.dto.SpielerAnzeigenViewDTO;
-import org.hacienda.durakweb.controller.dto.SpielerInRundeAnzeigenDTO;
-import org.hacienda.durakweb.controller.dto.SpielrundeAuswahlDTO;
+import org.hacienda.durakweb.controller.dto.*;
 import org.hacienda.durakweb.controller.requests.ChangeDurakStandRequest;
+import org.hacienda.durakweb.controller.requests.CreateSpielRundeParameter;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
@@ -46,12 +44,12 @@ public class SpielRundenController {
 
 
     @PostMapping("/createSpielRunde")
-    public ResponseEntity<ResponseWrapper<Spielrunde>> createSpielRunde(@RequestBody Spielrunde spielRunde) {
-        log.info("das ist der name der Spielrunde= " + spielRunde.getSpielRundenName());
+    public ResponseEntity<ResponseWrapper<Spielrunde>> createSpielRunde(@RequestBody CreateSpielRundeParameter parameter) {
+        log.info("das ist der name der Spielrunde= " + parameter.getSpielRundenName());
 
         ResponseWrapper<Spielrunde> wrapper = new ResponseWrapper<>();
 
-        wrapper.setData(spielrundenService.addSpielRunde(spielRunde));
+        wrapper.setData(spielrundenService.addSpielRunde(new Spielrunde(parameter.getSpielRundenName(), parameter.getSpielerInfos())));
         wrapper.addMeldungen("Allet Tuti");
         wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
 
@@ -104,18 +102,18 @@ public class SpielRundenController {
     }
 
     @GetMapping("/getSpielrundeById")
-    public ResponseEntity<ResponseWrapper<SpielRundeDetailsDTO>> getSpielrundeById(@RequestParam SpielrundenId spielRundenId) {
+    public ResponseEntity<ResponseWrapper<SpielRundeDetailsDTO>> getSpielrundeById(@RequestParam String spielRundenId) {
         ResponseWrapper<SpielRundeDetailsDTO> wrapper = new ResponseWrapper<>();
 
         log.info("spielerRunde By Id ausgelöst");
         System.out.println("spielerRunde By Id ausgelöst");
-        Spielrunde spielRunde = spielrundenService.getSpielRundeById(spielRundenId);
+        Spielrunde spielRunde = spielrundenService.getSpielRundeById(new SpielrundenId(spielRundenId));
 
 
         List<SpielerInRundeAnzeigenDTO> spielerInRundeAnzeigenDTOS = new ArrayList<>();
 
         for (Spieler spieler : spielerService.getSpielerById(spielrundenService.getSpielerIdsOfSpielrunde(spielRunde))) {
-            SpielerStandRecord spielerStandRecord = spielrundenService.getSpielerStandRecordById(spielRundenId, spieler.getSpielerId());
+            SpielerStandRecord spielerStandRecord = spielrundenService.getSpielerStandRecordById(new SpielrundenId(spielRundenId), spieler.getSpielerId());
             spielerInRundeAnzeigenDTOS.add(new SpielerInRundeAnzeigenDTO(spieler, spielerStandRecord));
         }
 
@@ -141,11 +139,19 @@ public class SpielRundenController {
 
 
     @PostMapping("/changedurakstand")
-    public ResponseEntity<ResponseWrapper<SpielerStandRecord>> changeSpielerStandRecord(@RequestBody ChangeDurakStandRequest request) {
+    public ResponseEntity<ResponseWrapper<SpielerStandRecordDTO>> changeSpielerStandRecord(@RequestBody ChangeDurakStandRequest request) {
 
-        ResponseWrapper<SpielerStandRecord> wrapper = new ResponseWrapper<>();
 
-        wrapper.setData(spielrundenService.changeSpielerstandRecord(request.getSpielerId(), request.getSpielrundenId(), request.getVerrechungszahl()));
+        System.out.println("changeSpielerStandRecord AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println(request.getSpielerId().toString());
+        System.out.println(request.getVerrechungszahl().toString());
+        System.out.println(request.getSpielrundenId().toString());
+
+        ResponseWrapper<SpielerStandRecordDTO> wrapper = new ResponseWrapper<>();
+
+        SpielerStandRecord spielerStandRecord = spielrundenService.changeSpielerstandRecord(request.getSpielerId(), request.getSpielrundenId(), request.getVerrechungszahl());
+
+        wrapper.setData(new SpielerStandRecordDTO(spielerStandRecord.getSpielerId(), spielerStandRecord.getStand()));
         wrapper.addMeldungen("banutti titi");
         wrapper.setStatusIndicator(StatusCode.ALLESDISCO);
 

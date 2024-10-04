@@ -1,6 +1,7 @@
 package org.hacienda.durakweb.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.repo.SpielerRepo;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class SpielerService {
 
@@ -25,6 +27,8 @@ public class SpielerService {
     }
 
     public List<Spieler> getAllSpieler() {
+
+        repo.getSpielerListe().stream().forEach(s -> log.info(s.getName()));
         return repo.getSpielerListe();
     }
 

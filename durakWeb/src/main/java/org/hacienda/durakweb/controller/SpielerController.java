@@ -1,6 +1,9 @@
 package org.hacienda.durakweb.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.apiresponse.ResponseWrapper;
 import org.hacienda.durakweb.constants.StatusCode;
@@ -16,6 +19,7 @@ import java.util.List;
 
 @RequestMapping("/api")
 
+@Slf4j
 @Controller
 public class SpielerController {
 
@@ -53,6 +57,21 @@ public class SpielerController {
         wrapper.setData(service.getAllSpieler());
         wrapper.addMeldungen("Allet Tuti");
         wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
+
+        /**
+         * TEST
+         */
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            log.info("response /get alle Spieler = " + mapper.writeValueAsString(wrapper.getData()));
+        } catch (JsonProcessingException e) {
+            e.getMessage();
+        }
+
+        /**
+         * TEST
+         */
+
 
         return ResponseEntity.ok(wrapper);
     }
