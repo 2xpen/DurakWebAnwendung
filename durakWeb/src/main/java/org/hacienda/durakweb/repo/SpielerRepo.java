@@ -8,6 +8,7 @@ import org.hacienda.durakweb.data.DateiPfade;
 import org.hacienda.durakweb.data.Serialisierbar;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.identifier.SpielerId;
+import org.hacienda.durakweb.durakfehlermeldung.DurakFehlerMeldung;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -68,6 +69,28 @@ public class SpielerRepo implements Serialisierbar {
             }
         }
         return gefundeneSpieler;
+    }
+
+    public Spieler getSpielerById(SpielerId spielerId) throws DurakFehlerMeldung {
+
+        log.info("Spieler liste: " + spielerListe.stream().toString());
+
+        try {
+            for (Spieler spieler : spielerListe) {
+                System.out.println(spieler.getSpielerId() + " " + spielerId);
+
+                if (spieler.getSpielerId().equals(spielerId)) {
+
+                    System.out.println("Spieler " + spieler.getName() + " gefunden");
+                    //todo PERFORMANCE
+                    // hier wenn eine der SpielerIds gefunden aus der liste entfernen
+                    return spieler;
+                }
+            }
+        } catch (Exception e) {
+            log.error("Spieler " + spielerId + " nicht gefunden");
+        }
+        return null;
     }
 
     @Override

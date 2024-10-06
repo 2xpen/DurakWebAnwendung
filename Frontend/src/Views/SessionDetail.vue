@@ -1,45 +1,45 @@
 <template>
-  <div  v-if="spielrunde" class="session-detail">
+  <div v-if="spielrunde" class="session-detail">
     <h1 class="session-title">{{ spielrunde!.spielRundenName || 'Keine Session gefunden' }}</h1>
 
-   <div class="bockrunde-container">
-      <button @click="startBockrunde" class="bockrundeKnopf">Bockrunde</button>
-      <img v-if="bockrundeImageVisible" :src=bockRunde alt="Bockrunde" class="bockrunde-image" />
+    <div class="bockrunde-container">
+      <button class="bockrundeKnopf" @click="startBockrunde">Bockrunde</button>
+      <img v-if="bockrundeImageVisible" :src=bockRunde alt="Bockrunde" class="bockrunde-image"/>
     </div>
-    
+
     <div class="spieler-container">
-      <div 
-        v-for="player in spielrunde!.spielerInRundeAnzeigenDTOS" 
-        :key="player.spielerId" 
-        class="spieler"
+      <div
+          v-for="player in spielrunde!.spielerInRundeAnzeigenDTOS"
+          :key="player.spielerId"
+          class="spieler"
       >
         <h3>{{ player.name }}</h3>
-        <img 
-          :src="player.profilePicture" 
-          :alt="`Profilbild von ${player.name}`"  
-          class="profilbild" 
+        <img
+            :alt="`Profilbild von ${player.name}`"
+            :src="player.profilePicture"
+            class="profilbild"
         />
         <h2>{{ player.durakStand }}</h2>
         <div class="buttons-container">
-          <button @click="calculateLooses(player)" class="duDurakKnopf">Du Durak</button>
-          <button @click="removeLosses(player)" class="korrekturKnopf" :disabled="!isDuDurakPressed">Korrektur</button>
+          <button class="duDurakKnopf" @click="calculateLooses(player)">Du Durak</button>
+          <button :disabled="!isDuDurakPressed" class="korrekturKnopf" @click="removeLosses(player)">Korrektur</button>
         </div>
       </div>
     </div>
 
-    <button @click="goBack" class="back-button">Zurück zur Übersicht</button>
+    <button class="back-button" @click="goBack">Zurück zur Übersicht</button>
   </div>
 </template>
 
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios'; 
-import { Spielrunde } from '../Types/Spielrunde';
-import { PlayerInSession } from '../Types/PlayerInSession';
+import {ref, onMounted} from 'vue';
+import {useRoute, useRouter} from 'vue-router';
+import axios from 'axios';
+import {Spielrunde} from '@/Types/Spielrunde';
+import {PlayerInSession} from '@/Types/PlayerInSession';
 import bockRunde from '../assets/bockRunde.png'
-import Weyo from '../assets/Profilbilder/Weyo.png'
+
 
 const router = useRouter();
 
@@ -49,6 +49,7 @@ const bockrundeStarted = ref(false);
 const clickCount = ref(0); // Track clicks
 const bockrundeImageVisible = ref(false);
 const isDuDurakPressed = ref(false);
+
 //   spielrunde.value = {
 //    spielRundenName: "Testspielrunde",
 //     spielRundenId: "jklshdfghsdkljfgh",
@@ -82,14 +83,14 @@ const isDuDurakPressed = ref(false);
 
 
 const props = defineProps<{
-  spielRundenId: string; 
+  spielRundenId: string;
 }>();
 
 const fetchSessionDetails = async () => {
-  const sessionId = props.spielRundenId; 
+  const sessionId = props.spielRundenId;
   try {
-    const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`); 
-    spielrunde.value = response.data.data; 
+    const response = await axios.get(`/api/getSpielrundeById?spielRundenId=${sessionId}`);
+    spielrunde.value = response.data.data;
     console.log(spielrunde.value, "session.value")
     console.log(spielrunde.value!.spielRundenName, "spielRundenName")
   } catch (error) {
@@ -104,11 +105,11 @@ const checkClickLimit = () => {
 }
 
 const goBack = () => {
-  router.push('/'); 
+  router.push('/');
 };
 
 const calculateLooses = async (player: PlayerInSession) => {
-  const sessionId = props.spielRundenId; 
+  const sessionId = props.spielRundenId;
   let wert: number;
 
   if (!bockrundeStarted.value) {
@@ -126,23 +127,23 @@ const calculateLooses = async (player: PlayerInSession) => {
 
   console.log(payload);
   try {
-  const response = await axios.post('/api/changedurakstand', payload);
-  player.durakStand = response.data.data.durakStand;
-  console.log(player.durakStand, "Aktualisierter player.durakStand");
-  console.log('Spieler-ID:', response.data.spielerId);
-} catch (error) {
-  console.log('Fehler', error);
-}
+    const response = await axios.post('/api/changedurakstand', payload);
+    player.durakStand = response.data.data.durakStand;
+    console.log(player.durakStand, "Aktualisierter player.durakStand");
+    console.log('Spieler-ID:', response.data.spielerId);
+  } catch (error) {
+    console.log('Fehler', error);
+  }
   isDuDurakPressed.value = true
   checkClickLimit();
 };
 
 const removeLosses = async (player: PlayerInSession) => {
-  const sessionId = props.spielRundenId; 
+  const sessionId = props.spielRundenId;
   let wert: number
-  if(!bockrundeStarted.value){
+  if (!bockrundeStarted.value) {
     wert = -1
-  }else{
+  } else {
     wert = -2
     clickCount.value--
   }
@@ -152,17 +153,17 @@ const removeLosses = async (player: PlayerInSession) => {
     verrechnungszahl: wert
   }
   console.log(payload)
-  try{
+  try {
     const response = await axios.post('/api/changedurakstand', payload);
     player.durakStand = response.data.data.durakStand
-  } catch (error){
+  } catch (error) {
     console.log('Fehler', error)
   }
   checkClickLimit()
 };
 
 onMounted(() => {
-  fetchSessionDetails(); 
+  fetchSessionDetails();
 });
 
 const startBockrunde = () => {

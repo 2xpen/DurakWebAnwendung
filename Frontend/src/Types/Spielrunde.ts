@@ -1,7 +1,6 @@
-import { PlayerInSession } from "./PlayerInSession";
+import {PlayerInSession} from "./PlayerInSession";
+import {SpielrundeBase} from "@/Types/SpielrundeBase";
 
-export interface Spielrunde {
-  spielRundenId: string;
-  spielRundenName: string;
-  spielerInRundeAnzeigenDTOS: PlayerInSession[];
+export interface Spielrunde extends SpielrundeBase {
+    spielerInRundeAnzeigenDTOS: PlayerInSession[];
 }

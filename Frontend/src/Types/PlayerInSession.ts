@@ -1,6 +1,6 @@
-export interface PlayerInSession {
-  durakStand: number;
-  name: string;
-  profilePicture: string;
-  spielerId: string;
+import {Player} from "@/Types/Player";
+
+export interface PlayerInSession extends Player {
+    spielerId: string;
+    durakStand: number;
 }

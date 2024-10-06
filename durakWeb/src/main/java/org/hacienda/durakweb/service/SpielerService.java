@@ -4,6 +4,7 @@ package org.hacienda.durakweb.service;
 import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.identifier.SpielerId;
+import org.hacienda.durakweb.durakfehlermeldung.DurakFehlerMeldung;
 import org.hacienda.durakweb.repo.SpielerRepo;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,6 @@ public class SpielerService {
 
     public List<Spieler> getAllSpieler() {
 
-        repo.getSpielerListe().stream().forEach(s -> log.info(s.getName()));
         return repo.getSpielerListe();
     }
 
@@ -36,13 +36,22 @@ public class SpielerService {
         return repo.getSpielerById(spielerIds);
     }
 
+    public Spieler getSpielerById(SpielerId spielerIds) throws DurakFehlerMeldung {
+        return repo.getSpielerById(spielerIds);
+    }
+
+
     // eigentlich utility
-    public List<SpielerId> convertStringToSpielerId(String[] idStrings) {
+    public List<SpielerId> convertStringToSpielerId(List<String> idStrings) {
         List<SpielerId> convertierteSpielerIds = new ArrayList<>();
         for (String id : idStrings) {
             convertierteSpielerIds.add(new SpielerId(id));
         }
         return convertierteSpielerIds;
+    }
+
+    public SpielerId convertStringToSpielerId(String idString) {
+        return new SpielerId(idString);
     }
 
 

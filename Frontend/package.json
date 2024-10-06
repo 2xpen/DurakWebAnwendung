@@ -3,18 +3,24 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
- "scripts": {
-  "dev": "vite",
-  "build": "vue-tsc -b && vite build",
-  "preview": "vite preview",
-  "update:dist": "tsc updateDist.ts && node updateDist.js"
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "update:dist": "tsc updateDist.ts && node updateDist.js"
+  },
   "dependencies": {
+    "axios": "^1.7.7",
+    "jquery": "^3.7.1",
     "vue": "^3.4.37",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.31",
     "@vitejs/plugin-vue": "^5.1.2",
+    "@vue/test-utils": "^2.4.6",
+    "babel-jest": "^29.7.0",
+    "jest": "^27.5.1",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
     "vue-tsc": "^2.0.29"

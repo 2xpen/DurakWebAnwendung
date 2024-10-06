@@ -2,7 +2,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import router from '../router';
 const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');
-const spieler = ref([]);
+const spielerList = ref([]);
 // import profile1 from '../assets/Profilbilder/ProfilBild1.png';
 // import profile2 from '../assets/Profilbilder/ProfilBild2.png';
 // import profile3 from '../assets/Profilbilder/ProfilBild3.png';
@@ -34,7 +34,7 @@ const fetchSpieler = async () => {
         if (Array.isArray(spielerArray)) {
             spielerArray.forEach((spielerData) => {
                 // Spieler zur spieler-Referenz hinzufügen
-                spieler.value.push({
+                spielerList.value.push({
                     spielerId: spielerData.spielerId.id,
                     name: spielerData.name,
                     profilePicture: spielerData.profilePicture, // Hier ist der vollständige Base64-String
@@ -52,6 +52,12 @@ const bearbeiten = (spieler) => {
 };
 const loeschen = (spieler) => {
     // Logik für Löschen hinzufügen
+};
+const goDetailSeite = (spieler) => {
+    router.push({
+        name: 'spielerdetails',
+        params: { spielerId: spieler.spielerId } // Übergebe nur die ID des Spielers
+    });
 };
 onMounted(() => {
     fetchSpieler();
@@ -86,22 +92,22 @@ function __VLS_template() {
     let __VLS_resolvedLocalAndGlobalComponents;
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-liste") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.h1, __VLS_intrinsicElements.h1)({ ...{ class: ("titel") }, });
-    if (__VLS_ctx.spieler.length > 0) {
+    if (__VLS_ctx.spielerList.length > 0) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("spieler-grid") }, });
-        for (const [spieler] of __VLS_getVForSourceType((__VLS_ctx.spieler))) {
+        for (const [spieler] of __VLS_getVForSourceType((__VLS_ctx.spielerList))) {
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((spieler.spielerId)), ...{ class: ("spieler") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (spieler.name);
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("bild-container") }, });
-            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((spieler.profilePicture)), alt: ((`Profilbild von ${spieler.name}`)), ...{ class: ("profilbild") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ alt: ((`Profilbild von ${spieler.name}`)), src: ((spieler.profilePicture)), ...{ class: ("profilbild") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("actions") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
-                        if (!((__VLS_ctx.spieler.length > 0)))
+                        if (!((__VLS_ctx.spielerList.length > 0)))
                             return;
-                        __VLS_ctx.bearbeiten(spieler);
+                        __VLS_ctx.goDetailSeite(spieler);
                     } }, ...{ class: ("actions button") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
-                        if (!((__VLS_ctx.spieler.length > 0)))
+                        if (!((__VLS_ctx.spielerList.length > 0)))
                             return;
                         __VLS_ctx.loeschen(spieler);
                     } }, ...{ class: ("actions button") }, });
@@ -137,9 +143,9 @@ function __VLS_template() {
 const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
-            spieler: spieler,
-            bearbeiten: bearbeiten,
+            spielerList: spielerList,
             loeschen: loeschen,
+            goDetailSeite: goDetailSeite,
             goHome: goHome,
         };
     },

@@ -116,10 +116,10 @@ function __VLS_template() {
         __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("actions") }, });
         __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
                     __VLS_ctx.addPlayerToSession(spieler.spielerId);
-                } }, disabled: ((__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), ...{ class: (({ 'disabled': __VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, });
+                } }, ...{ class: (({ 'disabled': __VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, disabled: ((__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), });
         __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (...[$event]) => {
                     __VLS_ctx.removePlayerFromSession(spieler.spielerId);
-                } }, disabled: ((!__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), ...{ class: (({ 'disabled': !__VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, });
+                } }, ...{ class: (({ 'disabled': !__VLS_ctx.addedPlayerIds.has(spieler.spielerId) })) }, disabled: ((!__VLS_ctx.addedPlayerIds.has(spieler.spielerId))), });
     }
     __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("save-session") }, });
     __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.saveSession) }, });

@@ -4,12 +4,12 @@
 
     <!-- Eingabefeld für Sessionnamen -->
     <div class="session-name">
-      <input v-model="sessionData.spielRundenName" placeholder="Sessionname eingeben" />
+      <input v-model="sessionData.spielRundenName" placeholder="Sessionname eingeben"/>
     </div>
 
     <!-- Eingabefeld für die Spieler-Suche (optional, kann entfernt werden) -->
     <div class="spieler-suche">
-      <input v-model="searchQuery" placeholder="Spieler suchen..." />
+      <input v-model="searchQuery" placeholder="Spieler suchen..."/>
     </div>
 
     <!-- Spieler-Liste -->
@@ -18,20 +18,20 @@
       <div class="spieler-grid">
         <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
           <h3>{{ spieler.name }}</h3>
-          <img :src="spieler.profilePicture" alt="Profilbild" class="profilbild" />
+          <img :src="spieler.profilePicture" alt="Profilbild" class="profilbild"/>
           <div class="actions">
             <!-- Spieler zur Session hinzufügen -->
-            <button 
-              @click="addPlayerToSession(spieler.spielerId!)" 
-              :disabled="addedPlayerIds.has(spieler.spielerId!)" 
-              :class="{ 'disabled': addedPlayerIds.has(spieler.spielerId!) }">
+            <button
+                :class="{ 'disabled': addedPlayerIds.has(spieler.spielerId!) }"
+                :disabled="addedPlayerIds.has(spieler.spielerId!)"
+                @click="addPlayerToSession(spieler.spielerId!)">
               Hinzufügen
             </button>
             <!-- Spieler aus der Session entfernen -->
-            <button 
-              @click="removePlayerFromSession(spieler.spielerId!)" 
-              :disabled="!addedPlayerIds.has(spieler.spielerId!)" 
-              :class="{ 'disabled': !addedPlayerIds.has(spieler.spielerId!) }">
+            <button
+                :class="{ 'disabled': !addedPlayerIds.has(spieler.spielerId!) }"
+                :disabled="!addedPlayerIds.has(spieler.spielerId!)"
+                @click="removePlayerFromSession(spieler.spielerId!)">
               Entfernen
             </button>
           </div>
@@ -45,26 +45,26 @@
     </div>
 
     <!-- Zurück zur Startseite -->
-    <button @click="goHome" class="buttons">Abbrechen</button>
+    <button class="buttons" @click="goHome">Abbrechen</button>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
 import router from '../router';
-import { Session } from '../Types/Session'; 
-import { Player } from '../Types/Player';
+import {SpielrundeView} from '@/Types/SpielrundeView';
+import {Player} from '../Types/Player';
 
-const spieler = ref<Player[]>([]); 
+const spieler = ref<Player[]>([]);
 
-const sessionData = ref<Session>({
+const sessionData = ref<SpielrundeView>({
   spielRundenName: '',
   spielRundenId: '',
   spielerAnzeigenViewDTOS: [],
 });
 
-const searchQuery = ref(''); 
+const searchQuery = ref('');
 const addedPlayerIds = ref<Set<string>>(new Set()); // Set für die hinzugefügten Spieler-IDs
 
 // Spieler zur Session hinzufügen
@@ -108,7 +108,7 @@ const goHome = () => {
 const fetchSpieler = async () => {
   try {
     const response = await axios.get('/api/getAlleSpieler');
-   
+
 
     // Zugriff auf das Array mit den Spielern
     const spielerArray = response.data.data;
@@ -123,10 +123,10 @@ const fetchSpieler = async () => {
         });
       });
     } else {
-    
+
     }
-    
-   
+
+
   } catch (error) {
   }
 };
@@ -207,17 +207,17 @@ onMounted(() => {
 }
 
 .actions button:first-child {
-  background-color: #4CAF50; 
+  background-color: #4CAF50;
   color: white;
 }
 
 .actions button:last-child {
-  background-color: #f44336; 
+  background-color: #f44336;
   color: white;
 }
 
 .actions button:hover {
-  opacity: 0.8; 
+  opacity: 0.8;
 }
 
 .save-session button {
@@ -250,9 +250,9 @@ onMounted(() => {
 }
 
 .actions button.disabled {
-  background-color: #ccc; 
-  color: #666; 
-  cursor: not-allowed; 
-  opacity: 0.6; 
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 </style>

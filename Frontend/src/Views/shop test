@@ -1,0 +1,161 @@
+<!--<template>-->
+<!--  <div class="shop">-->
+<!--    <h2 v-if="currentPlayer">Shop für Spieler: {{ currentPlayer.name }}</h2>-->
+<!--    <h2 v-else>Spieler wird geladen...</h2>-->
+
+<!--    <h3>Shop-Items</h3>-->
+<!--    <div v-if="shopItems.length" class="shop-items">-->
+<!--      <ul>-->
+<!--        <li v-for="item in shopItems" :key="item.name" class="shop-item">-->
+<!--          <img :src="item.bild" alt="item.name"/>-->
+<!--          <p>{{ item.name }} - {{ item.preis }} €</p>-->
+<!--          <button class="buy-button" @click="itemKaufen(item.name)">Kaufen</button> &lt;!&ndash; Kaufen-Knopf &ndash;&gt;-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--    <div v-else>-->
+<!--      <p>Keine Shop-Einträge gefunden.</p>-->
+<!--    </div>-->
+
+<!--    <h3>Inventar</h3>-->
+<!--    <div v-if="inventoryItems.length" class="inventory-items">-->
+<!--      <ul>-->
+<!--        <li v-for="item in inventoryItems" :key="item.name" class="inventory-item">-->
+<!--          <img :src="item.bild" alt="item.name"/>-->
+<!--          <p>{{ item.name }} - Anzahl: {{ item.anzahl }}</p> &lt;!&ndash; Anzahl anzeigen &ndash;&gt;-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--    <div v-else>-->
+<!--      <p>Das Inventar ist leer.</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</template>-->
+
+<!--<script lang="ts">-->
+<!--import {defineComponent, ref, onMounted} from "vue";-->
+<!--import {Player} from "@/Types/Player";-->
+<!--import {ShopItem} from "@/Types/ShopItem";-->
+<!--import {PlayerItem} from "@/Types/PlayerItem";-->
+
+
+<!--import bier from '../assets/shopBilder/bier.png';-->
+<!--import bubatz from '../assets/shopBilder/bubatz.png'-->
+<!--import karten from '../assets/shopBilder/karten.png'-->
+
+<!--const shopBilder = [-->
+<!--  bier,-->
+<!--  bubatz,-->
+<!--  karten-->
+<!--];-->
+
+
+<!--export default defineComponent({-->
+
+
+<!--  name: "Shop",-->
+<!--  props: {-->
+<!--    spielerId: {-->
+<!--      type: String, // Spieler-ID sollte als String übergeben werden-->
+<!--      required: true,-->
+<!--    },-->
+<!--  },-->
+<!--  setup(props) {-->
+
+
+<!--    // Statische Testdaten-->
+<!--    const shopItems = ref<ShopItem[]>([-->
+<!--      {name: 'Bier', preis: 50, bild: bier},-->
+<!--      {name: 'Bubatz', preis: 30, bild: bubatz},-->
+<!--      {name: 'Karten', preis: 10, bild: karten}-->
+<!--    ]);-->
+
+<!--    const inventoryItems = ref<PlayerItem[]>([-->
+<!--      {name: 'Bier', anzahl: 1, bild: bier},-->
+<!--      {name: 'Karten', anzahl: 5, bild: karten},-->
+<!--    ]);-->
+
+<!--    const currentPlayer = ref<Player | null>({-->
+<!--      spielerId: props.spielerId,-->
+<!--      name: 'Max Mustermann',-->
+<!--      profilePicture: 'https://via.placeholder.com/150'-->
+<!--    });-->
+
+<!--    const itemKaufen = (itemName: string) => {-->
+<!--      console.log(`Kauf von ${itemName} erfolgreich!`);-->
+<!--      // Simuliere das Hinzufügen des Items zum Inventar-->
+<!--      const item = inventoryItems.value.find(i => i.name === itemName);-->
+<!--      if (item) {-->
+<!--        item.anzahl++;-->
+<!--      } else {-->
+<!--        inventoryItems.value.push({-->
+<!--          name: itemName,-->
+<!--          anzahl: 1,-->
+<!--          bild: 'https://via.placeholder.com/150'-->
+<!--        });-->
+<!--      }-->
+<!--    };-->
+
+<!--    onMounted(() => {-->
+<!--      // Keine API-Aufrufe nötig, da wir statische Daten verwenden-->
+<!--    });-->
+
+<!--    return {-->
+<!--      currentPlayer,-->
+<!--      shopItems,-->
+<!--      inventoryItems,-->
+<!--      itemKaufen,-->
+<!--    };-->
+<!--  },-->
+<!--});-->
+<!--</script>-->
+
+<!--<style scoped>-->
+
+.shop {
+  padding: 20px;
+  background-color: #f5f5f5; /* Hellgrauer Hintergrund für den Shop */
+  border-radius: 10px;
+}
+
+.shop-container {
+  display: flex;
+  justify-content: space-between; /* Verteilt die Items gleichmäßig */
+}
+
+.shop-items {
+  width: 60%; /* Breite des Shop-Items Bereichs */
+  background-color: #e0e0e0; /* Hellgraue Hintergrundfarbe */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.shop-items ul {
+  list-style-type: none; /* Entfernt die Standardliste */
+  padding: 0;
+}
+
+.shop-items li {
+  display: flex;
+  align-items: center;
+  margin: 10px 0; /* Abstand zwischen den Items */
+}
+
+.inventory {
+  width: 35%; /* Breite des Inventar Bereichs */
+  background-color: #d0ffd0; /* Hellgrüne Hintergrundfarbe */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.inventory ul {
+  list-style-type: none; /* Entfernt die Standardliste */
+  padding: 0;
+}
+
+.inventory li {
+  display: flex;
+  align-items: center;
+  margin: 10px 0; /* Abstand zwischen den Items */
+}
+<!--</style>-->

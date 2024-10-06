@@ -1,30 +1,31 @@
 <template>
   <div class="spieler-liste">
     <h1 class="titel">Spielerliste</h1>
-    <div class="spieler-grid" v-if="spieler.length > 0">
-      <div v-for="spieler in spieler" :key="spieler.spielerId" class="spieler">
+    <div v-if="spielerList.length > 0" class="spieler-grid">
+      <div v-for="spieler in spielerList" :key="spieler.spielerId" class="spieler">
         <h3>{{ spieler.name }}</h3>
         <div class="bild-container">
-          <img :src="spieler.profilePicture" :alt="`Profilbild von ${spieler.name}`" class="profilbild" />
+          <img :alt="`Profilbild von ${spieler.name}`" :src="spieler.profilePicture" class="profilbild"/>
         </div>
         <div class="actions">
-          <button @click="bearbeiten(spieler)" class="actions button">Bearbeiten</button>
-          <button @click="loeschen(spieler)" class="actions button">Löschen</button>
+          <button class="actions button" @click="goDetailSeite(spieler)">Details</button>
+          <button class="actions button" @click="loeschen(spieler)">Löschen</button>
         </div>
       </div>
     </div>
     <p v-else>Keine Spieler gefunden.</p>
-    <button @click="goHome" class="buttons">Abbrechen</button>
+    <button class="buttons" @click="goHome">Abbrechen</button>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
 import router from '../router';
-import { Player } from '../Types/Player';
+import {SpielrundeView} from "@/Types/SpielrundeView";
+import {Player} from "@/Types/Player";
 
-const spieler = ref<Player[]>([])
+const spielerList = ref<Player[]>([])
 
 // import profile1 from '../assets/Profilbilder/ProfilBild1.png';
 // import profile2 from '../assets/Profilbilder/ProfilBild2.png';
@@ -53,7 +54,7 @@ const spieler = ref<Player[]>([])
 const fetchSpieler = async () => {
   try {
     const response = await axios.get('/api/getAlleSpieler');
-   
+
 
     // Zugriff auf das Array mit den Spielern
     const spielerArray = response.data.data;
@@ -62,17 +63,17 @@ const fetchSpieler = async () => {
     if (Array.isArray(spielerArray)) {
       spielerArray.forEach((spielerData: any) => {
         // Spieler zur spieler-Referenz hinzufügen
-        spieler.value.push({
+        spielerList.value.push({
           spielerId: spielerData.spielerId.id,
           name: spielerData.name,
           profilePicture: spielerData.profilePicture, // Hier ist der vollständige Base64-String
         });
       });
     } else {
-    
+
     }
-    
-   
+
+
   } catch (error) {
   }
 };
@@ -86,6 +87,16 @@ const loeschen = (spieler: Player) => {
   // Logik für Löschen hinzufügen
 
 };
+
+const goDetailSeite = (spieler: Player) => {
+  router.push({
+    name: 'spielerdetails',
+    params: {spielerId: spieler.spielerId} // Übergebe nur die ID des Spielers
+  });
+
+
+};
+
 
 onMounted(() => {
   fetchSpieler();
@@ -126,6 +137,7 @@ const goHome = () => {
   gap: 20px; /* Abstand zwischen den Spielern */
   justify-items: center; /* Zentriert die Spieler in den Zellen */
 }
+
 .bild-container {
   padding: 4px;
   margin-bottom: 10px;

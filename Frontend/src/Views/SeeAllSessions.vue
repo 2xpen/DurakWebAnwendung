@@ -1,22 +1,22 @@
 <template>
   <div class="sessions-view">
     <h1 class="titel">Sessions</h1>
-    <div class="sessions-list" v-if="sessions.length > 0">
+    <div v-if="sessions.length > 0" class="sessions-list">
       <div v-for="session in sessions" :key="session.spielRundenId" class="session-row">
         <div class="session-name">
           <h3>{{ session.spielRundenName }}</h3> <!-- Name der Session -->
         </div>
         <div class="spieler-container">
-          <div 
-            v-for="(player, index) in getLimitedPlayers(session.spielerAnzeigenViewDTOS)" 
-            :key="index" 
-            class="spieler"
+          <div
+              v-for="(player, index) in getLimitedPlayers(session.spielerAnzeigenViewDTOS)"
+              :key="index"
+              class="spieler"
           >
             <h3>{{ player.name }}</h3>
-            <img 
-              :src="player.profilePicture" 
-              :alt="`Profilbild von ${player.name}`" 
-              class="profilbild" 
+            <img
+                :alt="`Profilbild von ${player.name}`"
+                :src="player.profilePicture"
+                class="profilbild"
             />
           </div>
           <!-- Anzeige von "+ x mehr", wenn mehr als 4 Spieler vorhanden sind -->
@@ -25,49 +25,49 @@
           </div>
         </div>
         <div class="start-button-container">
-          <button @click="startSession(session)" class="start-button">Session starten</button>
+          <button class="start-button" @click="startSession(session)">Session starten</button>
         </div>
       </div>
     </div>
     <p v-else>Keine Sessions gefunden.</p>
-    <button @click="goHome" class="buttons">Abbrechen</button>
+    <button class="buttons" @click="goHome">Abbrechen</button>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
-import { Session } from '../Types/Session'; 
+import {SpielrundeView} from '@/Types/SpielrundeView';
 import router from '../router';
-import { Player } from '../Types/Player';
+import {Player} from '../Types/Player';
 
-const sessions = ref<Session[]>([])
+const sessions = ref<SpielrundeView[]>([])
 
 const goHome = () => {
   router.push('/');
 };
 
 const getLimitedPlayers = (spielerListe: Player[]): Player[] => {
-  return spielerListe.slice(0, 4); 
+  return spielerListe.slice(0, 4);
 };
 
 const fetchSessions = async () => {
   try {
-    const response = await axios.get('/api/getAlleSpielrundenAuswahlView'); 
+    const response = await axios.get('/api/getAlleSpielrundenAuswahlView');
     sessions.value = response.data.data;
-    console.log(sessions.value, "<-------empfangene session") 
+    console.log(sessions.value, "<-------empfangene session")
   } catch (error) {
     console.error('Fehler beim Abrufen der Sessions:', error);
   }
 };
 
-const startSession = (session: Session) => {
-    router.push({ name: 'sessionDetail', params: { spielRundenId: session.spielRundenId } });
+const startSession = (session: SpielrundeView) => {
+  router.push({name: 'sessionDetail', params: {spielRundenId: session.spielRundenId}});
 };
 
 
 onMounted(() => {
-  fetchSessions(); 
+  fetchSessions();
 });
 </script>
 

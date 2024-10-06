@@ -5,6 +5,7 @@ import SeeAllPlayer from "../Views/SeeAllPlayer.vue";
 import CreateSession from "../Views/CreateSession.vue";
 import SeeAllSessions from "../Views/SeeAllSessions.vue";
 import SessionDetail from "../Views/SessionDetail.vue";
+import Shop from "../Views/Shop.vue";
 const routes = [
     {
         path: "/",
@@ -36,6 +37,12 @@ const routes = [
         name: "sessionDetail",
         component: SessionDetail,
         props: true, // Übergibt den Parameter als Prop
+    },
+    {
+        path: '/spielerdetails/:spielerId', // Verwende einen Platzhalter für die Spieler-ID
+        name: 'spielerdetails',
+        component: Shop,
+        props: true, // Dies ermöglicht das automatische Übergeben der Route-Parameter als Props
     },
 ];
 const router = createRouter({

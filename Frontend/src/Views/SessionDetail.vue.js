@@ -160,7 +160,7 @@ function __VLS_template() {
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((player.spielerId)), ...{ class: ("spieler") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
             (player.name);
-            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((player.profilePicture)), alt: ((`Profilbild von ${player.name}`)), ...{ class: ("profilbild") }, });
+            __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ alt: ((`Profilbild von ${player.name}`)), src: ((player.profilePicture)), ...{ class: ("profilbild") }, });
             __VLS_elementAsFunction(__VLS_intrinsicElements.h2, __VLS_intrinsicElements.h2)({});
             (player.durakStand);
             __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("buttons-container") }, });
@@ -173,7 +173,7 @@ function __VLS_template() {
                         if (!((__VLS_ctx.spielrunde)))
                             return;
                         __VLS_ctx.removeLosses(player);
-                    } }, ...{ class: ("korrekturKnopf") }, disabled: ((!__VLS_ctx.isDuDurakPressed)), });
+                    } }, disabled: ((!__VLS_ctx.isDuDurakPressed)), ...{ class: ("korrekturKnopf") }, });
         }
         __VLS_elementAsFunction(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({ ...{ onClick: (__VLS_ctx.goBack) }, ...{ class: ("back-button") }, });
     }

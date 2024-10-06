@@ -1,40 +1,40 @@
 <template>
   <div class="create-player">
     <h2>Neuen Spieler erstellen</h2>
-    <input v-model="playerName" placeholder="Spielername eingeben" />
+    <input v-model="playerName" placeholder="Spielername eingeben"/>
 
     <div class="profile-pictures">
       <div class="pictures">
         <template v-for="(picture, index) in profilePictures" :key="index">
           <img
-            :src="picture"
-            alt="Profilbild"
-            @click="selectProfilePicture(picture)"
-            :class="['profile-img', { selected: selectedProfilePicture === picture }]"
+              :class="['profile-img', { selected: selectedProfilePicture === picture }]"
+              :src="picture"
+              alt="Profilbild"
+              @click="selectProfilePicture(picture)"
           />
         </template>
         <Allert
-          v-if="showAllert"
-          :title="allertTitle"
-          :message="allertMessage"
-          :isVisible="showAllert"
-          @close="showAllert = false"
+            v-if="showAllert"
+            :isVisible="showAllert"
+            :message="allertMessage"
+            :title="allertTitle"
+            @close="showAllert = false"
         />
       </div>
     </div>
 
     <div class="navigation-buttons">
-      <button @click="SaveAndHome" class="buttons">Speichern und Zurück</button>
-      <button @click="goHome" class="buttons">Abbrechen</button>
+      <button class="buttons" @click="SaveAndHome">Speichern und Zurück</button>
+      <button class="buttons" @click="goHome">Abbrechen</button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { Player } from '../Types/Player';
+import {ref, watch} from 'vue';
+import {Player} from '../Types/Player';
 import router from '../router';
-import Allert from '../components/Allert.vue'; 
+import Allert from '../components/Allert.vue';
 import $ from 'jquery';
 
 const playerName = ref<string>('');
@@ -113,14 +113,14 @@ const SaveAndHome = async () => {
       name: playerName.value,
       profilePicture: base64Image, // Verwende den Base64-String direkt
     };
-    
+
     const playerJson = JSON.stringify(newPlayer);
 
     $.ajax({
       url: '/api/createSpieler',
       method: 'POST',
-      contentType: 'application/json', 
-      data: playerJson, 
+      contentType: 'application/json',
+      data: playerJson,
       dataType: 'json',
     }).done((response: any) => {
     }).fail((jqXHR: JQuery.jqXHR, textStatus: string, errorThrown: string) => {
@@ -147,8 +147,8 @@ const SaveAndHome = async () => {
     });
 
     // Nach dem Schließen des Alerts zur Startseite navigieren
-    playerName.value = ''; 
-    selectedProfilePicture.value = null; 
+    playerName.value = '';
+    selectedProfilePicture.value = null;
     router.push('/');
   } else {
     // Fehler-Alert
@@ -204,11 +204,11 @@ input {
 }
 
 .profile-img {
-  width: 50px; 
-  height: 50px; 
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   border: 2px solid transparent;
-  object-fit: cover; 
+  object-fit: cover;
   margin: 0; /* Kein zusätzlicher Abstand */
 }
 

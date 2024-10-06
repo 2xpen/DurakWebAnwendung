@@ -61,7 +61,7 @@ function __VLS_template() {
                 __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ key: ((index)), ...{ class: ("spieler") }, });
                 __VLS_elementAsFunction(__VLS_intrinsicElements.h3, __VLS_intrinsicElements.h3)({});
                 (player.name);
-                __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ src: ((player.profilePicture)), alt: ((`Profilbild von ${player.name}`)), ...{ class: ("profilbild") }, });
+                __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ alt: ((`Profilbild von ${player.name}`)), src: ((player.profilePicture)), ...{ class: ("profilbild") }, });
             }
             if (session.spielerAnzeigenViewDTOS.length > 4) {
                 __VLS_elementAsFunction(__VLS_intrinsicElements.div, __VLS_intrinsicElements.div)({ ...{ class: ("mehr-spieler") }, });

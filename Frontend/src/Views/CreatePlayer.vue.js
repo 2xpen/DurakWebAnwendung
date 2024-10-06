@@ -149,14 +149,14 @@ function __VLS_template() {
     for (const [picture, index] of __VLS_getVForSourceType((__VLS_ctx.profilePictures))) {
         __VLS_elementAsFunction(__VLS_intrinsicElements.img)({ ...{ onClick: (...[$event]) => {
                     __VLS_ctx.selectProfilePicture(picture);
-                } }, src: ((picture)), alt: ("Profilbild"), ...{ class: ((['profile-img', { selected: __VLS_ctx.selectedProfilePicture === picture }])) }, });
+                } }, ...{ class: ((['profile-img', { selected: __VLS_ctx.selectedProfilePicture === picture }])) }, src: ((picture)), alt: ("Profilbild"), });
     }
     if (__VLS_ctx.showAllert) {
         // @ts-ignore
         [Allert,];
         // @ts-ignore
-        const __VLS_0 = __VLS_asFunctionalComponent(Allert, new Allert({ ...{ 'onClose': {} }, title: ((__VLS_ctx.allertTitle)), message: ((__VLS_ctx.allertMessage)), isVisible: ((__VLS_ctx.showAllert)), }));
-        const __VLS_1 = __VLS_0({ ...{ 'onClose': {} }, title: ((__VLS_ctx.allertTitle)), message: ((__VLS_ctx.allertMessage)), isVisible: ((__VLS_ctx.showAllert)), }, ...__VLS_functionalComponentArgsRest(__VLS_0));
+        const __VLS_0 = __VLS_asFunctionalComponent(Allert, new Allert({ ...{ 'onClose': {} }, isVisible: ((__VLS_ctx.showAllert)), message: ((__VLS_ctx.allertMessage)), title: ((__VLS_ctx.allertTitle)), }));
+        const __VLS_1 = __VLS_0({ ...{ 'onClose': {} }, isVisible: ((__VLS_ctx.showAllert)), message: ((__VLS_ctx.allertMessage)), title: ((__VLS_ctx.allertTitle)), }, ...__VLS_functionalComponentArgsRest(__VLS_0));
         let __VLS_5;
         const __VLS_6 = {
             onClose: (...[$event]) => {
