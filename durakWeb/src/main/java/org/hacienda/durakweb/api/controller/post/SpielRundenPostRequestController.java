@@ -36,13 +36,11 @@ import java.util.List;
 public class SpielRundenPostRequestController {
 
     private final SpielrundenService spielrundenService;
-    private final SpielerService spielerService;
 
 
     @Autowired
-    public SpielRundenPostRequestController(SpielrundenService spielrundenService, SpielerService spielerService) {
+    public SpielRundenPostRequestController(SpielrundenService spielrundenService) {
         this.spielrundenService = spielrundenService;
-        this.spielerService = spielerService;
     }
 
 
@@ -58,87 +56,6 @@ public class SpielRundenPostRequestController {
 
         return ResponseEntity.ok(wrapper);
     }
-
-
-    @GetMapping("/getAlleSpielrundenAuswahlView")
-    public ResponseEntity<ResponseWrapper<List<SpielrundeAuswahlDTO>>> getAlleSpielrunden() {
-
-
-        ResponseWrapper<List<SpielrundeAuswahlDTO>> wrapper = new ResponseWrapper<>();
-
-//TODO HIER UNBEDINGT NACHBESSERN, DAFÜR EINEN SERVICE SCHREIBEN DER DEDIZIERT DAS ERMITTELT*******************************************************************************************************************************************************************************************************************************************
-        List<SpielrundeAuswahlDTO> spielrundeAuswahlDTOS = new ArrayList<>();
-
-        for (Spielrunde spielrunde : spielrundenService.getAlleSpielrunde()) {
-
-            List<SpielerAnzeigenViewDTO> spielerAnzeigenViewDTOS = new ArrayList<>();
-
-            //  es wird jeder spieler der spielrunde ermittelt → das spielrunden repo schaut alle spielerIds nach die es für die spielrunde hat, und im spielerRepo wird jeder spieler anhand seiner id ermittelt
-            for (Spieler spieler : spielerService.getSpielerById(spielrundenService.getSpielerIdsOfSpielrunde(spielrunde))) {
-                //umwandlung vom Spieler zum DTOS
-                log.info(spieler.getName() + " WURDE BEIM DOT SUCHEN GEFUNDEN");
-                spielerAnzeigenViewDTOS.add(new SpielerAnzeigenViewDTO(spieler));
-            }
-            spielrundeAuswahlDTOS.add(new SpielrundeAuswahlDTO(spielrunde, spielerAnzeigenViewDTOS));
-        }
-//TODO*******************************************************************************************************************************************************************************************************************************************
-        wrapper.setData(spielrundeAuswahlDTOS);
-        wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
-        wrapper.addMeldungen("alter tom wenn du das siehst, erinner mich dran den service hier umzuschreiben");
-
-        /**
-         * TEST
-         */
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            log.info("response /get alle SpielrundeAuswahlView = " + mapper.writeValueAsString(wrapper.getData()));
-        } catch (JsonProcessingException e) {
-            e.getMessage();
-        }
-
-        /**
-         * TEST
-         */
-
-        return ResponseEntity.ok(wrapper);
-    }
-
-    @GetMapping("/getSpielrundeById")
-    public ResponseEntity<ResponseWrapper<SpielRundeDetailsDTO>> getSpielrundeById(@RequestParam String spielRundenId) {
-        ResponseWrapper<SpielRundeDetailsDTO> wrapper = new ResponseWrapper<>();
-
-        log.info("spielerRunde By Id ausgelöst");
-        System.out.println("spielerRunde By Id ausgelöst");
-        Spielrunde spielRunde = spielrundenService.getSpielRundeById(new SpielrundenId(spielRundenId));
-
-
-        List<SpielerInRundeAnzeigenDTO> spielerInRundeAnzeigenDTOS = new ArrayList<>();
-
-        for (Spieler spieler : spielerService.getSpielerById(spielrundenService.getSpielerIdsOfSpielrunde(spielRunde))) {
-            SpielerStandRecord spielerStandRecord = spielrundenService.getSpielerStandRecordById(new SpielrundenId(spielRundenId), spieler.getSpielerId());
-            spielerInRundeAnzeigenDTOS.add(new SpielerInRundeAnzeigenDTO(spieler, spielerStandRecord));
-        }
-
-        wrapper.setData(new SpielRundeDetailsDTO(spielRunde, spielerInRundeAnzeigenDTOS));
-        wrapper.setStatusIndicator(StatusCode.ALLESDISCO);
-        wrapper.addMeldungen("wie immer tom, alles TUTI FRUTTI BANUTTI");
-
-        /**
-         * TEST
-         * */
-
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            log.info("response /getSpielRundeById = " + mapper.writeValueAsString(wrapper.getData()));
-        } catch (JsonProcessingException e) {
-            e.getMessage();
-        }
-        /**
-         * TEST
-         */
-        return ResponseEntity.ok(wrapper);
-    }
-
 
     @PostMapping("/changedurakstand")
     public ResponseEntity<ResponseWrapper<SpielerStandRecordDTO>> changeSpielerStandRecord(@RequestBody ChangeDurakStandRequest request) {
