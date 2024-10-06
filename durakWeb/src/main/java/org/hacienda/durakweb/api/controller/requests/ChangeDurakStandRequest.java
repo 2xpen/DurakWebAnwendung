@@ -1,4 +1,4 @@
-package org.hacienda.durakweb.controller.requests;
+package org.hacienda.durakweb.api.controller.requests;
 
 import lombok.Getter;
 import org.hacienda.durakweb.data.identifier.SpielerId;

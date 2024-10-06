@@ -1,4 +1,4 @@
-package org.hacienda.durakweb.controller.dto;
+package org.hacienda.durakweb.api.dto.spielrundeDTO;
 
 import lombok.Getter;
 
@@ -12,9 +12,10 @@ public class SpielRundeCreateParamDTO {
         this.spielRundenName = spielRundenName;
     }
 
-    SpielRundeCreateParamDTO(){
+    SpielRundeCreateParamDTO() {
 
     }
+
     public String[] getSpielerIds() {
         return spielerIds;
     }

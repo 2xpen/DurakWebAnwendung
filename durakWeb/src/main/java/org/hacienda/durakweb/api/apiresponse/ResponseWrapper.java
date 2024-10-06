@@ -1,4 +1,4 @@
-package org.hacienda.durakweb.apiresponse;
+package org.hacienda.durakweb.api.apiresponse;
 
 import lombok.Getter;
 import org.hacienda.durakweb.constants.StatusCode;
@@ -17,29 +17,27 @@ public class ResponseWrapper<DATA_TYPE> {
     public ResponseWrapper() {
     }
 
-    public ResponseWrapper<DATA_TYPE> setData(DATA_TYPE data){
-        this.data = data;
-        return this;
-    }
-
-
-    public ResponseWrapper<DATA_TYPE> addMeldungen(String meldungen){
+    public ResponseWrapper<DATA_TYPE> addMeldungen(String meldungen) {
         this.meldungen.add(meldungen);
         return this;
     }
-
-    public ResponseWrapper<DATA_TYPE> setStatusIndicator(StatusCode statusIndicator){
-        this.statusIndicator = statusIndicator;
-        return this;
-    }
-
 
     public StatusCode getStatusIndicator() {
         return statusIndicator;
     }
 
+    public ResponseWrapper<DATA_TYPE> setStatusIndicator(StatusCode statusIndicator) {
+        this.statusIndicator = statusIndicator;
+        return this;
+    }
+
     public DATA_TYPE getData() {
         return data;
+    }
+
+    public ResponseWrapper<DATA_TYPE> setData(DATA_TYPE data) {
+        this.data = data;
+        return this;
     }
 
     public List<String> getMeldungen() {

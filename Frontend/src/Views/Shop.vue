@@ -63,7 +63,7 @@ export default defineComponent({
         const response = await axios.get(`/api/getSpielerById?spielerId=${props.spielerId}`);
         console.log("anfrage empfangen ... ");
         console.log(response.data.data, " ... die empfangenen datei");
-        console.log(response.data, " ... die empfangenen datei");
+        // console.log(response.data, " ... die empfangenen datei");
 
         const playerData = response.data.data;
         currentPlayer.value = {
@@ -73,8 +73,6 @@ export default defineComponent({
         };
       } catch (error) {
         console.error("Fehler beim Abrufen des Spielers:", error);
-        console.log("häää");
-        alert("heidewitzka ");
       }
     };
 

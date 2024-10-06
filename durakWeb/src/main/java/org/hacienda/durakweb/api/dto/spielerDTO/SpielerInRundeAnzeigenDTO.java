@@ -1,9 +1,8 @@
-package org.hacienda.durakweb.controller.dto;
+package org.hacienda.durakweb.api.dto.spielerDTO;
 
 import lombok.Getter;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.SpielerStandRecord;
-import org.hacienda.durakweb.data.identifier.SpielerId;
 
 @Getter
 public class SpielerInRundeAnzeigenDTO {

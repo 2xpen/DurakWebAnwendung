@@ -1,4 +1,4 @@
-package org.hacienda.durakweb.controller.dto;
+package org.hacienda.durakweb.api.dto.spielerDTO;
 
 import org.hacienda.durakweb.data.identifier.SpielerId;
 

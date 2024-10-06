@@ -1,9 +1,7 @@
-package org.hacienda.durakweb.controller.dto;
+package org.hacienda.durakweb.api.dto.spielerDTO;
 
 import lombok.Getter;
 import org.hacienda.durakweb.data.Spieler;
-
-
 
 
 @Getter
@@ -17,7 +15,8 @@ public class SpielerAnzeigenViewDTO {
         this.profilePicture = spieler.getprofilePicture();
     }
 
-    public SpielerAnzeigenViewDTO() {}
+    public SpielerAnzeigenViewDTO() {
+    }
 
     public void setName(String name) {
         this.name = name;

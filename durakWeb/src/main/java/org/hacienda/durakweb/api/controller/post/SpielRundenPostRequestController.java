@@ -1,18 +1,21 @@
-package org.hacienda.durakweb.controller;
+package org.hacienda.durakweb.api.controller.post;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.hacienda.durakweb.apiresponse.ResponseWrapper;
+import org.hacienda.durakweb.api.apiresponse.ResponseWrapper;
 import org.hacienda.durakweb.constants.StatusCode;
-import org.hacienda.durakweb.controller.dto.*;
-import org.hacienda.durakweb.controller.requests.ChangeDurakStandRequest;
-import org.hacienda.durakweb.controller.requests.CreateSpielRundeParameter;
+import org.hacienda.durakweb.api.dto.spielerDTO.SpielerAnzeigenViewDTO;
+import org.hacienda.durakweb.api.dto.spielerDTO.SpielerInRundeAnzeigenDTO;
+import org.hacienda.durakweb.api.dto.spielerDTO.SpielerStandRecordDTO;
+import org.hacienda.durakweb.api.dto.spielrundeDTO.SpielRundeDetailsDTO;
+import org.hacienda.durakweb.api.dto.spielrundeDTO.SpielrundeAuswahlDTO;
+import org.hacienda.durakweb.api.controller.requests.ChangeDurakStandRequest;
+import org.hacienda.durakweb.api.controller.requests.CreateSpielRundeParameter;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
-import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.data.identifier.SpielrundenId;
 import org.hacienda.durakweb.service.SpielerService;
 import org.hacienda.durakweb.service.SpielrundenService;
@@ -30,14 +33,14 @@ import java.util.List;
 //MAMBO TODO HIER EINE BASE KLASSE ERSTELLEN, DIE DEN WRAPPER VERPFLICHTET
 
 @Controller
-public class SpielRundenController {
+public class SpielRundenPostRequestController {
 
     private final SpielrundenService spielrundenService;
     private final SpielerService spielerService;
 
 
     @Autowired
-    public SpielRundenController(SpielrundenService spielrundenService, SpielerService spielerService) {
+    public SpielRundenPostRequestController(SpielrundenService spielrundenService, SpielerService spielerService) {
         this.spielrundenService = spielrundenService;
         this.spielerService = spielerService;
     }
@@ -60,7 +63,6 @@ public class SpielRundenController {
     @GetMapping("/getAlleSpielrundenAuswahlView")
     public ResponseEntity<ResponseWrapper<List<SpielrundeAuswahlDTO>>> getAlleSpielrunden() {
 
-        log.info("called /getAlleSpielrunden");
 
         ResponseWrapper<List<SpielrundeAuswahlDTO>> wrapper = new ResponseWrapper<>();
 

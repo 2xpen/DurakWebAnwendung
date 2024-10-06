@@ -1,6 +1,7 @@
-package org.hacienda.durakweb.controller.dto;
+package org.hacienda.durakweb.api.dto.spielrundeDTO;
 
 import lombok.Getter;
+import org.hacienda.durakweb.api.dto.spielerDTO.SpielerInRundeAnzeigenDTO;
 import org.hacienda.durakweb.data.Spielrunde;
 
 import java.util.List;

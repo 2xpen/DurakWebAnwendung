@@ -1,13 +1,12 @@
-package org.hacienda.durakweb.controller;
-
+package org.hacienda.durakweb.api.controller.get;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.hacienda.durakweb.controller.dto.SpielerDataResponse;
-import org.hacienda.durakweb.data.Spieler;
-import org.hacienda.durakweb.apiresponse.ResponseWrapper;
+import org.hacienda.durakweb.api.apiresponse.ResponseWrapper;
+import org.hacienda.durakweb.api.dto.spielerDTO.SpielerDataResponse;
 import org.hacienda.durakweb.constants.StatusCode;
+import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.durakfehlermeldung.DurakFehlerMeldung;
 import org.hacienda.durakweb.service.SpielerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,34 +21,16 @@ import java.util.List;
 
 @Slf4j
 @Controller
-public class SpielerController {
-
-    /**
-     *
-     */
+public class SpielerGetRequestController {
 
 
     private final SpielerService service;
 
     @Autowired
-    SpielerController(SpielerService service) {
+    SpielerGetRequestController(SpielerService service) {
         this.service = service;
     }
 
-
-    @PostMapping("/createSpieler")
-    public ResponseEntity<ResponseWrapper<Spieler>> createSpieler(@RequestBody Spieler spieler) {
-        ResponseWrapper<Spieler> wrapper = new ResponseWrapper<>();
-
-
-        service.addSpieler(spieler);
-
-        wrapper.setData(spieler);
-        wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
-        wrapper.addMeldungen("Allet Tuti");
-
-        return ResponseEntity.ok(wrapper);
-    }
 
     @GetMapping("/getAlleSpieler")
     public ResponseEntity<ResponseWrapper<List<Spieler>>> getAllPlayers() {
@@ -76,6 +57,7 @@ public class SpielerController {
 
         return ResponseEntity.ok(wrapper);
     }
+
 
     @GetMapping("/getSpielerById")
     public ResponseEntity<ResponseWrapper<SpielerDataResponse>> getSpieler(@RequestParam String spielerId) throws DurakFehlerMeldung {
@@ -146,3 +128,4 @@ public class SpielerController {
 
 
 }
+
