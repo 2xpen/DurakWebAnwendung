@@ -1,36 +1,54 @@
 package org.hacienda.durakweb.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 
 public class SpielerStandRecord {
 
     private final SpielerId spielerId;
-    private Integer stand;
+    private Integer normalesDurakAnzahl;
+    private Integer bockrundenAnzahl;
 
     public SpielerStandRecord(SpielerId spielerId) {
         this.spielerId = spielerId;
-        this.stand = 0;
+        this.normalesDurakAnzahl = 0;
+        this.bockrundenAnzahl = 0;
     }
 
     @JsonCreator
     public SpielerStandRecord(@JsonProperty("spielerId") SpielerId spielerId,
-                              @JsonProperty("stand") Integer stand) {
+                              @JsonProperty("normalesDurakAnzahl") Integer normalesDurakAnzahl,
+                              @JsonProperty("bockrundenAnzahl") Integer bockrundenAnzahl) {
         this.spielerId = spielerId;
-        this.stand = stand != null ? stand : 0; // Standardwert auf 0 setzen, wenn nicht angegeben
+        this.normalesDurakAnzahl = normalesDurakAnzahl != null ? normalesDurakAnzahl : 0; // Standardwert auf 0 setzen, wenn nicht angegeben
+        this.bockrundenAnzahl = bockrundenAnzahl != null ? bockrundenAnzahl : 0;
     }
 
     public SpielerId getSpielerId() {
         return spielerId;
     }
 
-    public Integer getStand() {
-        return stand;
+    public Integer getNormalesDurakAnzahl() {
+        return normalesDurakAnzahl;
     }
 
-    public void setStand(Integer stand) {
-        this.stand = stand;
+    public void setNormalesDurakAnzahl(Integer normalesDurakAnzahl) {
+        this.normalesDurakAnzahl = normalesDurakAnzahl;
+    }
+
+    public Integer getBockrundenAnzahl() {
+        return bockrundenAnzahl;
+    }
+
+    public void setBockrundenAnzahl(Integer bockrundenAnzahl) {
+        this.bockrundenAnzahl = bockrundenAnzahl;
+    }
+
+    @JsonIgnore
+    public Integer getDurakAnzahl() {
+        return this.bockrundenAnzahl + this.normalesDurakAnzahl;
     }
 
     @Override

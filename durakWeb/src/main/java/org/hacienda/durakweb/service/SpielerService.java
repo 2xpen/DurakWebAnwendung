@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.durakfehlermeldung.DurakFehlerMeldung;
+import org.hacienda.durakweb.repo.SpielRundenRepo;
 import org.hacienda.durakweb.repo.SpielerRepo;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,7 @@ import java.util.List;
 @Service
 public class SpielerService {
 
-    SpielerRepo repo;
-
+    private final SpielerRepo repo;
 
     SpielerService(SpielerRepo repo) {
         this.repo = repo;
@@ -25,6 +25,10 @@ public class SpielerService {
 
     public void addSpieler(Spieler spieler) {
         repo.addSpieler(spieler);
+    }
+
+    public void removeSpieler(Spieler spieler) {
+        repo.removeSpielerById(spieler.getSpielerId());
     }
 
     public List<Spieler> getAllSpieler() {

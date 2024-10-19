@@ -11,7 +11,6 @@ public class DurakWebApplication {
     public static void main(String[] args) {
         log.info("DurakWebApplication started");
         SpringApplication.run(DurakWebApplication.class, args);
-
     }
 
 }

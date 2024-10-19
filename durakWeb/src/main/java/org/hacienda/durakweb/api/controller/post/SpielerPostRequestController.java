@@ -46,5 +46,16 @@ public class SpielerPostRequestController {
         return ResponseEntity.ok(wrapper);
     }
 
+    @PostMapping("/removeSpieler")
+    public ResponseEntity<ResponseWrapper<Spieler>> removeSpieler(@RequestBody Spieler spieler) {
+        ResponseWrapper<Spieler> wrapper = new ResponseWrapper<>();
+
+        service.removeSpieler(spieler);
+        wrapper.setData(spieler);
+        wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
+        wrapper.addMeldungen("Alle Tuti");
+        return ResponseEntity.ok(wrapper);
+    }
+
 
 }

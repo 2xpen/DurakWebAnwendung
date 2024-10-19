@@ -15,6 +15,7 @@ public class Spieler {
     private final SpielerId spielerId;
     private String name;
     private String profilePicture = "";
+    
 
     @JsonCreator
     public Spieler(@JsonProperty("name") String name,

@@ -4,9 +4,12 @@ package org.hacienda.durakweb.repo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.hacienda.durakweb.api.controller.requests.ChangeDurakStandRequest;
+import org.hacienda.durakweb.constants.DateiPfade;
 import org.hacienda.durakweb.data.*;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.data.identifier.SpielrundenId;
+import org.hacienda.durakweb.durakfehlermeldung.DurakFehlerMeldung;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -19,7 +22,6 @@ import java.util.List;
 public class SpielRundenRepo implements Serialisierbar {
 
     List<Spielrunde> spielrunden = new ArrayList<>();
-
 
     public SpielRundenRepo() {
         load();
@@ -58,11 +60,36 @@ public class SpielRundenRepo implements Serialisierbar {
                                 (s -> s.getSpielerId().equals(spielerId)).findFirst().orElse(null);
     }
 
-    public SpielerStandRecord changeSpielerstandRecord(SpielrundenId spielrundenId, SpielerId spielerId, Integer verrechnungsZahl) {
-        SpielerStandRecord spielerStandRecord = getSpielerStandRecordBySpielerId(spielerId, spielrundenId);
-        spielerStandRecord.setStand(spielerStandRecord.getStand() + verrechnungsZahl);
+
+    public SpielerStandRecord changeSpielerstandRecord(ChangeDurakStandRequest req) throws DurakFehlerMeldung {
+        SpielerStandRecord currentRecord = getSpielerStandRecordBySpielerId(req.getSpielerId(), req.getSpielrundenId());
+
+        switch (req.getDurakArt()) {
+            case NORMAL:
+                currentRecord.setNormalesDurakAnzahl(currentRecord.getNormalesDurakAnzahl() + 1);
+            case BOCKRUNDE:
+                currentRecord.setBockrundenAnzahl(currentRecord.getBockrundenAnzahl() + 2);
+            case UNBEKANNT:
+                throw new DurakFehlerMeldung("DURAK ART NICHT GEFUNDEN");
+        }
         save();
-        return spielerStandRecord;
+        return currentRecord;
+    }
+
+    public SpielerStandRecord korrekturSpielerStandRecord(ChangeDurakStandRequest req) throws DurakFehlerMeldung {
+
+        SpielerStandRecord currentRecord = getSpielerStandRecordBySpielerId(req.getSpielerId(), req.getSpielrundenId());
+
+        switch (req.getDurakArt()) {
+            case NORMAL:
+                currentRecord.setNormalesDurakAnzahl(currentRecord.getNormalesDurakAnzahl() - 1);
+            case BOCKRUNDE:
+                currentRecord.setBockrundenAnzahl(currentRecord.getBockrundenAnzahl() - 2);
+            case UNBEKANNT:
+                throw new DurakFehlerMeldung("DURAK ART NICHT GEFUNDEN");
+        }
+        save();
+        return currentRecord;
     }
 
     @Override

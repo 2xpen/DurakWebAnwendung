@@ -1,11 +1,12 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 import Home from "../Views/Home.vue";
-import CreatePlayer from "../Views/CreatePlayer.vue";
-import SeeAllPlayer from "../Views/SeeAllPlayer.vue";
-import CreateSession from "../Views/CreateSession.vue";
-import SeeAllSessions from "../Views/SeeAllSessions.vue"
-import SessionDetail from "../Views/SessionDetail.vue"
-import Shop from "../Views/Shop.vue";
+import CreatePlayer from "../Views/player/CreatePlayer.vue";
+import SeeAllPlayer from "../Views/player/SeeAllPlayer.vue";
+import CreateSession from "../Views/sessions/CreateSession.vue";
+import SeeAllSessions from "../Views/sessions/SeeAllSessions.vue"
+import SessionDetail from "../Views/sessions/SessionDetail.vue"
+
+import PlayerDetails from "@/Views/player/PlayerDetails.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -13,40 +14,45 @@ const routes: Array<RouteRecordRaw> = [
         name: "Home",
         component: Home,
     },
+
     {
         path: "/createPlayer",
         name: "CreatePlayer",
         component: CreatePlayer,
     },
+
     {
         path: "/seeAllPlayer",
         name: "SeeAllPlayer", // Hier sollte der Name "SeeAllPlayer" verwendet werden
         component: SeeAllPlayer,
     },
+
     {
         path: "/createSession",
         name: "CreateSession",
         component: CreateSession,
     },
+
     {
         path: "/seeAllSessions",
         name: "SeeAllSessions",
         component: SeeAllSessions,
     },
+
     {
-        path: "/session/:spielRundenId", // Routen-Parameter für die Session-ID
+        path: "/session/:spielRundenId",
         name: "sessionDetail",
         component: SessionDetail,
-        props: true, // Übergibt den Parameter als Prop
+        props: true,
     },
 
     {
-        path: '/spielerdetails/:spielerId', // Verwende einen Platzhalter für die Spieler-ID
+        path: '/spielerdetails/:spielerId',
         name: 'spielerdetails',
-        component: Shop,
-        props: true, // Dies ermöglicht das automatische Übergeben der Route-Parameter als Props
+        component: PlayerDetails,
+        props: true,
     },
-    
+
 ];
 
 const router = createRouter({

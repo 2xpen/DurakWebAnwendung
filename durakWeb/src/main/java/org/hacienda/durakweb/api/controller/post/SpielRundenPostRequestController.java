@@ -6,26 +6,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.api.apiresponse.ResponseWrapper;
 import org.hacienda.durakweb.constants.StatusCode;
-import org.hacienda.durakweb.api.dto.spielerDTO.SpielerAnzeigenViewDTO;
-import org.hacienda.durakweb.api.dto.spielerDTO.SpielerInRundeAnzeigenDTO;
 import org.hacienda.durakweb.api.dto.spielerDTO.SpielerStandRecordDTO;
-import org.hacienda.durakweb.api.dto.spielrundeDTO.SpielRundeDetailsDTO;
-import org.hacienda.durakweb.api.dto.spielrundeDTO.SpielrundeAuswahlDTO;
 import org.hacienda.durakweb.api.controller.requests.ChangeDurakStandRequest;
 import org.hacienda.durakweb.api.controller.requests.CreateSpielRundeParameter;
-import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.SpielerStandRecord;
 import org.hacienda.durakweb.data.Spielrunde;
-import org.hacienda.durakweb.data.identifier.SpielrundenId;
-import org.hacienda.durakweb.service.SpielerService;
+import org.hacienda.durakweb.durakfehlermeldung.DurakFehlerMeldung;
 import org.hacienda.durakweb.service.SpielrundenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @RequestMapping("/api")
@@ -61,19 +52,25 @@ public class SpielRundenPostRequestController {
     public ResponseEntity<ResponseWrapper<SpielerStandRecordDTO>> changeSpielerStandRecord(@RequestBody ChangeDurakStandRequest request) {
 
 
-        System.out.println("changeSpielerStandRecord AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(request.getSpielerId().toString());
-        System.out.println(request.getVerrechungszahl().toString());
-        System.out.println(request.getSpielrundenId().toString());
+        log.info(
+                "auf die Schnittstelle für \"changeDurakStand\" wurde folgende Request gemacht" +
+                        "\n" + request
+        );
 
         ResponseWrapper<SpielerStandRecordDTO> wrapper = new ResponseWrapper<>();
 
-        SpielerStandRecord spielerStandRecord = spielrundenService.changeSpielerstandRecord(request.getSpielerId(), request.getSpielrundenId(), request.getVerrechungszahl());
+        try {
+            SpielerStandRecord spielerStandRecord = spielrundenService.changeSpielerstandRecord(request);
 
-        wrapper.setData(new SpielerStandRecordDTO(spielerStandRecord.getSpielerId(), spielerStandRecord.getStand()));
-        wrapper.addMeldungen("banutti titi");
-        wrapper.setStatusIndicator(StatusCode.ALLESDISCO);
+            wrapper.setData(new SpielerStandRecordDTO(spielerStandRecord.getSpielerId(), spielerStandRecord.getDurakAnzahl()));
+            wrapper.addMeldungen("banutti titi");
+            wrapper.setStatusIndicator(StatusCode.ALLESDISCO);
 
+        } catch (DurakFehlerMeldung d) {
+            wrapper.setData(null);
+            wrapper.addMeldungen(d.getMeldung());
+            wrapper.setStatusIndicator(StatusCode.FEHLER);
+        }
 
         /**
          * TEST

@@ -15,7 +15,7 @@ public class SpielerInRundeAnzeigenDTO {
         this.name = spieler.getName();
         this.spielerId = spieler.getSpielerId().toString();
         this.profilePicture = spieler.getprofilePicture();
-        this.durakStand = spielerStandRecord.getStand();
+        this.durakStand = spielerStandRecord.getNormalesDurakAnzahl();
     }
 
     public String getProfilePicture() {
