@@ -61,7 +61,6 @@ public class SpielRundenPostRequestController {
 
         try {
             SpielerStandRecord spielerStandRecord = spielrundenService.changeSpielerstandRecord(request);
-
             wrapper.setData(new SpielerStandRecordDTO(spielerStandRecord.getSpielerId(), spielerStandRecord.getDurakAnzahl()));
             wrapper.addMeldungen("banutti titi");
             wrapper.setStatusIndicator(StatusCode.ALLESDISCO);

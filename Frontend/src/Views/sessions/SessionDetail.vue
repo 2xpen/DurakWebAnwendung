@@ -123,7 +123,8 @@ const calculateLooses = async (player: PlayerInSession) => {
   const payload = {
     spielRundenId: sessionId,
     spielerId: player.spielerId,
-    durakArt: durakArt
+    durakArt: durakArt,
+    isKorrektur : false
   };
 
   console.log(payload);
@@ -154,7 +155,8 @@ const removeLosses = async (player: PlayerInSession) => {
   const payload = {
     spielRundenId: sessionId,
     spielerId: player.spielerId,
-    durakArt: durakArt
+    durakArt: durakArt,
+    isKorrektur: true
   }
 
   console.log(payload)

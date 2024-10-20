@@ -81,6 +81,7 @@ public class SpielRundenRepo implements Serialisierbar {
     public SpielerStandRecord korrekturSpielerStandRecord(ChangeDurakStandRequest req) throws DurakFehlerMeldung {
 
         SpielerStandRecord currentRecord = getSpielerStandRecordBySpielerId(req.getSpielerId(), req.getSpielrundenId());
+        log.info("es wurde eine Korrektur durchgeführt");
 
         switch (req.getDurakArt()) {
             case NORMAL:
@@ -88,6 +89,7 @@ public class SpielRundenRepo implements Serialisierbar {
                 break;
             case BOCKRUNDE:
                 currentRecord.setBockrundenAnzahl(currentRecord.getBockrundenAnzahl() - 2);
+                log.info("es wurde eine Bockrunden Korrektur durchgeführt");
                 break;
             case UNBEKANNT:
                 throw new DurakFehlerMeldung("DURAK ART NICHT GEFUNDEN");

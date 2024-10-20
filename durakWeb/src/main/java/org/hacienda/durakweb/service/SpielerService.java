@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hacienda.durakweb.data.Spieler;
 import org.hacienda.durakweb.data.identifier.SpielerId;
 import org.hacienda.durakweb.durakfehlermeldung.DurakFehlerMeldung;
-import org.hacienda.durakweb.repo.SpielRundenRepo;
 import org.hacienda.durakweb.repo.SpielerRepo;
 import org.springframework.stereotype.Service;
 
