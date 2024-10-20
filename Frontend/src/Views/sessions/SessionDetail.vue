@@ -130,12 +130,14 @@ const calculateLooses = async (player: PlayerInSession) => {
 
   try {
     const response = await axios.post('/api/changedurakstand', payload);
-    player.durakStand = response.data.data.durakStand;
+    //player.durakStand = response.data.data.durakStand;
+    console.log(response);
     console.log(player.durakStand, "Aktualisierter player.durakStand");
     console.log('Spieler-ID:', response.data.spielerId);
   } catch (error) {
     console.log('Fehler', error);
   }
+
   isDuDurakPressed.value = true
   checkClickLimit();
 };

@@ -44,5 +44,12 @@ public class ResponseWrapper<DATA_TYPE> {
         return meldungen;
     }
 
-
+    @Override
+    public String toString() {
+        return "ResponseWrapper{" +
+                "data=" + data +
+                ", meldungen=" + meldungen +
+                ", statusIndicator=" + statusIndicator +
+                '}';
+    }
 }

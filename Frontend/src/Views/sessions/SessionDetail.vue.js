@@ -80,7 +80,8 @@ const calculateLooses = async (player) => {
     console.log(payload);
     try {
         const response = await axios.post('/api/changedurakstand', payload);
-        player.durakStand = response.data.data.durakStand;
+        //player.durakStand = response.data.data.durakStand;
+        console.log(response);
         console.log(player.durakStand, "Aktualisierter player.durakStand");
         console.log('Spieler-ID:', response.data.spielerId);
     }

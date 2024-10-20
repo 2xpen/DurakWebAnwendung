@@ -67,8 +67,10 @@ public class SpielRundenRepo implements Serialisierbar {
         switch (req.getDurakArt()) {
             case NORMAL:
                 currentRecord.setNormalesDurakAnzahl(currentRecord.getNormalesDurakAnzahl() + 1);
+                break;
             case BOCKRUNDE:
                 currentRecord.setBockrundenAnzahl(currentRecord.getBockrundenAnzahl() + 2);
+                break;
             case UNBEKANNT:
                 throw new DurakFehlerMeldung("DURAK ART NICHT GEFUNDEN");
         }
@@ -83,8 +85,10 @@ public class SpielRundenRepo implements Serialisierbar {
         switch (req.getDurakArt()) {
             case NORMAL:
                 currentRecord.setNormalesDurakAnzahl(currentRecord.getNormalesDurakAnzahl() - 1);
+                break;
             case BOCKRUNDE:
                 currentRecord.setBockrundenAnzahl(currentRecord.getBockrundenAnzahl() - 2);
+                break;
             case UNBEKANNT:
                 throw new DurakFehlerMeldung("DURAK ART NICHT GEFUNDEN");
         }

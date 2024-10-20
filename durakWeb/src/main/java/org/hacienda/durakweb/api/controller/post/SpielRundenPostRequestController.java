@@ -76,12 +76,7 @@ public class SpielRundenPostRequestController {
          * TEST
          * */
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            log.info("response /changeDurakstand = " + mapper.writeValueAsString(wrapper.getData()));
-        } catch (JsonProcessingException e) {
-            e.getMessage();
-        }
+            log.info("response /changeDurakstand = " +wrapper.toString());
         /**
          * TEST
          */
