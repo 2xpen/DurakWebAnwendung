@@ -10,7 +10,7 @@ import java.util.List;
 public class ResponseWrapper<DATA_TYPE> {
 
     private DATA_TYPE data;
-    private List<String> meldungen = new ArrayList<String>();
+    private final List<String> meldungen = new ArrayList<String>();
     private StatusCode statusIndicator = StatusCode.ALLESMAMBOHUGE;
 
 

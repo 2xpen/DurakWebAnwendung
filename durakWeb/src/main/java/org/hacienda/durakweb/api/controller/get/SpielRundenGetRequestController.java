@@ -56,7 +56,6 @@ public class SpielRundenGetRequestController {
         for (Spielrunde spielrunde : spielrundenService.getAlleSpielrunde()) {
 
             List<SpielerAnzeigenViewDTO> spielerAnzeigenViewDTOS = new ArrayList<>();
-
             //  es wird jeder spieler der spielrunde ermittelt → das spielrunden repo schaut alle spielerIds nach die es für die spielrunde hat, und im spielerRepo wird jeder spieler anhand seiner id ermittelt
             for (Spieler spieler : spielerService.getSpielerById(spielrundenService.getSpielerIdsOfSpielrunde(spielrunde))) {
                 //umwandlung vom Spieler zum DTOS

@@ -28,5 +28,7 @@ public class ShopGetRequestController {
         wrapper.setStatusIndicator(StatusCode.ALLESMAMBOHUGE);
         return ResponseEntity.ok(wrapper);
     }
+
+
 }
 
